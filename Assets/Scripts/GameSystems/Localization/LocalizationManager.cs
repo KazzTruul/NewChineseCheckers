@@ -7,26 +7,54 @@ public class LocalizationManager : ILocalizationManager
 {
     private TranslationCatalog _translationCatalog;
 
-    public LocalizationManager()
+    public delegate void LanguageChange(string language);
+
+    public event LanguageChange LanguageChanged;
+
+    private bool IsLanguageSupported(string language)
+    {
+        return Directory.Exists(
+            Path.Combine(Constants.LocalizationPath, language));
+    }
+
+    public string GetPreferredLanguage()
     {
         var userLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-        if (!Directory.Exists(Path.Combine(Constants.LocalizationPath, userLanguage)))
-        {
-            userLanguage = Constants.DefaultLanguage;
-        }
+        return IsLanguageSupported(userLanguage)
+            ? userLanguage
+            : Constants.DefaultLanguage;
+    }
 
+    public void SetPreferredLanguage(string language)
+    {
+        if (!IsLanguageSupported(language))
+            return;
+        LoadTranslationCatalog(language);
+    }
+
+    public void Initialize(string language)
+    {
+        LoadTranslationCatalog(IsLanguageSupported(language)
+            ? language
+            : GetPreferredLanguage());
+    }
+
+    private void LoadTranslationCatalog(string language)
+    {
         var jsonContent = File.ReadAllText(
             Path.Combine(Constants.LocalizationPath,
-            $"{userLanguage}/{Constants.TranslationJsonName}"));
+            $"{language}/{Constants.TranslationJsonName}"));
 
-        var translationCatalog = new DataContractJsonSerializer(typeof(TranslationCatalog),
+        var translationSerializer = new DataContractJsonSerializer(typeof(TranslationCatalog),
             new DataContractJsonSerializerSettings
             {
                 UseSimpleDictionaryFormat = true
             });
 
-        _translationCatalog = translationCatalog.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(jsonContent))) as TranslationCatalog;
+        _translationCatalog = translationSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(jsonContent))) as TranslationCatalog;
+
+        LanguageChanged.Invoke(language);
     }
 
     public string GetTranslation(string translationId)
