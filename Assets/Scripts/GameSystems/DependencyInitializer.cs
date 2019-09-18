@@ -9,5 +9,14 @@ public class DependencyInitializer : MonoInstaller
             .To<LocalizationManager>()
             .AsSingle()
             .Lazy();
+        Container.Bind<ICommandHandler>()
+            .To<CommandHandler>()
+            .AsSingle()
+            .Lazy();
+    }
+
+    public void AddBinding<T>(T binding)
+    {
+
     }
 }
