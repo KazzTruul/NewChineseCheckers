@@ -1,2 +1,4 @@
 [Tt]emp/
 [Ll]ibrary/
+*.log
+*.md
