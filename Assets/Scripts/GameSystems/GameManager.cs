@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Zenject;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,15 +14,11 @@ public class GameManager : MonoBehaviour
     {
         get => _settings;
     }
-
-    private void Start()
+    
+    [Inject]
+    private void Initialize(ILocalizationManager localizationManager)
     {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
-        _localizationManager = new LocalizationManager();
+        _localizationManager = localizationManager;
 
         InitializeSettings();
         InitializeLocalization();
@@ -57,6 +54,5 @@ public class GameManager : MonoBehaviour
     private void InitializeLocalization()
     {
         _localizationManager.Initialize(_settings.Language);
-
     }
 }
