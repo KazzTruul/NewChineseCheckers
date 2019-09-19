@@ -1,16 +1,14 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Zenject;
 
 public class LocalizationManager : ILocalizationManager
 {
+    [Inject]
+    private readonly SignalBus _signalBus;
     private TranslationCatalog _translationCatalog;
-
-    public delegate void LanguageChangedEventHandler(object source, EventArgs e);
-
-    public event LanguageChangedEventHandler LanguageChanged;
 
     private bool IsLanguageSupported(string language)
     {
@@ -42,7 +40,7 @@ public class LocalizationManager : ILocalizationManager
             ? language
             : GetPreferredLanguage());
 
-        SetPreferredLanguage(language);
+        OnLanguageChanged(language);
     }
 
     private void LoadTranslationCatalog(string language)
@@ -67,9 +65,6 @@ public class LocalizationManager : ILocalizationManager
 
     private void OnLanguageChanged(string language)
     {
-        if(LanguageChanged != null)
-        {
-            LanguageChanged.Invoke(this, new LanguageChangedEventArgs { Language = language });
-        }
+        _signalBus.Fire(new LanguageChangedSignal() { Language = language });
     }
 }
