@@ -1,18 +1,15 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using UnityEngine;
-using Zenject;
 
 public class InitializeSettingsCommand : CommandBase
 {
-    private Settings _settings;
-    private ILocalizationManager _localizationManager;
+    private readonly SettingsContainer _settingsContainer;
+    private readonly ILocalizationManager _localizationManager;
 
-    [Inject]
-    public void Initialize(Settings settings, ILocalizationManager localizationManager)
+    public InitializeSettingsCommand(SettingsContainer settingsManager, ILocalizationManager localizationManager)
     {
-        _settings = settings;
+        _settingsContainer = settingsManager;
         _localizationManager = localizationManager;
     }
 
@@ -27,18 +24,18 @@ public class InitializeSettingsCommand : CommandBase
 
         if (File.Exists(Constants.SettingsPath))
         {
-            _settings = settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as Settings;
+            _settingsContainer.Settings = settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as Settings;
         }
         else
         {
-            _settings = new Settings{
+            _settingsContainer.Settings = new Settings{
                 MasterVolume = Constants.DefaultMasterVolume,
                 MusicVolume = Constants.DefaultMusicVolume,
                 SFXVolume = Constants.DefaultSFXVolume,
                 Language = _localizationManager.GetPreferredLanguage()
             };
 
-            settingsSerializer.WriteObject(new FileStream(Constants.SettingsPath, FileMode.Create), _settings);
+            settingsSerializer.WriteObject(new FileStream(Constants.SettingsPath, FileMode.Create), _settingsContainer);
         }
     }
 }

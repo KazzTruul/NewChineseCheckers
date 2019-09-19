@@ -5,6 +5,16 @@ public class DependencyInitializer : MonoInstaller
     //Set up all bindings for Zenject dependency injection
     public override void InstallBindings()
     {
+        //Add Container to SignalBusInstaller
+        SignalBusInstaller.Install(Container);
+
+        //Declare signals
+        Container.DeclareSignal<LanguageChangedSignal>();
+
+        //Set up bindings
+        Container.Bind<SettingsContainer>()
+            .AsSingle()
+            .Lazy();
         Container.Bind<ILocalizationManager>()
             .To<LocalizationManager>()
             .AsSingle()
@@ -13,10 +23,10 @@ public class DependencyInitializer : MonoInstaller
             .To<CommandHandler>()
             .AsSingle()
             .Lazy();
-    }
 
-    public void AddBinding<T>(T binding)
-    {
-
+        //Bind signals
+        Container.BindSignal<LanguageChangedSignal>()
+            .ToMethod<SettingsContainer>(settingsContainer => settingsContainer.SetLanguage)
+            .FromResolve();
     }
 }
