@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public sealed class CommandHandler : ICommandHandler
+public sealed class CommandDispatcher : ICommandDispatcher
 {
     private List<CommandBase> _commandList = new List<CommandBase>();
 
