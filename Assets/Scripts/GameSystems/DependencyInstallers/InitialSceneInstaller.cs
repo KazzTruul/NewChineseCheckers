@@ -19,8 +19,8 @@ public class InitialSceneInstaller : MonoInstaller
             .To<LocalizationManager>()
             .AsSingle()
             .Lazy();
-        Container.Bind<ICommandHandler>()
-            .To<CommandHandler>()
+        Container.Bind<ICommandDispatcher>()
+            .To<CommandDispatcher>()
             .AsSingle()
             .Lazy();
 

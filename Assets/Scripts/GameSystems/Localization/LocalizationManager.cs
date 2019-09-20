@@ -60,7 +60,11 @@ public class LocalizationManager : ILocalizationManager
 
     public string GetTranslation(string translationId)
     {
-        return _translationCatalog.Translations.ContainsKey(translationId) ? _translationCatalog.Translations[translationId] : translationId;
+        return _translationCatalog
+            .Translations
+            .ContainsKey(translationId) ? 
+            _translationCatalog
+            .Translations[translationId] : translationId;
     }
 
     private void OnLanguageChanged(string language)
