@@ -1,0 +1,14 @@
+{
+	"Translations": {
+		"Game_Name": "KinaSchack",
+		"Game_Options": "Inställningar",
+		"Game_Save": "Spara Spel",
+		"Game_Load": "Ladda Spel",
+		"Game_Start_Single": "Spela mot Datorn",
+		"Game_Start_Multi": "Spela Online",
+		"Game_Difficulty_Easy": "Lätt",
+		"Game_Difficulty_Medium": "Normal",
+		"Game_Difficulty_Hard": "Svår",
+		"Game_Quit": "Avsluta Spelet"
+	}
+}
