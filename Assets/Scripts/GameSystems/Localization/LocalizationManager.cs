@@ -47,7 +47,7 @@ public class LocalizationManager : ILocalizationManager
     {
         var jsonContent = File.ReadAllText(
             Path.Combine(Constants.LocalizationPath,
-            $"{language}/{Constants.TranslationJsonName}"));
+            $"{language}{Constants.TranslationJsonName}"));
 
         var translationSerializer = new DataContractJsonSerializer(typeof(TranslationCatalog),
             new DataContractJsonSerializerSettings

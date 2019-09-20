@@ -8,8 +8,9 @@ public static class Constants
     public const string OptionsTranslation = "Game_Options";
     public const string SaveGameTranslation = "Game_Save";
     public const string LoadGameTranslation = "Game_Load";
-    public const string SinglePlayerTranslation = "GameMode_Single";
-    public const string MultiPlayerTranslation = "GameMode_Multi";
+    public const string QuitGameTranslation = "Game_Quit";
+    public const string SinglePlayerTranslation = "Game_Start_Single";
+    public const string MultiPlayerTranslation = "Game_Start_Multi";
     #endregion
 
     //Paths
