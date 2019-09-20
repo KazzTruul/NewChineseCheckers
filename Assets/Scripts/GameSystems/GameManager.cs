@@ -3,18 +3,29 @@ using Zenject;
 
 public class GameManager : MonoBehaviour
 {
-    private ICommandHandler _commandHandler;
+    //CommandDispatcher
+    [Inject]
+    private ICommandDispatcher _commandDispatcher;
+
+    //Managers
+    [Inject]
     private ILocalizationManager _localizationManager;
+
+    //Containers
+    [Inject]
     private SettingsContainer _settingsContainer;
 
+    //Factories
     [Inject]
-    private void Initialize(ICommandHandler commandHandler, ILocalizationManager localizationManager, SettingsContainer settingsManager)
+    private ApplySettingsCommandFactory _applySettingsCommandFactory;
+    [Inject]
+    private InitializeSettingsCommandFactory _initializeSettingsCommandFactory;
+    [Inject]
+    private InitializeLocationCommandFactory _initializeLocationCommandFactory;
+    
+    public void Start()
     {
-        _commandHandler = commandHandler;
-        _localizationManager = localizationManager;
-        _settingsContainer = settingsManager;
-
-        _commandHandler.ExecuteCommand(new InitializeSettingsCommand(_settingsContainer, _localizationManager));
-        _commandHandler.ExecuteCommand(new InitializeLocalizationCommand(_settingsContainer, _localizationManager));
+        _commandDispatcher.ExecuteCommand(_initializeSettingsCommandFactory.Create());
+        _commandDispatcher.ExecuteCommand(_initializeLocationCommandFactory.Create());
     }
 }
