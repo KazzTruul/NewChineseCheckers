@@ -19,8 +19,17 @@ public class DependencyInitializer : MonoInstaller
             .To<LocalizationManager>()
             .AsSingle()
             .Lazy();
-        Container.Bind<ICommandHandler>()
-            .To<CommandHandler>()
+        Container.Bind<ICommandDispatcher>()
+            .To<CommandDispatcher>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<ApplySettingsCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<InitializeSettingsCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<InitializeLocationCommandFactory>()
             .AsSingle()
             .Lazy();
 
