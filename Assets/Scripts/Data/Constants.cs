@@ -1,21 +1,35 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class Constants
 {
     //Translations
     #region Translations
-    public const string GameNameTranslation = "Game_Name";
-    public const string OptionsTranslation = "Game_Options";
-    public const string SaveGameTranslation = "Game_Save";
-    public const string LoadGameTranslation = "Game_Load";
-    public const string QuitGameTranslation = "Game_Quit";
-    public const string SinglePlayerTranslation = "Game_Start_Single";
-    public const string MultiPlayerTranslation = "Game_Start_Multi";
+
+    public static readonly string[] SupportedLanuages =
+    {
+        "en",
+        "sv"
+    };
+
+    public static readonly Dictionary<TranslationIdentifier, string> Translations = new Dictionary<TranslationIdentifier, string>()
+    {
+        { TranslationIdentifier.GameNameTranslation, "Game_Name" },
+        { TranslationIdentifier.OptionsTranslation, "Game_Options" },
+        { TranslationIdentifier.SaveGameTranslation, "Game_Save" },
+        { TranslationIdentifier.LoadGameTranslation, "Game_Load" },
+        { TranslationIdentifier.QuitGameTranslation, "Game_Quit" },
+        { TranslationIdentifier.SinglePlayerTranslation, "Game_Start_Single" },
+        { TranslationIdentifier.MultiPlayerTranslation, "Game_Start_Multi" },
+        { TranslationIdentifier.DifficultyEasy, "Game_Difficulty_Easy" },
+        { TranslationIdentifier.DifficultyMedium, "Game_Difficulty_Medium" },
+        { TranslationIdentifier.DifficultyHard, "Game_Difficulty_Hard" }
+    };
     #endregion
 
     //Paths
     #region Paths
-    public const string TranslationJsonName = "Translations.json";
+    public const string TranslationJsonName = "{0}Translations.json";
     public static readonly string LocalizationPath = $"{Application.dataPath}/Data/Localization/";
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
     #endregion

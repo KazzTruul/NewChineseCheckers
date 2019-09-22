@@ -12,8 +12,8 @@ public class LocalizationManager : ILocalizationManager
 
     private bool IsLanguageSupported(string language)
     {
-        return Directory.Exists(
-            Path.Combine(Constants.LocalizationPath, language));
+        return File.Exists(
+            Path.Combine(Constants.LocalizationPath, string.Format(Constants.TranslationJsonName, language)));
     }
 
     public string GetPreferredLanguage()
@@ -29,16 +29,17 @@ public class LocalizationManager : ILocalizationManager
     {
         if (!IsLanguageSupported(language))
             return;
-
         LoadTranslationCatalog(language);
         OnLanguageChanged(language);
     }
 
     public void Initialize(string language)
     {
-        LoadTranslationCatalog(!string.IsNullOrEmpty(language) && IsLanguageSupported(language)
+        language = !string.IsNullOrEmpty(language) && IsLanguageSupported(language)
             ? language
-            : GetPreferredLanguage());
+            : GetPreferredLanguage();
+
+        LoadTranslationCatalog(language);
 
         OnLanguageChanged(language);
     }
@@ -47,7 +48,7 @@ public class LocalizationManager : ILocalizationManager
     {
         var jsonContent = File.ReadAllText(
             Path.Combine(Constants.LocalizationPath,
-            $"{language}{Constants.TranslationJsonName}"));
+            $"{string.Format(Constants.TranslationJsonName, language)}"));
 
         var translationSerializer = new DataContractJsonSerializer(typeof(TranslationCatalog),
             new DataContractJsonSerializerSettings
@@ -55,14 +56,17 @@ public class LocalizationManager : ILocalizationManager
                 UseSimpleDictionaryFormat = true
             });
 
-        _translationCatalog = translationSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(jsonContent))) as TranslationCatalog;
+        using (var memoryStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonContent)))
+        {
+            _translationCatalog = translationSerializer.ReadObject(memoryStream) as TranslationCatalog;
+        }
     }
 
     public string GetTranslation(string translationId)
     {
         return _translationCatalog
             .Translations
-            .ContainsKey(translationId) ? 
+            .ContainsKey(translationId) ?
             _translationCatalog
             .Translations[translationId] : translationId;
     }
