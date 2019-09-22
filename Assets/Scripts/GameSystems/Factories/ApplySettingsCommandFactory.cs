@@ -9,6 +9,6 @@
 
     public override CommandBase Create()
     {
-        return new ApplySettingsCommand(_settingsContainer.Settings);
+        return new ApplySettingsCommand(_settingsContainer);
     }
 }

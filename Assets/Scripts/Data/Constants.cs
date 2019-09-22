@@ -3,9 +3,8 @@ using UnityEngine;
 
 public static class Constants
 {
-    //Translations
-    #region Translations
-
+    //Localization
+    #region Localization
     public static readonly string[] SupportedLanuages =
     {
         "en",
@@ -23,7 +22,12 @@ public static class Constants
         { TranslationIdentifier.MultiPlayerTranslation, "Game_Start_Multi" },
         { TranslationIdentifier.DifficultyEasy, "Game_Difficulty_Easy" },
         { TranslationIdentifier.DifficultyMedium, "Game_Difficulty_Medium" },
-        { TranslationIdentifier.DifficultyHard, "Game_Difficulty_Hard" }
+        { TranslationIdentifier.DifficultyHard, "Game_Difficulty_Hard" },
+        { TranslationIdentifier.OptionsTitle, "Options_Title" },
+        { TranslationIdentifier.MasterVolume, "Volume_Master" },
+        { TranslationIdentifier.MusicVolume, "Volume_Music" },
+        { TranslationIdentifier.SFXVolume, "Volume_SFX" },
+        { TranslationIdentifier.GoBack, "Menu_Return" }
     };
     #endregion
 

@@ -10,7 +10,7 @@ public class LocalizationManager : ILocalizationManager
     private readonly SignalBus _signalBus;
     private TranslationCatalog _translationCatalog;
 
-    private bool IsLanguageSupported(string language)
+    public bool IsLanguageSupported(string language)
     {
         return File.Exists(
             Path.Combine(Constants.LocalizationPath, string.Format(Constants.TranslationJsonName, language)));

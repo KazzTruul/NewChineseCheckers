@@ -9,5 +9,11 @@
     MultiPlayerTranslation,
     DifficultyEasy,
     DifficultyMedium,
-    DifficultyHard
+    DifficultyHard,
+    OptionsTitle,
+    MasterVolume,
+    MusicVolume,
+    SFXVolume,
+    ChangeLanguage,
+    GoBack
 }

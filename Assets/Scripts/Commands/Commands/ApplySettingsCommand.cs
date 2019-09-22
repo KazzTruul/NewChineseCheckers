@@ -1,10 +1,10 @@
 ﻿public class ApplySettingsCommand : CommandBase
 {
-    Settings _settings;
+    private readonly SettingsContainer _settingsContainer;
 
-    public ApplySettingsCommand(Settings settings)
+    public ApplySettingsCommand(SettingsContainer settingsContainer)
     {
-        _settings = settings;
+        _settingsContainer = settingsContainer;
     }
 
     public override void Execute()
