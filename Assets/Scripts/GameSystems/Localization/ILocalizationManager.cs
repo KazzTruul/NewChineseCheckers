@@ -4,4 +4,5 @@
     void Initialize(string language);
     string GetPreferredLanguage();
     void SetPreferredLanguage(string language);
+    bool IsLanguageSupported(string language);
 }

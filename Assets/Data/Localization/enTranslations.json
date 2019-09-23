@@ -1,1 +1,20 @@
-{"Translations":{"Game_Name":"Chinese Checkers","Game_Options":"Options","Game_Save":"Save Game","Game_Load":"Load Game","Game_Start_Single":"Single Player","Game_Start_Multi":"Online Multiplayer","Game_Difficulty_Easy":"Easy","Game_Difficulty_Medium":"Normal","Game_Difficulty_Hard":"Hard","Game_Quit":"Quit Game"}}
+{
+	"Translations": {
+		"Game_Name": "Chinese Checkers",
+		"Game_Options": "Options",
+		"Game_Save": "Save Game",
+		"Game_Load": "Load Game",
+		"Game_Start_Single": "Single Player",
+		"Game_Start_Multi": "Online Multiplayer",
+		"Game_Difficulty_Easy": "Easy",
+		"Game_Difficulty_Medium": "Normal",
+		"Game_Difficulty_Hard": "Hard",
+		"Game_Quit": "Quit Game",
+		"Options_Title": "Options",
+		"Volume_Master": "Master Volume",
+		"Volume_Music": "Music Volume",
+		"Volume_SFX": "Sound Effect Volume",
+		"Menu_Return": "Go Back",
+		"Language_Change": "Change Language"
+	}
+}

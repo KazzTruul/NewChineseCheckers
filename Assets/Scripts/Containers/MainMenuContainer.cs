@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuContainer : MonoBehaviour
+public class MainMenuContainer : MonoBehaviour, ILocalizable
 {
     [SerializeField]
     private TMP_Text _startSinglePlayerGameText;
@@ -33,7 +33,7 @@ public class MainMenuContainer : MonoBehaviour
         svButton.onClick.AddListener(() => _localizationManager.SetPreferredLanguage("sv"));
     }
 
-    public void UpdateLanguage()
+    public void OnLanguageChanged()
     {
         _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayerTranslation]);
         _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayerTranslation]);
