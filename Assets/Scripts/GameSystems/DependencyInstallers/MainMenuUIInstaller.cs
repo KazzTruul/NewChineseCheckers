@@ -5,42 +5,21 @@ public class MainMenuUIInstaller : MonoInstaller
     public override void InstallBindings()
     {
         //Declare signals
-        Container.DeclareSignal<LanguageChangedSignal>();
+        //Container.DeclareSignal<LanguageChangedSignal>();
 
         //Set up bindings
         Container.Bind<ILocalizationManager>()
             .To<LocalizationManager>()
-            .AsSingle()
+            .AsCached()
             .Lazy();
-
-        Container.Bind<MainMenuContainer>()
+        
+        Container.Bind<ILocalizable>()
+            .To<MainMenuContainer>()
             .FromComponentOnRoot();
 
         //Bind signals
         Container.BindSignal<LanguageChangedSignal>()
-            .ToMethod<MainMenuContainer>(mainMenuContainer => mainMenuContainer.OnLanguageUpdated)
-            .FromResolve();
-    }
-}
-public class OptionsMenuInstaller : MonoInstaller
-{
-    public override void InstallBindings()
-    {
-        //Declare signals
-        Container.DeclareSignal<LanguageChangedSignal>();
-
-        //Set up bindings
-        Container.Bind<ILocalizationManager>()
-            .To<LocalizationManager>()
-            .AsSingle()
-            .Lazy();
-               
-        Container.Bind<SettingsMenuContainer>()
-            .FromComponentOnRoot();
-
-        //Bind signals
-        Container.BindSignal<LanguageChangedSignal>()
-            .ToMethod<SettingsMenuContainer>(settingsMenuContainer => settingsMenuContainer.OnLanguageUpdated)
+            .ToMethod<ILocalizable>(localizable => localizable.OnLanguageChanged)
             .FromResolve();
     }
 }
