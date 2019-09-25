@@ -1,0 +1,11 @@
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\bin\Debug\netcoreapp2.2\ProjectSearchTool.deps.json
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\bin\Debug\netcoreapp2.2\ProjectSearchTool.runtimeconfig.json
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\bin\Debug\netcoreapp2.2\ProjectSearchTool.runtimeconfig.dev.json
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\bin\Debug\netcoreapp2.2\ProjectSearchTool.dll
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\bin\Debug\netcoreapp2.2\ProjectSearchTool.pdb
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.csprojAssemblyReference.cache
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.csproj.CoreCompileInputs.cache
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.AssemblyInfoInputs.cache
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.AssemblyInfo.cs
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.dll
+D:\Unity\Unity Projects\NewChineseCheckers\Tools\ProjectSearchTool\ProjectSearchTool\obj\Debug\netcoreapp2.2\ProjectSearchTool.pdb
