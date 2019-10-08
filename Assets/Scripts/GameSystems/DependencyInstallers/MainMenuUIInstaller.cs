@@ -4,9 +4,6 @@ public class MainMenuUIInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //Declare signals
-        //Container.DeclareSignal<LanguageChangedSignal>();
-
         //Set up bindings
         Container.Bind<ILocalizationManager>()
             .To<LocalizationManager>()

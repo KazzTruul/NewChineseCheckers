@@ -8,6 +8,7 @@ public class LocalizationManager : ILocalizationManager
 {
     [Inject]
     private readonly SignalBus _signalBus;
+
     private TranslationCatalog _translationCatalog;
 
     public bool IsLanguageSupported(string language)
