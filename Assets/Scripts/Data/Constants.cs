@@ -3,7 +3,6 @@ using UnityEngine;
 
 public static class Constants
 {
-    //Localization
     #region Localization
     public static readonly string[] SupportedLanuages =
     {
@@ -32,18 +31,29 @@ public static class Constants
     };
     #endregion
 
-    //Paths
     #region Paths
     public const string TranslationJsonName = "{0}Translations.json";
     public static readonly string LocalizationPath = $"{Application.dataPath}/Data/Localization/";
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
     #endregion
 
-    //Defaults
     #region Defaults
     public const int DefaultMasterVolume = 0;
     public const int DefaultMusicVolume = 0;
     public const int DefaultSFXVolume = 0;
     public const string DefaultLanguage = "en";
+    #endregion
+
+    #region Conversions
+    public static readonly Dictionary<BoardColor, Color> ColorConversions = new Dictionary<BoardColor, Color>
+    {
+        { BoardColor.White, Color.white },
+        { BoardColor.Yellow, Color.yellow },
+        { BoardColor.Blue, Color.blue },
+        { BoardColor.Green, Color.green },
+        { BoardColor.Red, Color.red },
+        { BoardColor.Magenta, Color.magenta },
+        { BoardColor.Black, Color.black },
+    };
     #endregion
 }

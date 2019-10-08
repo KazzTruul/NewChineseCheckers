@@ -16,9 +16,9 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     [SerializeField]
     private TMP_Text _quitGameText;
     [SerializeField]
-    Button enButton;
+    private Button enButton;
     [SerializeField]
-    Button svButton;
+    private Button svButton;
 
     private ILocalizationManager _localizationManager;
 
