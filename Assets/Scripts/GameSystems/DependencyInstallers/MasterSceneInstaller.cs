@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class InitialSceneInstaller : MonoInstaller
+public class MasterSceneInstaller : MonoInstaller
 {
     //Set up all bindings for Zenject dependency injection
     public override void InstallBindings()
@@ -8,10 +8,10 @@ public class InitialSceneInstaller : MonoInstaller
         //Add Container to SignalBusInstaller
         SignalBusInstaller.Install(Container);
 
-        //Declare signals
+        //Declare Signals
         Container.DeclareSignal<LanguageChangedSignal>();
 
-        //Set up bindings
+        //Set up Bindings
         Container.Bind<SettingsContainer>()
             .AsSingle()
             .Lazy();
@@ -23,8 +23,25 @@ public class InitialSceneInstaller : MonoInstaller
             .To<CommandDispatcher>()
             .AsSingle()
             .Lazy();
+        Container.Bind<IInputManager>()
+            .To<InputManager>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<ITickable>()
+            .To<TickableManager>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<InitializeLocationCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<InitializeSettingsCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<ApplySettingsCommandFactory>()
+            .AsSingle()
+            .Lazy();
 
-        //Bind signals
+        //Bind Signals
         Container.BindSignal<LanguageChangedSignal>()
             .ToMethod<SettingsContainer>(settingsContainer => settingsContainer.SetLanguage)
             .FromResolve();
