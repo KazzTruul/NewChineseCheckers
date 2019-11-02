@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Commands\Handlers\CommandHandler.cs" />
     <Compile Include="Assets\Scripts\Commands\Handlers\ICommandHandler.cs" />
     <Compile Include="Assets\Scripts\Containers\MainMenuContainer.cs" />
+    <Compile Include="Assets\Scripts\Containers\OptionsMenuContainer.cs" />
     <Compile Include="Assets\Scripts\Containers\SettingsContainer.cs" />
     <Compile Include="Assets\Scripts\Data\Constants.cs" />
     <Compile Include="Assets\Scripts\Data\Settings.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\Data\TranslationIdentifier.cs" />
     <Compile Include="Assets\Scripts\GameSystems\DependencyInstallers\InitialSceneInstaller.cs" />
     <Compile Include="Assets\Scripts\GameSystems\DependencyInstallers\MainMenuUIInstaller.cs" />
+    <Compile Include="Assets\Scripts\GameSystems\DependencyInstallers\OptionsMenuInstaller.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Factories\ApplySettingsCommandFactory.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Factories\ChangeLanguageCommandFactory.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Factories\ChangeVolumeCommandFactory.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Scripts\GameSystems\Factories\InitializeLocationCommandFactory.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Factories\InitializeSettingsCommandFactory.cs" />
     <Compile Include="Assets\Scripts\GameSystems\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameSystems\Localization\ILocalizable.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Localization\ILocalizationManager.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Localization\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\GameSystems\Localization\TranslationCatalog.cs" />
