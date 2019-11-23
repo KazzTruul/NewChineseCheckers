@@ -116,6 +116,13 @@ MonoBehaviour:
   _loadGameText: {fileID: 2292466800222276532}
   _openSettingsText: {fileID: 2292466801642525956}
   _quitGameText: {fileID: 2292466799819494374}
+  _startSinglePlayerGameButton: {fileID: 2292466799810494042}
+  _startMultiPlayerGameButton: {fileID: 2292466801291369218}
+  _loadGameButton: {fileID: 2292466800014447188}
+  _openSettingsButton: {fileID: 2292466801583143221}
+  _quitGameButton: {fileID: 2292466801030080541}
+  _enButton: {fileID: 0}
+  _svButton: {fileID: 0}
 --- !u!1 &2292466799810494047
 GameObject:
   m_ObjectHideFlags: 0

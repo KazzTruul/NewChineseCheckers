@@ -384,91 +384,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &963194225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 963194228}
-  - component: {fileID: 963194227}
-  - component: {fileID: 963194226}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &963194226
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
---- !u!20 &963194227
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19157174, g: 0.26749092, b: 0.38679248, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &963194228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1433514278
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +557,7 @@ RectTransform:
   m_Children:
   - {fileID: 420264420503406414}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -662,7 +579,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2104832547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df560f40234f2e8449278322356ceffa, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cbc5931f8ecd3e43bca4ba05bc628bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2143426502
@@ -1044,6 +961,16 @@ PrefabInstance:
       propertyPath: enButton
       value: 
       objectReference: {fileID: 356818914}
+    - target: {fileID: 1008570407293247387, guid: cc563bd84dd9fc845852ec70c1adaee6,
+        type: 3}
+      propertyPath: _enButton
+      value: 
+      objectReference: {fileID: 356818914}
+    - target: {fileID: 1008570407293247387, guid: cc563bd84dd9fc845852ec70c1adaee6,
+        type: 3}
+      propertyPath: _svButton
+      value: 
+      objectReference: {fileID: 2143426504}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc563bd84dd9fc845852ec70c1adaee6, type: 3}
 --- !u!1001 &4232714262869018804
@@ -1120,6 +1047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4232714262206539678, guid: b5b21bb8cdfc170478d658e57b43102c,
         type: 3}
+      propertyPath: _parentContractNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232714262206539678, guid: b5b21bb8cdfc170478d658e57b43102c,
+        type: 3}
       propertyPath: _monoInstallers.Array.data[1]
       value: 
       objectReference: {fileID: 0}
@@ -1127,6 +1059,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _monoInstallers.Array.data[2]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232714262206539678, guid: b5b21bb8cdfc170478d658e57b43102c,
+        type: 3}
+      propertyPath: _monoInstallers.Array.data[0]
+      value: 
+      objectReference: {fileID: 2104832548}
+    - target: {fileID: 4232714262206539678, guid: b5b21bb8cdfc170478d658e57b43102c,
+        type: 3}
+      propertyPath: _parentContractNames.Array.data[0]
+      value: Master
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5b21bb8cdfc170478d658e57b43102c, type: 3}
