@@ -44,6 +44,13 @@ public static class Constants
     public const string DefaultLanguage = "en";
     #endregion
 
+    #region SceneIndices
+    public const int MasterSceneIndex = 0;
+    public const int MainMenuSceneIndex = 1;
+    public const int SinglePlayerSceneIndex = 2;
+    public const int MultiPlayerSceneIndex = 3;
+    #endregion
+
     #region Conversions
     public static readonly Dictionary<BoardColor, Color> ColorConversions = new Dictionary<BoardColor, Color>
     {

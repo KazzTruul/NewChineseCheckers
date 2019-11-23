@@ -1,7 +1,11 @@
 ﻿using Zenject;
+using UnityEngine.SceneManagement;
 
 public class MasterSceneInstaller : MonoInstaller
 {
+    [Inject]
+    private readonly ZenjectSceneLoader _zenjectSceneLoader;
+
     //Set up all bindings for Zenject dependency injection
     public override void InstallBindings()
     {
@@ -45,5 +49,7 @@ public class MasterSceneInstaller : MonoInstaller
         Container.BindSignal<LanguageChangedSignal>()
             .ToMethod<SettingsContainer>(settingsContainer => settingsContainer.SetLanguage)
             .FromResolve();
+
+        _zenjectSceneLoader.LoadScene(1, LoadSceneMode.Additive);
     }
 }

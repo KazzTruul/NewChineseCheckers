@@ -1,15 +1,18 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
+using System.Linq;
 
 public class SinglePlayerSceneInstaller : MonoInstaller
 {
+    [Inject]
+    private ICommandDispatcher _commandDispatcher;
+    [Inject]
+    private DiContainer _diContainer;
+
     public override void InstallBindings()
     {
-        //Add Container to SignalBusInstaller
-        SignalBusInstaller.Install(Container);
-
         //Declare Signals
         Container.DeclareSignal<TileClickedSignal>();
-        Container.DeclareSignal<PawnClickedSignal>();
 
         //Set up Bindings
         Container.Bind<TileFactory>()
@@ -17,6 +20,9 @@ public class SinglePlayerSceneInstaller : MonoInstaller
             .Lazy();
         Container.Bind<BoardData>()
             .To<DefaultBoardData>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<SpawnBoardCommand>()
             .AsSingle()
             .Lazy();
 

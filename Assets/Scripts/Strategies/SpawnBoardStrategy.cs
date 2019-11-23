@@ -2,13 +2,7 @@
 
 public abstract class SpawnBoardStrategy
 {
-    protected readonly TileFactory _tileFactory;
     protected virtual float _tileOffset { get; }
-    public abstract Tile[][] SpawnBoard(int[] rowLengths);
+    public abstract Tile[][] SpawnBoard(int[] rowLengths, TileFactory tileFactory);
     protected abstract void ConnectBoard(Tile[][] board);
-
-    public SpawnBoardStrategy(TileFactory tileFactory)
-    {
-        _tileFactory = tileFactory;
-    }
 }

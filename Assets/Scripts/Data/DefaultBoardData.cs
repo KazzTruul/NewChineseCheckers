@@ -1,14 +1,8 @@
-﻿using Zenject;
-
-public class DefaultBoardData : BoardData
+﻿public class DefaultBoardData : BoardData
 {
-    [Inject]
-    public void Initialize(TileFactory tileFactory)
-    {
-        SpawnBoardStrategy = new DefaultSpawnBoardStrategy(tileFactory);
-    }
+    public override SpawnBoardStrategy Strategy { get => _strategy; }
 
-    public override SpawnBoardStrategy SpawnBoardStrategy { get; protected set; }
+    private SpawnBoardStrategy _strategy = new DefaultSpawnBoardStrategy();
 
     public override int[] RowLengths { get; } = { 1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1 };
 

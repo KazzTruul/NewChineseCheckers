@@ -1,14 +1,14 @@
-﻿public class SpawnBoardCommand : CommandBase
-{
-    private readonly BoardData _boardData;
+﻿using Zenject;
 
-    public SpawnBoardCommand(BoardData boardData)
-    {
-        _boardData = boardData;
-    }
+public class SpawnBoardCommand : CommandBase
+{
+    [Inject]
+    public BoardData BoardData;
+    [Inject]
+    private TileFactory _tileFactory;
 
     public override void Execute()
     {
-        _boardData.SpawnBoardStrategy.SpawnBoard(_boardData.RowLengths);
+        BoardData.Strategy.SpawnBoard(BoardData.RowLengths, _tileFactory);
     }
 }

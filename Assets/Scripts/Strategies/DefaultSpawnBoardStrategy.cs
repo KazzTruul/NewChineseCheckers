@@ -5,13 +5,8 @@ public class DefaultSpawnBoardStrategy : SpawnBoardStrategy
     protected override float _tileOffset { get; } = 2.0f;
 
     private const float YPos = 0.0f;
-
-    public DefaultSpawnBoardStrategy(TileFactory tileFactory) : base(tileFactory)
-    {
-
-    }
-
-    public override Tile[][] SpawnBoard(int[] rowLengths)
+    
+    public override Tile[][] SpawnBoard(int[] rowLengths, TileFactory tileFactory)
     {
         var board = new Tile[rowLengths.Length][];
 
@@ -23,7 +18,7 @@ public class DefaultSpawnBoardStrategy : SpawnBoardStrategy
 
             for (var column = 0; column < rowLengths[row]; column++)
             {
-                var tile = _tileFactory.Create(column, row);
+                var tile = tileFactory.Create(column, row);
 
                 var xPos = (-(rowLengths[row] * _tileOffset) / 2) + (_tileOffset * column) + (_tileOffset / 2.0f);
 
