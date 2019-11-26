@@ -1,4 +1,4 @@
-﻿public class InitializeSettingsCommandFactory : CommandFactory
+﻿public class InitializeSettingsCommandFactory
 {
     private readonly SettingsContainer _settingsContainer;
     private readonly ILocalizationManager _localizationManager;
@@ -9,7 +9,7 @@
         _localizationManager = localizationManager;
     }
 
-    public override CommandBase Create()
+    public InitializeSettingsCommand Create()
     {
         return new InitializeSettingsCommand(_settingsContainer, _localizationManager);
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class ChangeVolumeCommandFactory : CommandFactory
+public class ChangeVolumeCommandFactory
 {
     private readonly SettingsContainer _settingsContainer;
     private readonly Dictionary<SoundType, int> Volumes = new Dictionary<SoundType, int>()
@@ -28,7 +28,7 @@ public class ChangeVolumeCommandFactory : CommandFactory
         return Create() as ChangeVolumeCommand;
     }
 
-    public override CommandBase Create()
+    public ChangeVolumeCommand Create()
     {
         return new ChangeVolumeCommand(Volumes[_modifiedSoundType], _modifiedSoundType, _settingsContainer);
     }

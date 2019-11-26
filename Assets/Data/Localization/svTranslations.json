@@ -15,6 +15,10 @@
 		"Volume_Music": "Musikvolym",
 		"Volume_SFX": "Ljudeffektsvolym",
 		"Menu_Return": "Gå tillbaka",
-		"Language_Change": "Byt Språk"	
+		"Language_Change": "Byt Språk",
+		"Game_Resume": "Fortsätt Spela",
+		"Game_Restart": "Börja om Spelet",
+		"Main_Menu": "Huvudmeny",
+		"Pause_Menu_Title": "Spelet Pausat"
 	}
 }

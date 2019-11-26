@@ -1,4 +1,4 @@
-﻿public class ApplySettingsCommandFactory : CommandFactory
+﻿public class ApplySettingsCommandFactory
 {
     private readonly SettingsContainer _settingsContainer;
 
@@ -7,7 +7,7 @@
         _settingsContainer = settingsContainer;
     }
 
-    public override CommandBase Create()
+    public SynchronousCommand Create()
     {
         return new ApplySettingsCommand(_settingsContainer);
     }

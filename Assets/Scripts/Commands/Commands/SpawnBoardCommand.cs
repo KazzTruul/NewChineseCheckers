@@ -1,14 +1,14 @@
 ﻿using Zenject;
 
-public class SpawnBoardCommand : CommandBase
+public class SpawnBoardCommand : SynchronousCommand
 {
     [Inject]
-    public BoardData BoardData;
+    private BoardData _boardData;
     [Inject]
     private TileFactory _tileFactory;
 
     public override void Execute()
     {
-        BoardData.Strategy.SpawnBoard(BoardData.RowLengths, _tileFactory);
+        _boardData.Strategy.SpawnBoard(_boardData.RowLengths, _tileFactory);
     }
 }

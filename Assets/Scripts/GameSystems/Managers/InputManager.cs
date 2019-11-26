@@ -1,8 +1,22 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class InputManager : IInputManager
 {
     private Pawn _selectedPawn;
+
+    private ICommandDispatcher _commandDispatcher;
+
+    private SignalBus _signalBus;
+
+    private bool _paused;
+
+    [Inject]
+    public void Initialize(ICommandDispatcher commandDispatcher, SignalBus signalBus)
+    {
+        _commandDispatcher = commandDispatcher;
+        _signalBus = signalBus;
+    }
 
     public void Tick()
     {
@@ -18,6 +32,16 @@ public class InputManager : IInputManager
                 clickable.OnClick();
             }
         }
+        if (Input.GetKeyDown(Constants.PauseKey))
+        {
+            OnPauseKeyClicked();
+        }
+    }
+
+    private void OnPauseKeyClicked()
+    {
+        _paused = !_paused;
+        _signalBus.Fire(new GamePausedChangedSignal { DidBecomePaused = _paused });
     }
 
     public void OnTileClicked(TileClickedSignal signal)

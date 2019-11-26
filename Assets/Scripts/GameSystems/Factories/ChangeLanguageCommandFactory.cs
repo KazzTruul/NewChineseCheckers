@@ -1,4 +1,4 @@
-﻿public class ChangeLanguageCommandFactory : CommandFactory
+﻿public class ChangeLanguageCommandFactory
 {
     private ILocalizationManager _localizationManager;
     private string _language = Constants.DefaultLanguage;
@@ -9,7 +9,7 @@
         set { if (_localizationManager.IsLanguageSupported(value)) { _language = value; } }
     }
 
-    public override CommandBase Create()
+    public ChangeLanguageCommand Create()
     {
         return new ChangeLanguageCommand(_localizationManager, _language);
     }

@@ -4,11 +4,6 @@ using System.Linq;
 
 public class SinglePlayerSceneInstaller : MonoInstaller
 {
-    [Inject]
-    private ICommandDispatcher _commandDispatcher;
-    [Inject]
-    private DiContainer _diContainer;
-
     public override void InstallBindings()
     {
         //Declare Signals
@@ -30,5 +25,8 @@ public class SinglePlayerSceneInstaller : MonoInstaller
         Container.BindSignal<TileClickedSignal>()
             .ToMethod<IInputManager>(inputManager => inputManager.OnTileClicked)
             .FromResolve();
+        Container.BindSignal<ActiveSceneChangedSignal>()
+            .ToMethod<SinglePlayerSceneInitializer>(s => s.OnActiveSceneChanged)
+            .FromNew();
     }
 }

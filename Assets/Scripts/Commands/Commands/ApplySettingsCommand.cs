@@ -1,4 +1,4 @@
-﻿public class ApplySettingsCommand : CommandBase
+﻿public class ApplySettingsCommand : SynchronousCommand
 {
     private readonly SettingsContainer _settingsContainer;
 
