@@ -32,6 +32,7 @@ public class InputManager : IInputManager
                 clickable.OnClick();
             }
         }
+
         if (Input.GetKeyDown(Constants.PauseKey))
         {
             OnPauseKeyClicked();
@@ -41,7 +42,13 @@ public class InputManager : IInputManager
     private void OnPauseKeyClicked()
     {
         _paused = !_paused;
-        _signalBus.Fire(new GamePausedChangedSignal { DidBecomePaused = _paused });
+        SetGamePaused(_paused);
+    }
+
+    private void SetGamePaused(bool didBecomePaused)
+    {
+        Time.timeScale = didBecomePaused ? 0f : 1f;
+        _signalBus.Fire(new GamePausedChangedSignal { DidBecomePaused = didBecomePaused });
     }
 
     public void OnTileClicked(TileClickedSignal signal)
