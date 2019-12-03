@@ -43,12 +43,12 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         //TODO: Add difficulty selection
         _startSinglePlayerGameButton.onClick.AddListener(() =>
         {
-            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.SinglePlayerSceneIndex, true, Constants.MainMenuSceneIndex));
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.SinglePlayerSceneIndex, false, true, Constants.MainMenuSceneIndex));
             SceneManager.UnloadSceneAsync(Constants.MainMenuSceneIndex);
         });
         _startMultiPlayerGameButton.onClick.AddListener(() =>
         {
-            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MultiPlayerSceneIndex, true, Constants.MainMenuSceneIndex));
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MultiPlayerSceneIndex, false, true, Constants.MainMenuSceneIndex));
             SceneManager.UnloadSceneAsync(Constants.MainMenuSceneIndex);
         });
         //TODO: Make confirmation menu

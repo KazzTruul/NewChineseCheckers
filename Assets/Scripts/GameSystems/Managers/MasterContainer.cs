@@ -31,6 +31,6 @@ public sealed class MasterContainer : MonoBehaviour
     {
         _commandDispatcher.ExecuteCommand(_initializeSettingsCommandFactory.Create());
         _commandDispatcher.ExecuteCommand(_initializeLocationCommandFactory.Create());
-        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, true));
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
     }
 }

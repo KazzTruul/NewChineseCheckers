@@ -34,7 +34,6 @@ public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
     private IInputManager _inputManager;
     private ICommandDispatcher _commandDispatcher;
     private LoadSceneCommandFactory _loadSceneCommandFactory;
-    private SignalBus _signalBus;
     private SetGamePausedCommandFactory _setGamePausedCommandFactory;
 
     [Inject]
@@ -42,18 +41,21 @@ public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
         ICommandDispatcher commandDispatcher,
         LoadSceneCommandFactory loadSceneCommandFactory,
         IInputManager inputManager,
-        SignalBus signalBus,
         SetGamePausedCommandFactory setGamePausedCommandFactory)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
         _inputManager = inputManager;
-        _signalBus = signalBus;
         _setGamePausedCommandFactory = setGamePausedCommandFactory;
 
         _resumeGameButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_setGamePausedCommandFactory.Create(false)));
-        _mainMenuButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, true, Constants.SinglePlayerSceneIndex)));
+        //TODO: Add confirmation menu
+        _restartGameButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.SinglePlayerSceneIndex, true, true, Constants.SinglePlayerSceneIndex)));
+        //TODO: Add settings button functionality
+        _mainMenuButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true, Constants.SinglePlayerSceneIndex)));
+        //TODO: Add confirmation menu
+        _quitGameButton.onClick.AddListener(() => Application.Quit());
 
         OnLanguageChanged();
     }

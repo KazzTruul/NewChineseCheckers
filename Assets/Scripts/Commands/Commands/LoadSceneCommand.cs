@@ -7,14 +7,16 @@ public class LoadSceneCommand : CoroutineCommand
     private readonly ZenjectSceneLoader _sceneLoader;
     private readonly int _loadSceneIndex;
     private readonly int _unloadSceneIndex;
+    private readonly bool _restartScene;
     private readonly bool _loadAdditive;
     private readonly SignalBus _signalBus;
 
-    public LoadSceneCommand(ZenjectSceneLoader sceneLoader, SignalBus signalBus, int sceneIndex, bool loadAdditive, int unloadSceneIndex)
+    public LoadSceneCommand(ZenjectSceneLoader sceneLoader, SignalBus signalBus, int sceneIndex, bool restartScene, bool loadAdditive, int unloadSceneIndex)
     {
         _sceneLoader = sceneLoader;
         _signalBus = signalBus;
         _loadSceneIndex = sceneIndex;
+        _restartScene = restartScene;
         _loadAdditive = loadAdditive;
         _unloadSceneIndex = unloadSceneIndex;
     }
@@ -23,6 +25,11 @@ public class LoadSceneCommand : CoroutineCommand
     {
         _signalBus.Fire(new GamePausedChangedSignal() { DidBecomePaused = false });
 
+        if (_restartScene)
+        {
+            yield return SceneManager.UnloadSceneAsync(_unloadSceneIndex);
+        }
+
         var op = _sceneLoader.LoadSceneAsync(_loadSceneIndex, LoadSceneMode.Additive, null, _loadAdditive ? LoadSceneRelationship.Child : LoadSceneRelationship.Sibling);
 
         op.allowSceneActivation = true;
@@ -30,7 +37,7 @@ public class LoadSceneCommand : CoroutineCommand
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(_loadSceneIndex));
 
-        if (_unloadSceneIndex > 0)
+        if (!_restartScene && _unloadSceneIndex > 0)
         {
             yield return SceneManager.UnloadSceneAsync(_unloadSceneIndex);
         }
