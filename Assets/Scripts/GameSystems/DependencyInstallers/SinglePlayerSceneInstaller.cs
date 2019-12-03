@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
-using System.Linq;
+﻿using Zenject;
 
 public class SinglePlayerSceneInstaller : MonoInstaller
 {
@@ -17,7 +15,7 @@ public class SinglePlayerSceneInstaller : MonoInstaller
             .To<DefaultBoardData>()
             .AsSingle()
             .Lazy();
-        Container.Bind<SpawnBoardCommand>()
+        Container.Bind<SpawnBoardCommandFactory>()
             .AsSingle()
             .Lazy();
 

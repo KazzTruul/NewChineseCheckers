@@ -1,4 +1,4 @@
 ﻿public class GamePausedChangedSignal
 {
-    public bool DidBecomePaused;
+    public bool? DidBecomePaused;
 }

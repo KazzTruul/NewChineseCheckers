@@ -1,11 +1,13 @@
-﻿using Zenject;
-
-public class SpawnBoardCommand : SynchronousCommand
+﻿public class SpawnBoardCommand : SynchronousCommand
 {
-    [Inject]
     private BoardData _boardData;
-    [Inject]
     private TileFactory _tileFactory;
+
+    public SpawnBoardCommand(BoardData boardData, TileFactory tileFactory)
+    {
+        _boardData = boardData;
+        _tileFactory = tileFactory;
+    }
 
     public override void Execute()
     {

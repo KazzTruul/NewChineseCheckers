@@ -10,7 +10,7 @@ public class MasterInstaller : MonoInstaller
 
         //Declare Signals
         Container.DeclareSignal<LanguageChangedSignal>();
-        Container.DeclareSignal<GamePausedChangedSignal>();
+        Container.DeclareSignal<GamePausedChangedSignal>().OptionalSubscriber();
         Container.DeclareSignal<ActiveSceneChangedSignal>();
 
         //Set up Bindings
@@ -35,6 +35,9 @@ public class MasterInstaller : MonoInstaller
             .Lazy();
         Container.Bind<CoroutineRunner>()
             .FromComponentOnRoot();
+        Container.Bind<SetGamePausedCommandFactory>()
+            .AsSingle()
+            .Lazy();
 
         //Bind Factories
         Container.Bind<InitializeLocationCommandFactory>()
@@ -53,6 +56,9 @@ public class MasterInstaller : MonoInstaller
         //Bind Signals
         Container.BindSignal<LanguageChangedSignal>()
             .ToMethod<SettingsContainer>(settingsContainer => settingsContainer.SetLanguage)
+            .FromResolve();
+        Container.BindSignal<ActiveSceneChangedSignal>()
+            .ToMethod<IInputManager>(iM => iM.OnActiveSceneChanged)
             .FromResolve();
     }
 }

@@ -5,18 +5,16 @@ public class InputManager : IInputManager
 {
     private Pawn _selectedPawn;
 
+    [Inject]
+    private SignalBus _signalBus;
+    [Inject]
+    private SetGamePausedCommandFactory _setGamePausedCommandFactory;
+    [Inject]
     private ICommandDispatcher _commandDispatcher;
 
-    private SignalBus _signalBus;
+    private bool _gamePaused;
 
-    private bool _paused;
-
-    [Inject]
-    public void Initialize(ICommandDispatcher commandDispatcher, SignalBus signalBus)
-    {
-        _commandDispatcher = commandDispatcher;
-        _signalBus = signalBus;
-    }
+    public bool GamePaused => _gamePaused;
 
     public void Tick()
     {
@@ -39,16 +37,22 @@ public class InputManager : IInputManager
         }
     }
 
-    private void OnPauseKeyClicked()
+    public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
     {
-        _paused = !_paused;
-        SetGamePaused(_paused);
+        _gamePaused = false;
+        Time.timeScale = 1f;
     }
 
-    private void SetGamePaused(bool didBecomePaused)
+    private void OnPauseKeyClicked()
     {
-        Time.timeScale = didBecomePaused ? 0f : 1f;
-        _signalBus.Fire(new GamePausedChangedSignal { DidBecomePaused = didBecomePaused });
+        _commandDispatcher.ExecuteCommand(_setGamePausedCommandFactory.Create());
+    }
+
+    public void SetGamePaused(bool? didBecomePaused)
+    {
+        _gamePaused = didBecomePaused ?? !_gamePaused;
+        Time.timeScale = _gamePaused ? 0f : 1f;
+        _signalBus.Fire(new GamePausedChangedSignal { DidBecomePaused = _gamePaused });
     }
 
     public void OnTileClicked(TileClickedSignal signal)

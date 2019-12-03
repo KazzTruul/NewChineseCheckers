@@ -2,15 +2,10 @@
 
 public class SinglePlayerSceneInitializer
 {
-    private ICommandDispatcher _commandDispatcher;
-    private SpawnBoardCommand _spawnBoardCommand;
-
     [Inject]
-    private void Initialize(ICommandDispatcher commandDispatcher, SpawnBoardCommand spawnBoardCommand)
-    {
-        _commandDispatcher = commandDispatcher;
-        _spawnBoardCommand = spawnBoardCommand;
-    }
+    private ICommandDispatcher _commandDispatcher;
+    [Inject]
+    private SpawnBoardCommandFactory _spawnBoardCommandFactory;
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
     {
@@ -25,6 +20,6 @@ public class SinglePlayerSceneInitializer
 
     private void SpawnBoard()
     {
-        _commandDispatcher.ExecuteCommand(_spawnBoardCommand);
+        _commandDispatcher.ExecuteCommand(_spawnBoardCommandFactory.Create());
     }
 }

@@ -31,16 +31,28 @@ public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
     private Button _quitGameButton;
 
     private ILocalizationManager _localizationManager;
+    private IInputManager _inputManager;
     private ICommandDispatcher _commandDispatcher;
     private LoadSceneCommandFactory _loadSceneCommandFactory;
+    private SignalBus _signalBus;
+    private SetGamePausedCommandFactory _setGamePausedCommandFactory;
 
     [Inject]
-    public void Initialize(ILocalizationManager localizationManager, ICommandDispatcher commandDispatcher, LoadSceneCommandFactory loadSceneCommandFactory)
+    public void Initialize(ILocalizationManager localizationManager,
+        ICommandDispatcher commandDispatcher,
+        LoadSceneCommandFactory loadSceneCommandFactory,
+        IInputManager inputManager,
+        SignalBus signalBus,
+        SetGamePausedCommandFactory setGamePausedCommandFactory)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
+        _inputManager = inputManager;
+        _signalBus = signalBus;
+        _setGamePausedCommandFactory = setGamePausedCommandFactory;
 
+        _resumeGameButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_setGamePausedCommandFactory.Create(false)));
         _mainMenuButton.onClick.AddListener(() => _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, true, Constants.SinglePlayerSceneIndex)));
 
         OnLanguageChanged();
@@ -58,6 +70,7 @@ public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
 
     public void OnPausedAndUnpaused(GamePausedChangedSignal signal)
     {
-        _menuObject.SetActive(signal.DidBecomePaused);
+        var paused = signal.DidBecomePaused ?? !_inputManager.GamePaused;
+        _menuObject.SetActive(paused);
     }
 }

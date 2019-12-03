@@ -1,6 +1,5 @@
 ﻿using Zenject;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 using System.Collections;
 
 public class LoadSceneCommand : CoroutineCommand
@@ -22,6 +21,8 @@ public class LoadSceneCommand : CoroutineCommand
 
     public override IEnumerator Execute()
     {
+        _signalBus.Fire(new GamePausedChangedSignal() { DidBecomePaused = false });
+
         var op = _sceneLoader.LoadSceneAsync(_loadSceneIndex, LoadSceneMode.Additive, null, _loadAdditive ? LoadSceneRelationship.Child : LoadSceneRelationship.Sibling);
 
         op.allowSceneActivation = true;
