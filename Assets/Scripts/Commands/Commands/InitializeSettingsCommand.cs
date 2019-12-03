@@ -2,7 +2,7 @@
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-public class InitializeSettingsCommand : CommandBase
+public class InitializeSettingsCommand : SynchronousCommand
 {
     private readonly SettingsContainer _settingsContainer;
     private readonly ILocalizationManager _localizationManager;

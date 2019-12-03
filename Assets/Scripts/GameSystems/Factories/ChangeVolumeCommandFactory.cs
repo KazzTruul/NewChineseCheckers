@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Zenject;
 
-public class ChangeVolumeCommandFactory : CommandFactory
+public class ChangeVolumeCommandFactory
 {
+    [Inject]
     private readonly SettingsContainer _settingsContainer;
+
     private readonly Dictionary<SoundType, int> Volumes = new Dictionary<SoundType, int>()
     {
         { SoundType.Master, Constants.DefaultMasterVolume },
         { SoundType.Music, Constants.DefaultMusicVolume },
         { SoundType.SFX, Constants.DefaultSFXVolume }
     };
+
     private SoundType _modifiedSoundType;
-
-    public ChangeVolumeCommandFactory(SettingsContainer settingsContainer)
-    {
-        _settingsContainer = settingsContainer;
-    }
-
+    
     public ChangeVolumeCommand SetVolume(SoundType soundType, int volume)
     {
         if (!Volumes.ContainsKey(soundType))
@@ -25,10 +24,10 @@ public class ChangeVolumeCommandFactory : CommandFactory
         }
         Volumes[soundType] = volume;
         _modifiedSoundType = soundType;
-        return Create() as ChangeVolumeCommand;
+        return Create();
     }
 
-    public override CommandBase Create()
+    public ChangeVolumeCommand Create()
     {
         return new ChangeVolumeCommand(Volumes[_modifiedSoundType], _modifiedSoundType, _settingsContainer);
     }

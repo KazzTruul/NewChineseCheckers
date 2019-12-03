@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
 
 public class MainMenuContainer : MonoBehaviour, ILocalizable
 {
@@ -27,42 +26,41 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     private Button _openSettingsButton;
     [SerializeField]
     private Button _quitGameButton;
-    [SerializeField]
-    private Button _enButton;
-    [SerializeField]
-    private Button _svButton;
 
     private ILocalizationManager _localizationManager;
-    private ZenjectSceneLoader _zenjectSceneLoader;
+    private ICommandDispatcher _commandDispatcher;
+    private LoadSceneCommandFactory _loadSceneCommandFactory;
 
     [Inject]
-    public void Initialize(ILocalizationManager localizationManager, ZenjectSceneLoader sceneLoader)
+    public void Initialize(ILocalizationManager localizationManager, ICommandDispatcher commandDispatcher, LoadSceneCommandFactory loadSceneCommandFactory)
     {
         _localizationManager = localizationManager;
-        _zenjectSceneLoader = sceneLoader;
+        _commandDispatcher = commandDispatcher;
+        _loadSceneCommandFactory = loadSceneCommandFactory;
+
         _localizationManager.Initialize(_localizationManager.GetPreferredLanguage());
 
-        //TODO: Move to options menu
-        _enButton.onClick.AddListener(() => _localizationManager.SetPreferredLanguage("en"));
-        _svButton.onClick.AddListener(() => _localizationManager.SetPreferredLanguage("sv"));
+        //TODO: Add difficulty selection
         _startSinglePlayerGameButton.onClick.AddListener(() =>
         {
-            _zenjectSceneLoader.LoadSceneAsync(Constants.SinglePlayerSceneIndex, LoadSceneMode.Additive);
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.SinglePlayerSceneIndex, false, true, Constants.MainMenuSceneIndex));
             SceneManager.UnloadSceneAsync(Constants.MainMenuSceneIndex);
         });
         _startMultiPlayerGameButton.onClick.AddListener(() =>
         {
-            _zenjectSceneLoader.LoadSceneAsync(Constants.MultiPlayerSceneIndex, LoadSceneMode.Additive);
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MultiPlayerSceneIndex, false, true, Constants.MainMenuSceneIndex));
             SceneManager.UnloadSceneAsync(Constants.MainMenuSceneIndex);
         });
+        //TODO: Make confirmation menu
+        _quitGameButton.onClick.AddListener(() => Application.Quit());
     }
 
     public void OnLanguageChanged()
     {
-        _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayerTranslation]);
-        _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayerTranslation]);
-        _loadGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoadGameTranslation]);
-        _openSettingsText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.OptionsTranslation]);
-        _quitGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.QuitGameTranslation]);
+        _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayer]);
+        _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayer]);
+        _loadGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoadGame]);
+        _openSettingsText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Options]);
+        _quitGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.QuitGame]);
     }
 }

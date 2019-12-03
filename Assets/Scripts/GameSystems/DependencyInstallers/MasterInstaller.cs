@@ -1,11 +1,7 @@
 ﻿using Zenject;
-using UnityEngine.SceneManagement;
 
-public class MasterSceneInstaller : MonoInstaller
+public class MasterInstaller : MonoInstaller
 {
-    [Inject]
-    private readonly ZenjectSceneLoader _zenjectSceneLoader;
-
     //Set up all bindings for Zenject dependency injection
     public override void InstallBindings()
     {
@@ -14,6 +10,8 @@ public class MasterSceneInstaller : MonoInstaller
 
         //Declare Signals
         Container.DeclareSignal<LanguageChangedSignal>();
+        Container.DeclareSignal<GamePausedChangedSignal>().OptionalSubscriber();
+        Container.DeclareSignal<ActiveSceneChangedSignal>();
 
         //Set up Bindings
         Container.Bind<SettingsContainer>()
@@ -35,6 +33,13 @@ public class MasterSceneInstaller : MonoInstaller
             .To<TickableManager>()
             .AsSingle()
             .Lazy();
+        Container.Bind<CoroutineRunner>()
+            .FromComponentOnRoot();
+        Container.Bind<SetGamePausedCommandFactory>()
+            .AsSingle()
+            .Lazy();
+
+        //Bind Factories
         Container.Bind<InitializeLocationCommandFactory>()
             .AsSingle()
             .Lazy();
@@ -44,12 +49,16 @@ public class MasterSceneInstaller : MonoInstaller
         Container.Bind<ApplySettingsCommandFactory>()
             .AsSingle()
             .Lazy();
+        Container.Bind<LoadSceneCommandFactory>()
+            .AsSingle()
+            .Lazy();
 
         //Bind Signals
         Container.BindSignal<LanguageChangedSignal>()
             .ToMethod<SettingsContainer>(settingsContainer => settingsContainer.SetLanguage)
             .FromResolve();
-
-        _zenjectSceneLoader.LoadScene(1, LoadSceneMode.Additive);
+        Container.BindSignal<ActiveSceneChangedSignal>()
+            .ToMethod<IInputManager>(iM => iM.OnActiveSceneChanged)
+            .FromResolve();
     }
 }

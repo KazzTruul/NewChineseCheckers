@@ -4,14 +4,7 @@ public class MainMenuUIInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //Set up bindings
-        Container.Bind<ILocalizationManager>()
-            .To<LocalizationManager>()
-            .AsCached()
-            .Lazy();
-        
-        Container.Bind<ILocalizable>()
-            .To<MainMenuContainer>()
+        Container.BindInterfacesTo<MainMenuContainer>()
             .FromComponentOnRoot();
 
         //Bind signals

@@ -1,15 +1,13 @@
-﻿public class InitializeSettingsCommandFactory : CommandFactory
+﻿using Zenject;
+
+public class InitializeSettingsCommandFactory
 {
+    [Inject]
     private readonly SettingsContainer _settingsContainer;
+    [Inject]
     private readonly ILocalizationManager _localizationManager;
-
-    public InitializeSettingsCommandFactory(SettingsContainer settingsContainer, ILocalizationManager localizationManager)
-    {
-        _settingsContainer = settingsContainer;
-        _localizationManager = localizationManager;
-    }
-
-    public override CommandBase Create()
+    
+    public InitializeSettingsCommand Create()
     {
         return new InitializeSettingsCommand(_settingsContainer, _localizationManager);
     }

@@ -1,6 +1,10 @@
-﻿public class ChangeLanguageCommandFactory : CommandFactory
+﻿using Zenject;
+
+public class ChangeLanguageCommandFactory
 {
+    [Inject]
     private ILocalizationManager _localizationManager;
+
     private string _language = Constants.DefaultLanguage;
 
     public string Language
@@ -9,7 +13,7 @@
         set { if (_localizationManager.IsLanguageSupported(value)) { _language = value; } }
     }
 
-    public override CommandBase Create()
+    public ChangeLanguageCommand Create()
     {
         return new ChangeLanguageCommand(_localizationManager, _language);
     }

@@ -1,19 +1,25 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
-public class SinglePlayerSceneInitializer : MonoBehaviour
+public class SinglePlayerSceneInitializer
 {
-    private BoardData _boardData;
-    private ICommandDispatcher _commandDispatcher;
-    private SpawnBoardCommand _spawnBoardCommand;
-
     [Inject]
-    private void Initialize(ICommandDispatcher commandDispatcher, BoardData boardData, SpawnBoardCommand spawnBoardCommand)
-    {
-        _commandDispatcher = commandDispatcher;
-        _boardData = boardData;
-        _spawnBoardCommand = spawnBoardCommand;
+    private ICommandDispatcher _commandDispatcher;
+    [Inject]
+    private SpawnBoardCommandFactory _spawnBoardCommandFactory;
 
-        _commandDispatcher.ExecuteCommand(_spawnBoardCommand);
+    public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
+    {
+        //TODO: Update check
+        if(signal.NewSceneIndex != Constants.SinglePlayerSceneIndex)
+        {
+            return;
+        }
+
+        SpawnBoard();
+    }
+
+    private void SpawnBoard()
+    {
+        _commandDispatcher.ExecuteCommand(_spawnBoardCommandFactory.Create());
     }
 }

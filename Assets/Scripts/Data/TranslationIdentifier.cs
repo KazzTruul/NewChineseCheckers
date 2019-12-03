@@ -1,12 +1,12 @@
 ﻿public enum TranslationIdentifier
 {
-    GameNameTranslation,
-    OptionsTranslation,
-    SaveGameTranslation,
-    LoadGameTranslation,
-    QuitGameTranslation,
-    SinglePlayerTranslation,
-    MultiPlayerTranslation,
+    GameName,
+    Options,
+    SaveGame,
+    LoadGame,
+    QuitGame,
+    SinglePlayer,
+    MultiPlayer,
     DifficultyEasy,
     DifficultyMedium,
     DifficultyHard,
@@ -15,5 +15,9 @@
     MusicVolume,
     SFXVolume,
     ChangeLanguage,
-    GoBack
+    GoBack,
+    ResumeGame,
+    RestartGame,
+    MainMenu,
+    PauseMenuTitle
 }

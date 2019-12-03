@@ -1,4 +1,4 @@
-﻿public class ChangeVolumeCommand : CommandBase
+﻿public class ChangeVolumeCommand : SynchronousCommand
 {
     private readonly int _volume;
     private readonly SoundType _soundType;

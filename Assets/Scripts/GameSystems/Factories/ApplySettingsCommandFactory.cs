@@ -1,13 +1,11 @@
-﻿public class ApplySettingsCommandFactory : CommandFactory
+﻿using Zenject;
+
+public class ApplySettingsCommandFactory
 {
+    [Inject]
     private readonly SettingsContainer _settingsContainer;
 
-    public ApplySettingsCommandFactory(SettingsContainer settingsContainer)
-    {
-        _settingsContainer = settingsContainer;
-    }
-
-    public override CommandBase Create()
+    public SynchronousCommand Create()
     {
         return new ApplySettingsCommand(_settingsContainer);
     }

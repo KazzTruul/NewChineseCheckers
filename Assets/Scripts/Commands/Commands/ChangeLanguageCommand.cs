@@ -1,4 +1,4 @@
-﻿public class ChangeLanguageCommand : CommandBase
+﻿public class ChangeLanguageCommand : SynchronousCommand
 {
     private readonly ILocalizationManager _localizationManager;
     private readonly string _language;

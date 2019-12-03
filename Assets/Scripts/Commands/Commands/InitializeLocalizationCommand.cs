@@ -1,4 +1,4 @@
-﻿public class InitializeLocalizationCommand : CommandBase
+﻿public class InitializeLocalizationCommand : SynchronousCommand
 {
     private readonly SettingsContainer _settingsContainer;
     private readonly ILocalizationManager _localizationManager;

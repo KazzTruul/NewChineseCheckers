@@ -1,4 +1,5 @@
 ﻿public interface ICommandDispatcher
 {
-    void ExecuteCommand(CommandBase command);
+    void ExecuteCommand(SynchronousCommand command);
+    void ExecuteCommand(CoroutineCommand command);
 }
