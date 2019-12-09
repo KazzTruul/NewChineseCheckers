@@ -18,6 +18,15 @@ public class SinglePlayerSceneInstaller : MonoInstaller
         Container.Bind<SpawnBoardCommandFactory>()
             .AsSingle()
             .Lazy();
+        Container.Bind<SetAutoSaveEnabledCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<ChangeLanguageCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<ChangeVolumeCommandFactory>()
+            .AsSingle()
+            .Lazy();
 
         //Bind Signals
         Container.BindSignal<TileClickedSignal>()

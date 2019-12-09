@@ -7,7 +7,7 @@ public class ChangeVolumeCommandFactory
     [Inject]
     private readonly SettingsContainer _settingsContainer;
 
-    private readonly Dictionary<SoundType, int> Volumes = new Dictionary<SoundType, int>()
+    private readonly Dictionary<SoundType, float> Volumes = new Dictionary<SoundType, float>()
     {
         { SoundType.Master, Constants.DefaultMasterVolume },
         { SoundType.Music, Constants.DefaultMusicVolume },
@@ -16,7 +16,7 @@ public class ChangeVolumeCommandFactory
 
     private SoundType _modifiedSoundType;
     
-    public ChangeVolumeCommand SetVolume(SoundType soundType, int volume)
+    public ChangeVolumeCommand SetVolume(SoundType soundType, float volume)
     {
         if (!Volumes.ContainsKey(soundType))
         {

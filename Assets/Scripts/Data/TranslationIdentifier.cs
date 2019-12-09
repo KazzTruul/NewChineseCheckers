@@ -19,5 +19,7 @@
     ResumeGame,
     RestartGame,
     MainMenu,
-    PauseMenuTitle
+    PauseMenuTitle,
+    Language,
+    AutoSave
 }

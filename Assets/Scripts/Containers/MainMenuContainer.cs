@@ -30,13 +30,15 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     private ILocalizationManager _localizationManager;
     private ICommandDispatcher _commandDispatcher;
     private LoadSceneCommandFactory _loadSceneCommandFactory;
+    private SignalBus _signalBus;
 
     [Inject]
-    public void Initialize(ILocalizationManager localizationManager, ICommandDispatcher commandDispatcher, LoadSceneCommandFactory loadSceneCommandFactory)
+    public void Initialize(ILocalizationManager localizationManager, ICommandDispatcher commandDispatcher, LoadSceneCommandFactory loadSceneCommandFactory, SignalBus signalBus)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
+        _signalBus = signalBus;
 
         _localizationManager.Initialize(_localizationManager.GetPreferredLanguage());
 
@@ -50,6 +52,11 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         {
             _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MultiPlayerSceneIndex, false, true, Constants.MainMenuSceneIndex));
             SceneManager.UnloadSceneAsync(Constants.MainMenuSceneIndex);
+        });
+        _openSettingsButton.onClick.AddListener(() =>
+        {
+            //_commandDispatcher.ExecuteCommand(new settings)
+            _signalBus.Fire(new SettingsShouldShowChangedSignal { ShowSettings = true });
         });
         //TODO: Make confirmation menu
         _quitGameButton.onClick.AddListener(() => Application.Quit());
