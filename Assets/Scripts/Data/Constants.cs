@@ -75,5 +75,11 @@ public static class Constants
         { BoardColor.Magenta, Color.magenta },
         { BoardColor.Black, Color.black },
     };
+
+    public static readonly Dictionary<string, string> IsoToLocalizedLanguageConversions = new Dictionary<string, string>
+    {
+        { "en", "English" },
+        { "sv", "Svenska" }
+    };
     #endregion
 }

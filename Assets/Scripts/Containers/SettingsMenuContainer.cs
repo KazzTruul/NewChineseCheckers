@@ -63,7 +63,7 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _languageSelectionDropdown.onValueChanged.AddListener(language => _changeLanguageCommandFactory.Create(Constants.SupportedLanuages[language]));
         _autoSaveToggle.onValueChanged.AddListener(SetAutoSaveEnabled);
 
-        _languageSelectionDropdown.AddOptions(Constants.SupportedLanuages.Select(language => new TMP_Dropdown.OptionData(language)).ToList());
+        _languageSelectionDropdown.AddOptions(Constants.SupportedLanuages.Select(language => new TMP_Dropdown.OptionData(Constants.IsoToLocalizedLanguageConversions[language])).ToList());
 
         OnLanguageChanged();
     }
