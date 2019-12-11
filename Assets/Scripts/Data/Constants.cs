@@ -33,7 +33,8 @@ public static class Constants
         { TranslationIdentifier.MainMenu,               "Main_Menu" },
         { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" },
         { TranslationIdentifier.Language,               "Options_Language" },
-        { TranslationIdentifier.AutoSave,               "Options_AutoSave" }
+        { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
+        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" }
     };
     #endregion
 
@@ -76,7 +77,7 @@ public static class Constants
         { BoardColor.Black, Color.black },
     };
 
-    public static readonly Dictionary<string, string> IsoToLocalizedLanguageConversions = new Dictionary<string, string>
+    public static readonly Dictionary<string, string> IsoToLocalizedLanguages = new Dictionary<string, string>
     {
         { "en", "English" },
         { "sv", "Svenska" }

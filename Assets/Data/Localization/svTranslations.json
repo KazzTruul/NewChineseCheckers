@@ -21,6 +21,7 @@
 		"Main_Menu": "Huvudmeny",
 		"Pause_Menu_Title": "Spelet Pausat",
 		"Options_Language": "Språk",
-		"Options_AutoSave": "Spara Automatiskt"
+		"Options_AutoSave": "Spara Automatiskt",
+		"Options_SaveAndLeave": "Spara och Gå Tillbaka"
 	}
 }

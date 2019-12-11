@@ -3,6 +3,7 @@ using Zenject;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SettingsMenuContainer : MonoBehaviour, ILocalizable
 {
@@ -32,12 +33,17 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     private TMP_Text _autoSaveText;
     [SerializeField]
     private Toggle _autoSaveToggle;
+    [SerializeField]
+    private TMP_Text _saveAndLeaveText;
+    [SerializeField]
+    private Button _saveAndExitButton;
 
     private ILocalizationManager _localizationManager;
     private SignalBus _signalbus;
     private SettingsContainer _settingsContainer;
     private ChangeVolumeCommandFactory _changeVolumeCommandFactory;
     private ChangeLanguageCommandFactory _changeLanguageCommandFactory;
+    private SaveSettingsCommandFactory _saveSettingsCommandFactory;
     private ICommandDispatcher _commandDispatcher;
 
     [Inject]
@@ -47,6 +53,7 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         SettingsContainer settingsContainer,
         ChangeVolumeCommandFactory changeVolumeCommandFactory,
         ChangeLanguageCommandFactory changeLanguageCommandFactory,
+        SaveSettingsCommandFactory saveSettingsCommandFactory,
         ICommandDispatcher commandDispatcher)
     {
         _localizationManager = localizationManager;
@@ -54,16 +61,31 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _settingsContainer = settingsContainer;
         _changeVolumeCommandFactory = changeVolumeCommandFactory;
         _changeLanguageCommandFactory = changeLanguageCommandFactory;
+        _saveSettingsCommandFactory = saveSettingsCommandFactory;
         _commandDispatcher = commandDispatcher;
-
+        
         _backButton.onClick.AddListener(OnCloseSettings);
+
+        _masterVolumeSlider.value = _settingsContainer.Settings.MasterVolume;
         _masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
+        _musicVolumeSlider.value = _settingsContainer.Settings.MusicVolume;
         _musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+        _sfxVolumeSlider.value = _settingsContainer.Settings.SFXVolume;
         _sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
-        _languageSelectionDropdown.onValueChanged.AddListener(language => _changeLanguageCommandFactory.Create(Constants.SupportedLanuages[language]));
+
+        _languageSelectionDropdown.onValueChanged.AddListener(language => _commandDispatcher.ExecuteCommand(_changeLanguageCommandFactory.Create(Constants.SupportedLanuages[language])));
+        _languageSelectionDropdown.AddOptions(Constants.SupportedLanuages.Select(language => new TMP_Dropdown.OptionData(Constants.IsoToLocalizedLanguages[language])).ToList());
+        _languageSelectionDropdown.value = Constants.SupportedLanuages.Contains(_localizationManager.CurrentLanguage) ? Array.IndexOf(Constants.SupportedLanuages, _localizationManager.CurrentLanguage) : 0;
+
+        _autoSaveToggle.isOn = _settingsContainer.Settings.AutoSave;
         _autoSaveToggle.onValueChanged.AddListener(SetAutoSaveEnabled);
 
-        _languageSelectionDropdown.AddOptions(Constants.SupportedLanuages.Select(language => new TMP_Dropdown.OptionData(Constants.IsoToLocalizedLanguageConversions[language])).ToList());
+        _saveAndExitButton.onClick.AddListener(() =>
+        {
+            SaveChanges();
+            _commandDispatcher.ExecuteCommand(_saveSettingsCommandFactory.Create());
+            OnCloseSettings();
+        });
 
         OnLanguageChanged();
     }
@@ -87,7 +109,7 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     {
         SetVolume(SoundType.SFX, volume);
     }
-    
+
     private void SetAutoSaveEnabled(bool enableAutoSave)
     {
         _settingsContainer.SetAutoSave(enableAutoSave);
@@ -101,6 +123,7 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _sfxVolumeText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SFXVolume]);
         _languageText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Language]);
         _autoSaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.AutoSave]);
+        _saveAndLeaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SaveAndLeave]);
     }
 
     public void OnShowSettingsChanged(SettingsShouldShowChangedSignal signal)

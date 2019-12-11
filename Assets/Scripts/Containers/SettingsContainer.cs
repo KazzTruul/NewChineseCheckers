@@ -7,17 +7,19 @@ public class SettingsContainer
     public SettingsData Settings
     {
         get { return _settings; }
-        set { if (_settings == null) _settings = value; }
     }
 
     private SettingsData _unsavedSettings = new SettingsData();
 
+    public void InitializeSettings(SettingsData settings)
+    {
+        _settings = settings;
+        _unsavedSettings = settings;
+    }
+
     public void SetLanguage(LanguageChangedSignal signal)
     {
-        if (Settings == null)
-            return;
-
-        Settings.Language = signal.Language;
+        _unsavedSettings.Language = signal.Language;
     }
 
     public void SetVolume(SoundType soundType, float volume)

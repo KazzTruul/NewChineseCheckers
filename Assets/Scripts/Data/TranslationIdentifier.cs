@@ -21,5 +21,6 @@
     MainMenu,
     PauseMenuTitle,
     Language,
-    AutoSave
+    AutoSave,
+    SaveAndLeave
 }

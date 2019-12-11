@@ -40,8 +40,6 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         _loadSceneCommandFactory = loadSceneCommandFactory;
         _signalBus = signalBus;
 
-        _localizationManager.Initialize(_localizationManager.GetPreferredLanguage());
-
         //TODO: Add difficulty selection
         _startSinglePlayerGameButton.onClick.AddListener(() =>
         {
@@ -60,6 +58,8 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         });
         //TODO: Make confirmation menu
         _quitGameButton.onClick.AddListener(() => Application.Quit());
+
+        OnLanguageChanged();
     }
 
     public void OnLanguageChanged()

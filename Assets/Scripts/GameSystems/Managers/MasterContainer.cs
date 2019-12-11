@@ -19,8 +19,6 @@ public sealed class MasterContainer : MonoBehaviour
 
     //Factories
     [Inject]
-    private readonly ApplySettingsCommandFactory _applySettingsCommandFactory;
-    [Inject]
     private readonly InitializeSettingsCommandFactory _initializeSettingsCommandFactory;
     [Inject]
     private readonly InitializeLocationCommandFactory _initializeLocationCommandFactory;

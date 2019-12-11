@@ -21,20 +21,20 @@ public class InitializeSettingsCommand : SynchronousCommand
             UseSimpleDictionaryFormat = true
         });
 
-
         if (File.Exists(Constants.SettingsPath))
         {
-            _settingsContainer.Settings = settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as SettingsData;
+            _settingsContainer.InitializeSettings(settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as SettingsData);
         }
         else
         {
-            _settingsContainer.Settings = new SettingsData {
+            _settingsContainer.InitializeSettings(new SettingsData
+            {
                 MasterVolume = Constants.DefaultMasterVolume,
                 MusicVolume = Constants.DefaultMusicVolume,
                 SFXVolume = Constants.DefaultSFXVolume,
                 Language = _localizationManager.GetPreferredLanguage(),
                 AutoSave = Constants.AutoSaveDefault
-            };
+            });
 
             settingsSerializer.WriteObject(new FileStream(Constants.SettingsPath, FileMode.Create), _settingsContainer);
         }

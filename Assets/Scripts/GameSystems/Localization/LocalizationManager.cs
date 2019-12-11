@@ -11,6 +11,10 @@ public class LocalizationManager : ILocalizationManager
 
     private TranslationCatalog _translationCatalog;
 
+    private string _currentLanguage = Constants.DefaultLanguage;
+
+    public string CurrentLanguage => _currentLanguage;
+
     public bool IsLanguageSupported(string language)
     {
         return File.Exists(
@@ -30,6 +34,7 @@ public class LocalizationManager : ILocalizationManager
     {
         if (!IsLanguageSupported(language))
             return;
+
         LoadTranslationCatalog(language);
         OnLanguageChanged(language);
     }
@@ -39,7 +44,7 @@ public class LocalizationManager : ILocalizationManager
         language = !string.IsNullOrEmpty(language) && IsLanguageSupported(language)
             ? language
             : GetPreferredLanguage();
-
+        
         LoadTranslationCatalog(language);
 
         OnLanguageChanged(language);
@@ -74,6 +79,7 @@ public class LocalizationManager : ILocalizationManager
 
     private void OnLanguageChanged(string language)
     {
+        _currentLanguage = language;
         _signalBus.Fire(new LanguageChangedSignal() { Language = language });
     }
 }

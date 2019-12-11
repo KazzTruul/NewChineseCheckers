@@ -21,6 +21,7 @@
 		"Main_Menu": "Main Menu",
 		"Pause_Menu_Title": "Game Paused",
 		"Options_Language": "Options",
-		"Options_AutoSave": "Auto Save"
+		"Options_AutoSave": "Auto Save",
+		"Options_SaveAndLeave": "Save and Leave"
 	}
 }

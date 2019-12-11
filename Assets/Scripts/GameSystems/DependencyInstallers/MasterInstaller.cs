@@ -36,18 +36,18 @@ public class MasterInstaller : MonoInstaller
             .Lazy();
         Container.Bind<CoroutineRunner>()
             .FromComponentOnRoot();
+
+        //Bind Factories
         Container.Bind<SetGamePausedCommandFactory>()
             .AsSingle()
             .Lazy();
-
-        //Bind Factories
         Container.Bind<InitializeLocationCommandFactory>()
             .AsSingle()
             .Lazy();
         Container.Bind<InitializeSettingsCommandFactory>()
             .AsSingle()
             .Lazy();
-        Container.Bind<ApplySettingsCommandFactory>()
+        Container.Bind<SaveSettingsCommandFactory>()
             .AsSingle()
             .Lazy();
         Container.Bind<LoadSceneCommandFactory>()
