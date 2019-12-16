@@ -19,6 +19,9 @@
 		"Game_Resume": "Fortsätt Spela",
 		"Game_Restart": "Börja om Spelet",
 		"Main_Menu": "Huvudmeny",
-		"Pause_Menu_Title": "Spelet Pausat"
+		"Pause_Menu_Title": "Spelet Pausat",
+		"Options_Language": "Språk",
+		"Options_AutoSave": "Spara Automatiskt",
+		"Options_SaveAndLeave": "Spara och Gå Tillbaka"
 	}
 }

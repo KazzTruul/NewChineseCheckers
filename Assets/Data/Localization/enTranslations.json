@@ -19,6 +19,9 @@
 		"Game_Resume": "Resume Game",
 		"Game_Restart": "Restart Game",
 		"Main_Menu": "Main Menu",
-		"Pause_Menu_Title": "Game Paused"
+		"Pause_Menu_Title": "Game Paused",
+		"Options_Language": "Options",
+		"Options_AutoSave": "Auto Save",
+		"Options_SaveAndLeave": "Save and Leave"
 	}
 }

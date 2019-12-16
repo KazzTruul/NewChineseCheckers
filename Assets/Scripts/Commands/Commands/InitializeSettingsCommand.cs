@@ -15,25 +15,26 @@ public class InitializeSettingsCommand : SynchronousCommand
 
     public override void Execute()
     {
-        var settingsSerializer = new DataContractJsonSerializer(typeof(Settings),
+        var settingsSerializer = new DataContractJsonSerializer(typeof(SettingsData),
         new DataContractJsonSerializerSettings
         {
             UseSimpleDictionaryFormat = true
         });
 
-
         if (File.Exists(Constants.SettingsPath))
         {
-            _settingsContainer.Settings = settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as Settings;
+            _settingsContainer.InitializeSettings(settingsSerializer.ReadObject(new MemoryStream(Encoding.Unicode.GetBytes(File.ReadAllText(Constants.SettingsPath)))) as SettingsData);
         }
         else
         {
-            _settingsContainer.Settings = new Settings{
+            _settingsContainer.InitializeSettings(new SettingsData
+            {
                 MasterVolume = Constants.DefaultMasterVolume,
                 MusicVolume = Constants.DefaultMusicVolume,
                 SFXVolume = Constants.DefaultSFXVolume,
-                Language = _localizationManager.GetPreferredLanguage()
-            };
+                Language = _localizationManager.GetPreferredLanguage(),
+                AutoSave = Constants.AutoSaveDefault
+            });
 
             settingsSerializer.WriteObject(new FileStream(Constants.SettingsPath, FileMode.Create), _settingsContainer);
         }

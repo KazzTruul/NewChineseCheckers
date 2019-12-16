@@ -4,7 +4,8 @@ public class PauseMenuInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //Bind interfaces
+        Container.Bind<PauseMenuContainer>()
+            .FromComponentOnRoot();
         Container.BindInterfacesTo<PauseMenuContainer>()
             .FromComponentOnRoot();
 

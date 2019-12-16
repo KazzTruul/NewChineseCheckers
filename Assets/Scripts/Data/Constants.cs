@@ -31,7 +31,10 @@ public static class Constants
         { TranslationIdentifier.ResumeGame,             "Game_Resume" },
         { TranslationIdentifier.RestartGame,            "Game_Restart" },
         { TranslationIdentifier.MainMenu,               "Main_Menu" },
-        { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" }
+        { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" },
+        { TranslationIdentifier.Language,               "Options_Language" },
+        { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
+        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" }
     };
     #endregion
 
@@ -48,10 +51,11 @@ public static class Constants
     #endregion
 
     #region Defaults
-    public const int DefaultMasterVolume = 0;
-    public const int DefaultMusicVolume = 0;
-    public const int DefaultSFXVolume = 0;
+    public const float DefaultMasterVolume = 0f;
+    public const float DefaultMusicVolume = 0f;
+    public const float DefaultSFXVolume = 0f;
     public const string DefaultLanguage = "en";
+    public const bool AutoSaveDefault = true;
     #endregion
 
     #region SceneIndices
@@ -71,6 +75,12 @@ public static class Constants
         { BoardColor.Red, Color.red },
         { BoardColor.Magenta, Color.magenta },
         { BoardColor.Black, Color.black },
+    };
+
+    public static readonly Dictionary<string, string> IsoToLocalizedLanguages = new Dictionary<string, string>
+    {
+        { "en", "English" },
+        { "sv", "Svenska" }
     };
     #endregion
 }

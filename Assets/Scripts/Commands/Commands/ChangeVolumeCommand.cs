@@ -1,10 +1,10 @@
 ﻿public class ChangeVolumeCommand : SynchronousCommand
 {
-    private readonly int _volume;
+    private readonly float _volume;
     private readonly SoundType _soundType;
     private readonly SettingsContainer _settingsContainer;
 
-    public ChangeVolumeCommand(int volume, SoundType soundType, SettingsContainer settingsContainer)
+    public ChangeVolumeCommand(float volume, SoundType soundType, SettingsContainer settingsContainer)
     {
         _volume = volume;
         _soundType = soundType;

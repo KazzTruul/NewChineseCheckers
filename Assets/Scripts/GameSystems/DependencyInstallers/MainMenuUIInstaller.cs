@@ -4,6 +4,8 @@ public class MainMenuUIInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        Container.Bind<MainMenuContainer>()
+            .FromComponentOnRoot();
         Container.BindInterfacesTo<MainMenuContainer>()
             .FromComponentOnRoot();
 

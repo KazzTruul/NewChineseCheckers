@@ -1,5 +1,6 @@
 ﻿public interface ILocalizationManager
 {
+    string CurrentLanguage { get; }
     string GetTranslation(string translationId);
     void Initialize(string language);
     string GetPreferredLanguage();
