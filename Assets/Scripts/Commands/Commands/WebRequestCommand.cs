@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using UnityEngine.Networking;
 
@@ -23,6 +24,8 @@ public class WebRequestCommand : CoroutineCommand
     {
         var x = new UnityWebRequest(_url, _method);
 
+        x.downloadHandler = new DownloadHandlerBuffer();
+
         yield return x.SendWebRequest();
 
         if (x.isNetworkError)
@@ -32,7 +35,12 @@ public class WebRequestCommand : CoroutineCommand
 
         var result = x.downloadHandler.data;
 
-        _result = x.downloadHandler.data.ToString();
+        if(result == null)
+        {
+            throw new Exception("No result");
+        }
+
+        _result = Encoding.UTF8.GetString(result);
 
         x.Dispose();
 
