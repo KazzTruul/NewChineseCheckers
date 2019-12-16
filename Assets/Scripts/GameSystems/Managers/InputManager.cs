@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Zenject;
 
 public class InputManager : IInputManager
@@ -10,7 +11,11 @@ public class InputManager : IInputManager
     [Inject]
     private SetGamePausedCommandFactory _setGamePausedCommandFactory;
     [Inject]
+    private WebRequestCommandFactory _webRequestCommandFactory;
+    [Inject]
     private ICommandDispatcher _commandDispatcher;
+    [Inject]
+    private CoroutineRunner _coroutineRunner;
 
     private bool _gamePaused;
 
@@ -18,6 +23,11 @@ public class InputManager : IInputManager
 
     public void Tick()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _coroutineRunner.StartCoroutine(Test());
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
@@ -35,6 +45,19 @@ public class InputManager : IInputManager
         {
             OnPauseKeyClicked();
         }
+    }
+
+    private IEnumerator Test()
+    {
+        var command = _webRequestCommandFactory.Create(Constants.LeaderboardDatabaseUrl);
+        _commandDispatcher.ExecuteCommand(command);
+
+        while (!command.Done)
+        {
+            yield return null;
+        }
+
+        Debug.LogError($"Result: {command.Result}");
     }
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)

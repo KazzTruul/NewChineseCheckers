@@ -50,6 +50,10 @@ public static class Constants
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
     #endregion
 
+    #region Web
+    public const string LeaderboardDatabaseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zu2lx8pD4PoAQJNAAgCu7ly4BlgE3eT5Y8fNcoi-NhNwayPSJDhk8p2n20bgW6G8Fo-vm6xBhWT6/pub?output=csv";
+    #endregion
+
     #region Defaults
     public const float DefaultMasterVolume = 0f;
     public const float DefaultMusicVolume = 0f;

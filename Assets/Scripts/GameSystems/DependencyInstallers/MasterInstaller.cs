@@ -38,6 +38,9 @@ public class MasterInstaller : MonoInstaller
             .FromComponentOnRoot();
 
         //Bind Factories
+        Container.Bind<WebRequestCommandFactory>()
+            .AsSingle()
+            .Lazy();
         Container.Bind<SetGamePausedCommandFactory>()
             .AsSingle()
             .Lazy();
