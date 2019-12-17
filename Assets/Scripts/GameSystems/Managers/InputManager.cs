@@ -11,7 +11,7 @@ public class InputManager : IInputManager
     [Inject]
     private SetGamePausedCommandFactory _setGamePausedCommandFactory;
     [Inject]
-    private WebRequestCommandFactory _webRequestCommandFactory;
+    private WebRequestDownloadCommandFactory _webRequestCommandFactory;
     [Inject]
     private ICommandDispatcher _commandDispatcher;
     [Inject]
@@ -49,7 +49,7 @@ public class InputManager : IInputManager
 
     private IEnumerator Test()
     {
-        var command = _webRequestCommandFactory.Create(Constants.LeaderboardDatabaseUrl);
+        var command = _webRequestCommandFactory.Create<LeaderboardsData>(Constants.LeaderboardDatabaseUrl);
         _commandDispatcher.ExecuteCommand(command);
 
         while (!command.Done)
@@ -57,7 +57,7 @@ public class InputManager : IInputManager
             yield return null;
         }
 
-        Debug.LogError($"Result: {command.Result}");
+        Debug.LogError($"Result: {command.Result.Easy[0].PlayerName}");
     }
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
