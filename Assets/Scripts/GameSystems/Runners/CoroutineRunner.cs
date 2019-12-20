@@ -7,4 +7,9 @@ public class CoroutineRunner : MonoBehaviour
     {
         return StartCoroutine(enumerator);
     }
+
+    public void StopExternalCoroutine(IEnumerator enumerator)
+    {
+        StopCoroutine(enumerator);
+    }
 }

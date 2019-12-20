@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using UnityEngine;
 
 public class WebRequestDownloadCommand<T> : CoroutineCommand where T : class
 {
@@ -43,6 +44,8 @@ public class WebRequestDownloadCommand<T> : CoroutineCommand where T : class
         }
 
         var resultString = Encoding.UTF8.GetString(result);
+
+        Debug.LogError($"Result: {resultString}");
 
         var translationSerializer = new DataContractJsonSerializer(typeof(TranslationCatalog),
             new DataContractJsonSerializerSettings

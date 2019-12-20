@@ -49,7 +49,7 @@ public class InputManager : IInputManager
 
     private IEnumerator Test()
     {
-        var command = _webRequestCommandFactory.Create<LeaderboardsData>(Constants.LeaderboardDatabaseUrl);
+        var command = _webRequestCommandFactory.Create<LeaderboardsData>(Constants.EasyLeaderboardDatabaseUrl);
         _commandDispatcher.ExecuteCommand(command);
 
         while (!command.Done)
@@ -57,7 +57,7 @@ public class InputManager : IInputManager
             yield return null;
         }
 
-        Debug.LogError($"Result: {command.Result.Easy[0].PlayerName}");
+        Debug.LogError($"Result: {command.Result.Leaderboard[0].PlayerName}");
     }
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
