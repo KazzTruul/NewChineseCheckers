@@ -50,12 +50,6 @@ public static class Constants
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
     #endregion
 
-    #region Web
-    public const string EasyLeaderboardDatabaseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zu2lx8pD4PoAQJNAAgCu7ly4BlgE3eT5Y8fNcoi-NhNwayPSJDhk8p2n20bgW6G8Fo-vm6xBhWT6/pub?gid=0&single=true&output=csv";
-    public const string MediumLeaderboardDatabaseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zu2lx8pD4PoAQJNAAgCu7ly4BlgE3eT5Y8fNcoi-NhNwayPSJDhk8p2n20bgW6G8Fo-vm6xBhWT6/pub?gid=342582741&single=true&output=csv";
-    public const string HardLeaderboardDatabaseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zu2lx8pD4PoAQJNAAgCu7ly4BlgE3eT5Y8fNcoi-NhNwayPSJDhk8p2n20bgW6G8Fo-vm6xBhWT6/pub?gid=890661821&single=true&output=csv";
-    #endregion
-
     #region Defaults
     public const float DefaultMasterVolume = 0f;
     public const float DefaultMusicVolume = 0f;
