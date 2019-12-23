@@ -11,8 +11,6 @@ public class InputManager : IInputManager
     [Inject]
     private SetGamePausedCommandFactory _setGamePausedCommandFactory;
     [Inject]
-    private WebRequestDownloadCommandFactory _webRequestCommandFactory;
-    [Inject]
     private ICommandDispatcher _commandDispatcher;
     [Inject]
     private CoroutineRunner _coroutineRunner;
@@ -23,11 +21,6 @@ public class InputManager : IInputManager
 
     public void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            _coroutineRunner.StartCoroutine(Test());
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
@@ -45,19 +38,6 @@ public class InputManager : IInputManager
         {
             OnPauseKeyClicked();
         }
-    }
-
-    private IEnumerator Test()
-    {
-        var command = _webRequestCommandFactory.Create<LeaderboardsData>(Constants.EasyLeaderboardDatabaseUrl);
-        _commandDispatcher.ExecuteCommand(command);
-
-        while (!command.Done)
-        {
-            yield return null;
-        }
-
-        Debug.LogError($"Result: {command.Result.Leaderboard[0].PlayerName}");
     }
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
