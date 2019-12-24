@@ -1,5 +1,5 @@
 {
-    "name": "Backend",
+    "name": "Middleware",
     "references": [
         "GUID:ed470ed267a9a224790fec8410e5c27c",
         "GUID:8f342294dfb958a4694b67859092b749",
