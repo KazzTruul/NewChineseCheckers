@@ -34,7 +34,12 @@ public static class Constants
         { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" },
         { TranslationIdentifier.Language,               "Options_Language" },
         { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
-        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" }
+        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" },
+        { TranslationIdentifier.LoginMenuTitle,         "Login_Menu_Title" },
+        { TranslationIdentifier.PlayerDisplayName,      "Player_Display_Name" },
+        { TranslationIdentifier.PlayerPassword,         "Player_Password" },
+        { TranslationIdentifier.Login,                  "Player_Login" },
+        { TranslationIdentifier.CreateAccount,          "Player_Create_Account" }
     };
     #endregion
 
@@ -60,9 +65,10 @@ public static class Constants
 
     #region SceneIndices
     public const int MasterSceneIndex = 0;
-    public const int MainMenuSceneIndex = 1;
-    public const int SinglePlayerSceneIndex = 2;
-    public const int MultiPlayerSceneIndex = 3;
+    public const int LoginSceneIndex = 1;
+    public const int MainMenuSceneIndex = 2;
+    public const int SinglePlayerSceneIndex = 3;
+    public const int MultiPlayerSceneIndex = 4;
     #endregion
 
     #region Conversions

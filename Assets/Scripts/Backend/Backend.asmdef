@@ -1,0 +1,18 @@
+{
+    "name": "Backend",
+    "references": [
+        "GUID:ed470ed267a9a224790fec8410e5c27c",
+        "GUID:8f342294dfb958a4694b67859092b749",
+        "GUID:fb1574451c56b754fb50ac8ed022aacd",
+        "GUID:6faf849fd71899e48b3d80b074023cb5"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": []
+}
