@@ -3,7 +3,7 @@ using PlayFab.ClientModels;
 using UnityEngine;
 using Zenject;
 
-namespace Backend
+namespace Middleware
 {
     public class PlayFabManager
     {
@@ -25,7 +25,7 @@ namespace Backend
             PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginFailure);
         }
 
-        public void CreateUser(string username, string password)
+        public void RegisterUser(string username, string password)
         {
             var x = new RegisterPlayFabUserRequest { DisplayName = username, Password = password };
             PlayFabClientAPI.RegisterPlayFabUser(x, OnAccountCreationSuccess, OnAccountCreationFailure);

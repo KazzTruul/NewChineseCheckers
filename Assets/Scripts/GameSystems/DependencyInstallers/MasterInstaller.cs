@@ -1,4 +1,5 @@
 ﻿using Zenject;
+using Middleware;
 
 public class MasterInstaller : MonoInstaller
 {
@@ -36,6 +37,9 @@ public class MasterInstaller : MonoInstaller
             .Lazy();
         Container.Bind<CoroutineRunner>()
             .FromComponentOnRoot();
+        Container.Bind<PlayFabManager>()
+            .AsSingle()
+            .Lazy();
 
         //Bind Factories
         Container.Bind<SetGamePausedCommandFactory>()
@@ -51,6 +55,12 @@ public class MasterInstaller : MonoInstaller
             .AsSingle()
             .Lazy();
         Container.Bind<LoadSceneCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<RegisterUserCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<LoginUserCommandFactory>()
             .AsSingle()
             .Lazy();
 

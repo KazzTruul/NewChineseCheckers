@@ -41,19 +41,19 @@ public static class Constants
         { TranslationIdentifier.Login,                  "Player_Login" },
         { TranslationIdentifier.CreateAccount,          "Player_Create_Account" }
     };
-    #endregion
+    #endregion Localization
 
     #region Input
-
     public const KeyCode PauseKey = KeyCode.Escape;
-
-    #endregion
+    public const int MinUsernameLength = 3;
+    public const int MaxUsernameLength = 16;
+    #endregion Input
 
     #region Paths
     public const string TranslationJsonName = "{0}Translations.json";
     public static readonly string LocalizationPath = $"{Application.dataPath}/Data/Localization/";
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
-    #endregion
+    #endregion Paths
 
     #region Defaults
     public const float DefaultMasterVolume = 0f;
@@ -61,7 +61,8 @@ public static class Constants
     public const float DefaultSFXVolume = 0f;
     public const string DefaultLanguage = "en";
     public const bool AutoSaveDefault = true;
-    #endregion
+    public const bool AutoLoginDefault = true;
+    #endregion Defaults
 
     #region SceneIndices
     public const int MasterSceneIndex = 0;
@@ -69,7 +70,7 @@ public static class Constants
     public const int MainMenuSceneIndex = 2;
     public const int SinglePlayerSceneIndex = 3;
     public const int MultiPlayerSceneIndex = 4;
-    #endregion
+    #endregion SceneIndices
 
     #region Conversions
     public static readonly Dictionary<BoardColor, Color> ColorConversions = new Dictionary<BoardColor, Color>
@@ -88,5 +89,5 @@ public static class Constants
         { "en", "English" },
         { "sv", "Svenska" }
     };
-    #endregion
+    #endregion Conversions
 }

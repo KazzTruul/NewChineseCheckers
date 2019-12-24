@@ -13,4 +13,10 @@ public class SettingsData
     public string Language { get; set; }
     [DataMember]
     public bool AutoSave { get; set; }
+    [DataMember]
+    public bool AutoLogin { get; set; }
+    [DataMember]
+    public string Username { get; set; }
+    [DataMember]
+    public string Password { get; set; }
 }
