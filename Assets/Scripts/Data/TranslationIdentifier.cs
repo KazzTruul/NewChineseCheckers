@@ -24,7 +24,7 @@
     AutoSave,
     SaveAndLeave,
     LoginMenuTitle,
-    PlayerDisplayName,
+    PlayerUsername,
     PlayerPassword,
     Login,
     CreateAccount

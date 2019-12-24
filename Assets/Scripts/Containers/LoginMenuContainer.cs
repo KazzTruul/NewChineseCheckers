@@ -79,7 +79,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
     public void OnLanguageChanged()
     {
         _loginMenuTitleText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoginMenuTitle]);
-        _usernameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PlayerDisplayName]);
+        _usernameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PlayerUsername]);
         _passwordText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PlayerPassword]);
         _loginUserButtonText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Login]);
         _registerUserButtonText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.CreateAccount]);

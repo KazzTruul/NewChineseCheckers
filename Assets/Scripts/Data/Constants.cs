@@ -36,7 +36,7 @@ public static class Constants
         { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
         { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" },
         { TranslationIdentifier.LoginMenuTitle,         "Login_Menu_Title" },
-        { TranslationIdentifier.PlayerDisplayName,      "Player_Display_Name" },
+        { TranslationIdentifier.PlayerUsername,      "Player_Display_Name" },
         { TranslationIdentifier.PlayerPassword,         "Player_Password" },
         { TranslationIdentifier.Login,                  "Player_Login" },
         { TranslationIdentifier.CreateAccount,          "Player_Create_Account" }
