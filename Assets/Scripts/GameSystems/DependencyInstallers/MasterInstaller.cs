@@ -14,6 +14,10 @@ public class MasterInstaller : MonoInstaller
         Container.DeclareSignal<GamePausedChangedSignal>().OptionalSubscriber();
         Container.DeclareSignal<ActiveSceneChangedSignal>();
         Container.DeclareSignal<SettingsShouldShowChangedSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserRegistrationSucceededSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserRegistrationFailedSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserLoginSucceededSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserLoginFailedSignal>().OptionalSubscriber();
 
         //Set up Bindings
         Container.Bind<SettingsContainer>()

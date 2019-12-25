@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
+using Middleware;
 
 public sealed class MasterContainer : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public sealed class MasterContainer : MonoBehaviour
     private readonly ILocalizationManager _localizationManager;
     [Inject]
     private readonly IInputManager _inputManager;
+    [Inject]
+    private readonly PlayFabManager _playFabManager;
 
     //Data
     [Inject]
@@ -24,11 +27,20 @@ public sealed class MasterContainer : MonoBehaviour
     private readonly InitializeLocationCommandFactory _initializeLocationCommandFactory;
     [Inject]
     private readonly LoadSceneCommandFactory _loadSceneCommandFactory;
-    
+
     public void Start()
     {
         _commandDispatcher.ExecuteCommand(_initializeSettingsCommandFactory.Create());
         _commandDispatcher.ExecuteCommand(_initializeLocationCommandFactory.Create());
-        //_commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
+
+        if (!string.IsNullOrEmpty(_settingsContainer.Settings.Username)
+            && !string.IsNullOrEmpty(_settingsContainer.Settings.Password))
+        {
+
+        }
+        else
+        {
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.LoginSceneIndex, false, true));
+        }
     }
 }

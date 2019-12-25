@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Middleware;
 
 public class LoginMenuContainer : MonoBehaviour, ILocalizable
 {
@@ -74,6 +75,26 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
     private void OnLoginUser()
     {
         _commandDispatcher.ExecuteCommand(_loginUserCommandFactory.Create(_username, _userPassword));
+    }
+
+    public void OnRegisterUserSuccess(UserRegistrationSucceededSignal signal)
+    {
+
+    }
+
+    public void OnRegisterUserFailure(UserRegistrationFailedSignal signal)
+    {
+
+    }
+
+    public void OnLoginUserSuccess(UserLoginSucceededSignal signal)
+    {
+
+    }
+
+    public void OnLoginUserFailure(UserLoginFailedSignal signal)
+    {
+
     }
 
     public void OnLanguageChanged()
