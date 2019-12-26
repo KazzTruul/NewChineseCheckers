@@ -1,10 +1,8 @@
-﻿using PlayFab;
-
-namespace Middleware
+﻿namespace Middleware
 {
     public class UserLoginFailedSignal
     {
-        public PlayFabError Error;
+        public string Error;
 
         public string Username;
 

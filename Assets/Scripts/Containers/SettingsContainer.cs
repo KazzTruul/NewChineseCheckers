@@ -46,6 +46,11 @@ public class SettingsContainer
         _unsavedSettings.AutoSave = autoSave;
     }
 
+    public void SetAutoLogin(bool autoLogin)
+    {
+        _unsavedSettings.AutoLogin = autoLogin;
+    }
+
     public void SaveChanges()
     {
         _settings.OverwriteSettings(_unsavedSettings);

@@ -4,7 +4,7 @@ namespace Middleware
 {
     public class UserRegistrationFailedSignal
     {
-        public PlayFabError Error;
+        public string Error;
 
         public string Username;
 

@@ -6,7 +6,8 @@ public class VerifyUsernameValidityStrategy
 
     public bool IsValidUsername(string potentialUsername)
     {
-        return Regex.IsMatch(potentialUsername, _validUsernamePattern)
+        return !string.IsNullOrEmpty(potentialUsername)
+            && Regex.IsMatch(potentialUsername, _validUsernamePattern)
             && potentialUsername.Length >= Constants.MinUsernameLength
             && potentialUsername.Length <= Constants.MaxUsernameLength;
     }

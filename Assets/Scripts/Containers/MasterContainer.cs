@@ -15,11 +15,7 @@ public sealed class MasterContainer : MonoBehaviour
     private readonly IInputManager _inputManager;
     [Inject]
     private readonly PlayFabManager _playFabManager;
-
-    //Data
-    [Inject]
-    private readonly SettingsContainer _settingsContainer;
-
+    
     //Factories
     [Inject]
     private readonly InitializeSettingsCommandFactory _initializeSettingsCommandFactory;
@@ -33,14 +29,6 @@ public sealed class MasterContainer : MonoBehaviour
         _commandDispatcher.ExecuteCommand(_initializeSettingsCommandFactory.Create());
         _commandDispatcher.ExecuteCommand(_initializeLocationCommandFactory.Create());
 
-        if (!string.IsNullOrEmpty(_settingsContainer.Settings.Username)
-            && !string.IsNullOrEmpty(_settingsContainer.Settings.Password))
-        {
-
-        }
-        else
-        {
-            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.LoginSceneIndex, false, true));
-        }
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.LoginSceneIndex, false, true));
     }
 }

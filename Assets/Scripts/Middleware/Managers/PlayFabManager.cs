@@ -8,6 +8,8 @@ namespace Middleware
     {
         private SignalBus _signalBus;
 
+        private string _sessionTicket;
+
         [Inject]
         public void Initialize(SignalBus signalBus)
         {
@@ -22,7 +24,7 @@ namespace Middleware
         #region UserRegistration
         public void RegisterUser(string username, string password)
         {
-            var request = new RegisterPlayFabUserRequest { DisplayName = username, Password = password };
+            var request = new RegisterPlayFabUserRequest { Username = username, Password = password, RequireBothUsernameAndEmail = false };
 
             PlayFabClientAPI.RegisterPlayFabUser(request,
                 result => OnUserRegistrationSuccess(result, username, password),
@@ -31,12 +33,13 @@ namespace Middleware
 
         private void OnUserRegistrationSuccess(RegisterPlayFabUserResult result, string username, string password)
         {
+            _sessionTicket = result.SessionTicket;
             _signalBus.Fire(new UserRegistrationSucceededSignal { Result = result, Username = username, Password = password });
         }
 
         private void OnUserRegistrationFailure(PlayFabError error, string username, string password)
         {
-            _signalBus.Fire(new UserRegistrationFailedSignal { Error = error, Username = username, Password = password });
+            _signalBus.Fire(new UserRegistrationFailedSignal { Error = error.ErrorMessage, Username = username, Password = password });
         }
         #endregion UserRegistration
 
@@ -57,7 +60,7 @@ namespace Middleware
 
         private void OnUserLoginFailure(PlayFabError error, string username, string password)
         {
-            _signalBus.Fire(new UserLoginFailedSignal { Error = error, Username = username, Password = password });
+            _signalBus.Fire(new UserLoginFailedSignal { Error = error.ErrorMessage, Username = username, Password = password });
         }
         #endregion UserLogin
     }

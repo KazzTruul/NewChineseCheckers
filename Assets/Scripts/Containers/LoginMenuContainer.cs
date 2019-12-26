@@ -29,6 +29,8 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
     private ICommandDispatcher _commandDispatcher;
     private RegisterUserCommandFactory _registerUserCommandFactory;
     private LoginUserCommandFactory _loginUserCommandFactory;
+    private SettingsContainer _settingsContainer;
+    private LoadSceneCommandFactory _loadSceneCommandFactory;
 
     private readonly VerifyUsernameValidityStrategy _verifyUsernameValidityStrategy = new VerifyUsernameValidityStrategy();
 
@@ -40,18 +42,33 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
         ILocalizationManager localizationManager,
         ICommandDispatcher commandDispatcher,
         RegisterUserCommandFactory registerUserCommandFactory,
-        LoginUserCommandFactory loginUserCommandFactory)
+        LoginUserCommandFactory loginUserCommandFactory,
+        SettingsContainer settingsContainer,
+        LoadSceneCommandFactory loadSceneCommandFactory)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _registerUserCommandFactory = registerUserCommandFactory;
         _loginUserCommandFactory = loginUserCommandFactory;
+        _settingsContainer = settingsContainer;
+        _loadSceneCommandFactory = loadSceneCommandFactory;
 
         _usernameInputField.onValueChanged.AddListener(OnUsernameInputChanged);
+        _passwordInputField.onValueChanged.AddListener(OnUserPasswordInputChanged);
         _registerUserButton.onClick.AddListener(OnRegisterUser);
         _loginUserButton.onClick.AddListener(OnLoginUser);
 
         OnLanguageChanged();
+
+        _username = _settingsContainer.Settings.Username;
+        _userPassword = _settingsContainer.Settings.Password;
+
+        if (_settingsContainer.Settings.AutoLogin
+            && !string.IsNullOrEmpty(_username)
+             && !string.IsNullOrEmpty(_userPassword))
+        {
+            OnLoginUser();
+        }
     }
 
     private void OnUsernameInputChanged(string username)
@@ -79,22 +96,22 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnRegisterUserSuccess(UserRegistrationSucceededSignal signal)
     {
-
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
     }
 
     public void OnRegisterUserFailure(UserRegistrationFailedSignal signal)
     {
-
+        Debug.LogError($"Error on registration: {signal.Error}");
     }
 
     public void OnLoginUserSuccess(UserLoginSucceededSignal signal)
     {
-
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
     }
 
     public void OnLoginUserFailure(UserLoginFailedSignal signal)
     {
-
+        Debug.LogError($"Error on login: {signal.Error}");
     }
 
     public void OnLanguageChanged()
