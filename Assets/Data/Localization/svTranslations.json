@@ -27,7 +27,8 @@
 		"Player_Display_Name": "Kontonamn",
 		"Player_Password": "Lösenord",
 		"Player_Login": "Logga In",
-		"Player_Create_Account": "Skapa Konto"
-	}
+		"Player_Create_Account": "Skapa Konto",
+		"Player_Logout": "Logga Ut",
+		"Options_AutoLogin":  "Logga in Automatiskt"
 	}
 }

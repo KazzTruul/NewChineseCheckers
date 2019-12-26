@@ -34,6 +34,10 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     [SerializeField]
     private Toggle _autoSaveToggle;
     [SerializeField]
+    private TMP_Text _autoLoginText;
+    [SerializeField]
+    private Toggle _autoLoginToggle;
+    [SerializeField]
     private TMP_Text _saveAndLeaveText;
     [SerializeField]
     private Button _saveAndExitButton;
@@ -43,7 +47,6 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     private SettingsContainer _settingsContainer;
     private ChangeVolumeCommandFactory _changeVolumeCommandFactory;
     private ChangeLanguageCommandFactory _changeLanguageCommandFactory;
-    private SaveSettingsCommandFactory _saveSettingsCommandFactory;
     private ICommandDispatcher _commandDispatcher;
 
     [Inject]
@@ -53,7 +56,6 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         SettingsContainer settingsContainer,
         ChangeVolumeCommandFactory changeVolumeCommandFactory,
         ChangeLanguageCommandFactory changeLanguageCommandFactory,
-        SaveSettingsCommandFactory saveSettingsCommandFactory,
         ICommandDispatcher commandDispatcher)
     {
         _localizationManager = localizationManager;
@@ -61,7 +63,6 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _settingsContainer = settingsContainer;
         _changeVolumeCommandFactory = changeVolumeCommandFactory;
         _changeLanguageCommandFactory = changeLanguageCommandFactory;
-        _saveSettingsCommandFactory = saveSettingsCommandFactory;
         _commandDispatcher = commandDispatcher;
         
         _backButton.onClick.AddListener(OnCloseSettings);
@@ -80,10 +81,12 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _autoSaveToggle.isOn = _settingsContainer.Settings.AutoSave;
         _autoSaveToggle.onValueChanged.AddListener(SetAutoSaveEnabled);
 
+        _autoLoginToggle.isOn = _settingsContainer.Settings.AutoLogin;
+        _autoLoginToggle.onValueChanged.AddListener(SetAutoLoginEnabled);
+
         _saveAndExitButton.onClick.AddListener(() =>
         {
             SaveChanges();
-            _commandDispatcher.ExecuteCommand(_saveSettingsCommandFactory.Create());
             OnCloseSettings();
         });
 
@@ -115,6 +118,11 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _settingsContainer.SetAutoSave(enableAutoSave);
     }
 
+    private void SetAutoLoginEnabled(bool enableAutoLogin)
+    {
+        _settingsContainer.SetAutoLogin(enableAutoLogin);
+    }
+
     public void OnLanguageChanged()
     {
         _menuTitleText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.OptionsTitle]);
@@ -123,6 +131,7 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _sfxVolumeText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SFXVolume]);
         _languageText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Language]);
         _autoSaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.AutoSave]);
+        _autoLoginText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.AutoLogin]);
         _saveAndLeaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SaveAndLeave]);
     }
 

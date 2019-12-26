@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1550575718430469084}
   - component: {fileID: 1550575718430469059}
   - component: {fileID: 1550575718430469058}
-  - component: {fileID: 7065981646222313512}
-  - component: {fileID: 4524330581222701705}
   - component: {fileID: 2939192523883475963}
+  - component: {fileID: 3584833933052504750}
+  - component: {fileID: 9193429122419037478}
   m_Layer: 5
-  m_Name: LoginScreen
+  m_Name: AuthenticationScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,39 +93,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 4
   m_AspectRatio: 1.6
---- !u!114 &7065981646222313512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550575718430469056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b58678b7c237b4cbe8cb77291e67ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loginMenuTitleText: {fileID: 1550575719977385294}
-  _usernameInputField: {fileID: 1739249629942755963}
-  _usernameText: {fileID: 1739249629501756257}
-  _passwordInputField: {fileID: 1739249629148146888}
-  _passwordText: {fileID: 1739249629788360146}
-  _loginUserButton: {fileID: 7701221713064185769}
-  _loginUserButtonText: {fileID: 6363220245534088840}
-  _registerUserButton: {fileID: 7701221713489858866}
-  _registerUserButtonText: {fileID: 6363220245020393491}
---- !u!114 &4524330581222701705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550575718430469056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1bed4511be96964097114d040a7552b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2939192523883475963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,10 +107,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 4524330581222701705}
+  - {fileID: 9193429122419037478}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
+--- !u!114 &3584833933052504750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550575718430469056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6e5f66d247ecc4ea340f6a639b9860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loginMenuTitleText: {fileID: 1550575719977385294}
+  _usernameInputField: {fileID: 1739249629942755963}
+  _usernameText: {fileID: 1739249629501756257}
+  _passwordInputField: {fileID: 1739249629148146888}
+  _passwordText: {fileID: 1739249629788360146}
+  _loginUserButton: {fileID: 7701221713064185769}
+  _loginUserButtonText: {fileID: 6363220245534088840}
+  _registerUserButton: {fileID: 7701221713489858866}
+  _registerUserButtonText: {fileID: 6363220245020393491}
+--- !u!114 &9193429122419037478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550575718430469056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ab43e41bc4b504d9444412ce017a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1550575719868873747
 GameObject:
   m_ObjectHideFlags: 0

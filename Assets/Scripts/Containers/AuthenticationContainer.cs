@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Middleware;
 
-public class LoginMenuContainer : MonoBehaviour, ILocalizable
+public class AuthenticationContainer : MonoBehaviour, ILocalizable
 {
     [SerializeField]
     private TMP_Text _loginMenuTitleText;
@@ -96,6 +96,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnRegisterUserSuccess(UserRegistrationSucceededSignal signal)
     {
+        _settingsContainer.SetCurrentUser(_username, _userPassword);
         _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true, Constants.LoginSceneIndex));
     }
 
@@ -106,6 +107,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLoginUserSuccess(UserLoginSucceededSignal signal)
     {
+        _settingsContainer.SetCurrentUser(_username, _userPassword);
         _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true, Constants.LoginSceneIndex));
     }
 
@@ -119,7 +121,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
         _loginMenuTitleText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoginMenuTitle]);
         _usernameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PlayerUsername]);
         _passwordText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PlayerPassword]);
-        _loginUserButtonText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Login]);
+        _loginUserButtonText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoginUser]);
         _registerUserButtonText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.CreateAccount]);
     }
 }

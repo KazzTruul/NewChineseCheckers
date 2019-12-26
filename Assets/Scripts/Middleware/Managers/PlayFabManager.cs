@@ -24,7 +24,13 @@ namespace Middleware
         #region UserRegistration
         public void RegisterUser(string username, string password)
         {
-            var request = new RegisterPlayFabUserRequest { Username = username, Password = password, RequireBothUsernameAndEmail = false };
+            var request = new RegisterPlayFabUserRequest
+            {
+                Username = username,
+                DisplayName = username,
+                Password = password,
+                RequireBothUsernameAndEmail = false
+            };
 
             PlayFabClientAPI.RegisterPlayFabUser(request,
                 result => OnUserRegistrationSuccess(result, username, password),
@@ -63,5 +69,12 @@ namespace Middleware
             _signalBus.Fire(new UserLoginFailedSignal { Error = error.ErrorMessage, Username = username, Password = password });
         }
         #endregion UserLogin
+
+        #region UserLogout
+        public void LogoutUser()
+        {
+            PlayFabClientAPI.ForgetAllCredentials();
+        }
+        #endregion UserLogout
     }
 }

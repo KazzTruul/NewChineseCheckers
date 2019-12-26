@@ -26,6 +26,8 @@
     LoginMenuTitle,
     PlayerUsername,
     PlayerPassword,
-    Login,
-    CreateAccount
+    LoginUser,
+    CreateAccount,
+    LogoutUser,
+    AutoLogin
 }

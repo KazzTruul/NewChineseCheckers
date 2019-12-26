@@ -1,13 +1,13 @@
 ﻿using Zenject;
 using Middleware;
 
-public class LoginMenuInstaller : MonoInstaller
+public class AuthenticationInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<LoginMenuContainer>()
+        Container.Bind<AuthenticationContainer>()
             .FromComponentOnRoot();
-        Container.BindInterfacesTo<LoginMenuContainer>()
+        Container.BindInterfacesTo<AuthenticationContainer>()
             .FromComponentOnRoot();
 
         //Bind signals
@@ -15,16 +15,16 @@ public class LoginMenuInstaller : MonoInstaller
             .ToMethod<ILocalizable>(localizable => localizable.OnLanguageChanged)
             .FromResolve();
         Container.BindSignal<UserRegistrationSucceededSignal>()
-            .ToMethod<LoginMenuContainer>(container => container.OnRegisterUserSuccess)
+            .ToMethod<AuthenticationContainer>(container => container.OnRegisterUserSuccess)
             .FromResolve();
         Container.BindSignal<UserRegistrationFailedSignal>()
-            .ToMethod<LoginMenuContainer>(container => container.OnRegisterUserFailure)
+            .ToMethod<AuthenticationContainer>(container => container.OnRegisterUserFailure)
             .FromResolve();
         Container.BindSignal<UserLoginSucceededSignal>()
-            .ToMethod<LoginMenuContainer>(container => container.OnLoginUserSuccess)
+            .ToMethod<AuthenticationContainer>(container => container.OnLoginUserSuccess)
             .FromResolve();
         Container.BindSignal<UserLoginFailedSignal>()
-            .ToMethod<LoginMenuContainer>(container => container.OnLoginUserFailure)
+            .ToMethod<AuthenticationContainer>(container => container.OnLoginUserFailure)
             .FromResolve();
     }
 }

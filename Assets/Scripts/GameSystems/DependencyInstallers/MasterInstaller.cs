@@ -55,9 +55,6 @@ public class MasterInstaller : MonoInstaller
         Container.Bind<InitializeSettingsCommandFactory>()
             .AsSingle()
             .Lazy();
-        Container.Bind<SaveSettingsCommandFactory>()
-            .AsSingle()
-            .Lazy();
         Container.Bind<LoadSceneCommandFactory>()
             .AsSingle()
             .Lazy();
@@ -65,6 +62,9 @@ public class MasterInstaller : MonoInstaller
             .AsSingle()
             .Lazy();
         Container.Bind<LoginUserCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<LogoutUserCommandFactory>()
             .AsSingle()
             .Lazy();
 

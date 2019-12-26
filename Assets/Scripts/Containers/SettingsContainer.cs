@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Runtime.Serialization.Json;
+using UnityEngine;
 
 public class SettingsContainer
 {
@@ -51,9 +53,25 @@ public class SettingsContainer
         _unsavedSettings.AutoLogin = autoLogin;
     }
 
+    public void SetCurrentUser(string username, string password)
+    {
+        _unsavedSettings.Username = username;
+        _unsavedSettings.Password = password;
+
+        SaveChanges();
+    }
+
     public void SaveChanges()
     {
         _settings.OverwriteSettings(_unsavedSettings);
+
+        var settingsSerializer = new DataContractJsonSerializer(typeof(SettingsData),
+        new DataContractJsonSerializerSettings
+        {
+            UseSimpleDictionaryFormat = true
+        });
+
+        settingsSerializer.WriteObject(new FileStream(Constants.SettingsPath, FileMode.Create), _settings);
     }
 
     public void DiscardChanges()
