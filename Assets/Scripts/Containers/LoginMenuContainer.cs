@@ -96,7 +96,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnRegisterUserSuccess(UserRegistrationSucceededSignal signal)
     {
-        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true, Constants.LoginSceneIndex));
     }
 
     public void OnRegisterUserFailure(UserRegistrationFailedSignal signal)
@@ -106,7 +106,7 @@ public class LoginMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLoginUserSuccess(UserLoginSucceededSignal signal)
     {
-        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true));
+        _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.MainMenuSceneIndex, false, true, Constants.LoginSceneIndex));
     }
 
     public void OnLoginUserFailure(UserLoginFailedSignal signal)
