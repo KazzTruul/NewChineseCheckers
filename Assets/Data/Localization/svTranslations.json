@@ -29,6 +29,7 @@
 		"Player_Login": "Logga In",
 		"Player_Create_Account": "Skapa Konto",
 		"Player_Logout": "Logga Ut",
-		"Options_AutoLogin":  "Logga in Automatiskt"
+		"Options_AutoLogin": "Logga in Automatiskt",
+		"Main_Menu_Greeting": "Välkommen, {0}"
 	}
 }

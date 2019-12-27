@@ -41,7 +41,8 @@ public static class Constants
         { TranslationIdentifier.LoginUser,              "Player_Login" },
         { TranslationIdentifier.CreateAccount,          "Player_Create_Account" },
         { TranslationIdentifier.LogoutUser,             "Player_Logout" },
-        { TranslationIdentifier.AutoLogin,              "Options_AutoLogin" }
+        { TranslationIdentifier.AutoLogin,              "Options_AutoLogin" },
+        { TranslationIdentifier.UserGreeting,           "Main_Menu_Greeting" }
     };
     #endregion Localization
 

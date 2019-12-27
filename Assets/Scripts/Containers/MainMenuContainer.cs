@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuContainer : MonoBehaviour, ILocalizable
 {
     [SerializeField]
+    private TMP_Text _userGreetingText;
+    [SerializeField]
     private TMP_Text _startSinglePlayerGameText;
     [SerializeField]
     private TMP_Text _startMultiPlayerGameText;
@@ -36,19 +38,22 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     private LoadSceneCommandFactory _loadSceneCommandFactory;
     private SignalBus _signalBus;
     private LogoutUserCommandFactory _logoutUserCommandFactory;
+    private SettingsContainer _settingsContainer;
 
     [Inject]
     public void Initialize(ILocalizationManager localizationManager,
         ICommandDispatcher commandDispatcher,
         LoadSceneCommandFactory loadSceneCommandFactory,
         SignalBus signalBus,
-        LogoutUserCommandFactory logoutUserCommandFactory)
+        LogoutUserCommandFactory logoutUserCommandFactory,
+        SettingsContainer settingsContainer)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
         _signalBus = signalBus;
         _logoutUserCommandFactory = logoutUserCommandFactory;
+        _settingsContainer = settingsContainer;
 
         //TODO: Add difficulty selection
         _startSinglePlayerGameButton.onClick.AddListener(() =>
@@ -79,6 +84,7 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLanguageChanged()
     {
+        _userGreetingText.text = string.Format(_localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.UserGreeting]), _settingsContainer.Settings.Username);
         _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayer]);
         _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayer]);
         _loadGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoadGame]);

@@ -7,6 +7,8 @@ using Middleware;
 public class AuthenticationContainer : MonoBehaviour, ILocalizable
 {
     [SerializeField]
+    private GameObject _menuHolder;
+    [SerializeField]
     private TMP_Text _loginMenuTitleText;
     [SerializeField]
     private TMP_InputField _usernameInputField;
@@ -47,6 +49,8 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
         SettingsContainer settingsContainer,
         LoadSceneCommandFactory loadSceneCommandFactory)
     {
+        _menuHolder.SetActive(false);
+
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _registerUserCommandFactory = registerUserCommandFactory;
@@ -69,6 +73,10 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
         if (ShouldAttemptAutoLogin())
         {
             OnLoginUser();
+        }
+        else
+        {
+            _menuHolder.SetActive(true);
         }
     }
 
@@ -120,6 +128,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
 
     public void OnRegisterUserFailure(UserRegistrationFailedSignal signal)
     {
+        _menuHolder.SetActive(true);
         Debug.LogError($"Error on registration: {signal.Error}");
     }
 
@@ -131,6 +140,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
 
     public void OnLoginUserFailure(UserLoginFailedSignal signal)
     {
+        _menuHolder.SetActive(true);
         Debug.LogError($"Error on login: {signal.Error}");
     }
 

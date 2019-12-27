@@ -29,5 +29,6 @@
     LoginUser,
     CreateAccount,
     LogoutUser,
-    AutoLogin
+    AutoLogin,
+    UserGreeting
 }

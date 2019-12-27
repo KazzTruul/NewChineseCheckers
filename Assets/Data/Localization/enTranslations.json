@@ -29,6 +29,7 @@
 		"Player_Login": "Login",
 		"Player_Create_Account": "Create Account",
 		"Player_Logout": "Log Out",
-		"Options_AutoLogin":  "Auto Login"
+		"Options_AutoLogin": "Auto Login",
+		"Main_Menu_Greeting":  "Welcome, {0}"
 	}
 }
