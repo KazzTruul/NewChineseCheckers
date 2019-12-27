@@ -49,6 +49,8 @@ public static class Constants
     public const KeyCode PauseKey = KeyCode.Escape;
     public const int MinUsernameLength = 6;
     public const int MaxUsernameLength = 16;
+    public const int MinPasswordLength = 6;
+    public const int MaxPasswordLength = 100;
     #endregion Input
 
     #region Paths

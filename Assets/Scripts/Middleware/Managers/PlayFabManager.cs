@@ -10,6 +10,10 @@ namespace Middleware
 
         private string _sessionTicket;
 
+        private bool _hasLoggedIn = false;
+
+        public bool HasLoggedIn => _hasLoggedIn;
+
         [Inject]
         public void Initialize(SignalBus signalBus)
         {
@@ -40,6 +44,7 @@ namespace Middleware
         private void OnUserRegistrationSuccess(RegisterPlayFabUserResult result, string username, string password)
         {
             _sessionTicket = result.SessionTicket;
+            _hasLoggedIn = true;
             _signalBus.Fire(new UserRegistrationSucceededSignal { Result = result, Username = username, Password = password });
         }
 
@@ -61,6 +66,8 @@ namespace Middleware
 
         private void OnUserLoginSuccess(LoginResult result, string username, string password)
         {
+            _hasLoggedIn = true;
+            _sessionTicket = result.SessionTicket;
             _signalBus.Fire(new UserLoginSucceededSignal { Result = result, Username = username, Password = password });
         }
 

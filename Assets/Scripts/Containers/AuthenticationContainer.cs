@@ -25,6 +25,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
     [SerializeField]
     private TMP_Text _registerUserButtonText;
 
+    private PlayFabManager _playFabManager;
     private ILocalizationManager _localizationManager;
     private ICommandDispatcher _commandDispatcher;
     private RegisterUserCommandFactory _registerUserCommandFactory;
@@ -33,12 +34,14 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
     private LoadSceneCommandFactory _loadSceneCommandFactory;
 
     private readonly VerifyUsernameValidityStrategy _verifyUsernameValidityStrategy = new VerifyUsernameValidityStrategy();
+    private readonly VerifyPasswordValidityStrategy _verifyPasswordValidityStrategy = new VerifyPasswordValidityStrategy();
 
     private string _username = "";
     private string _userPassword = "";
 
     [Inject]
     private void Initialize(
+        PlayFabManager playFabManager,
         ILocalizationManager localizationManager,
         ICommandDispatcher commandDispatcher,
         RegisterUserCommandFactory registerUserCommandFactory,
@@ -46,6 +49,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
         SettingsContainer settingsContainer,
         LoadSceneCommandFactory loadSceneCommandFactory)
     {
+        _playFabManager = playFabManager;
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _registerUserCommandFactory = registerUserCommandFactory;
@@ -63,25 +67,43 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
         _username = _settingsContainer.Settings.Username;
         _userPassword = _settingsContainer.Settings.Password;
 
-        if (_settingsContainer.Settings.AutoLogin
-            && !string.IsNullOrEmpty(_username)
-             && !string.IsNullOrEmpty(_userPassword))
+        DetermineRegisterLoginButtonsInteractable();
+
+        if (ShouldAttemptAutoLogin())
         {
             OnLoginUser();
         }
+    }
+
+    private bool ShouldAttemptAutoLogin()
+    {
+        return _settingsContainer.Settings.AutoLogin
+            && !_playFabManager.HasLoggedIn
+            && !string.IsNullOrEmpty(_username)
+            && !string.IsNullOrEmpty(_userPassword);
+    }
+
+    private void DetermineRegisterLoginButtonsInteractable()
+    {
+        var validUsername = _verifyUsernameValidityStrategy.IsValidUsername(_username);
+        var validPassword = _verifyPasswordValidityStrategy.IsValidPassword(_userPassword);
+
+        _registerUserButton.interactable = validUsername && validPassword;
+        _loginUserButton.interactable = validUsername && validPassword;
     }
 
     private void OnUsernameInputChanged(string username)
     {
         _username = username;
 
-        _registerUserButton.interactable = _verifyUsernameValidityStrategy.IsValidUsername(_username);
-        _loginUserButton.interactable = _verifyUsernameValidityStrategy.IsValidUsername(_username);
+        DetermineRegisterLoginButtonsInteractable();
     }
 
     private void OnUserPasswordInputChanged(string password)
     {
         _userPassword = password;
+
+        DetermineRegisterLoginButtonsInteractable();
     }
 
     private void OnRegisterUser()
