@@ -24,8 +24,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
     private Button _registerUserButton;
     [SerializeField]
     private TMP_Text _registerUserButtonText;
-
-    private PlayFabManager _playFabManager;
+    
     private ILocalizationManager _localizationManager;
     private ICommandDispatcher _commandDispatcher;
     private RegisterUserCommandFactory _registerUserCommandFactory;
@@ -41,7 +40,6 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
 
     [Inject]
     private void Initialize(
-        PlayFabManager playFabManager,
         ILocalizationManager localizationManager,
         ICommandDispatcher commandDispatcher,
         RegisterUserCommandFactory registerUserCommandFactory,
@@ -49,7 +47,6 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
         SettingsContainer settingsContainer,
         LoadSceneCommandFactory loadSceneCommandFactory)
     {
-        _playFabManager = playFabManager;
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _registerUserCommandFactory = registerUserCommandFactory;
@@ -78,7 +75,6 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
     private bool ShouldAttemptAutoLogin()
     {
         return _settingsContainer.Settings.AutoLogin
-            && !_playFabManager.HasLoggedIn
             && !string.IsNullOrEmpty(_username)
             && !string.IsNullOrEmpty(_userPassword);
     }
