@@ -1,4 +1,5 @@
 ﻿using Zenject;
+using Middleware;
 
 public class MasterInstaller : MonoInstaller
 {
@@ -13,6 +14,10 @@ public class MasterInstaller : MonoInstaller
         Container.DeclareSignal<GamePausedChangedSignal>().OptionalSubscriber();
         Container.DeclareSignal<ActiveSceneChangedSignal>();
         Container.DeclareSignal<SettingsShouldShowChangedSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserRegistrationSucceededSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserRegistrationFailedSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserLoginSucceededSignal>().OptionalSubscriber();
+        Container.DeclareSignal<UserLoginFailedSignal>().OptionalSubscriber();
 
         //Set up Bindings
         Container.Bind<SettingsContainer>()
@@ -36,6 +41,9 @@ public class MasterInstaller : MonoInstaller
             .Lazy();
         Container.Bind<CoroutineRunner>()
             .FromComponentOnRoot();
+        Container.Bind<PlayFabManager>()
+            .AsSingle()
+            .Lazy();
 
         //Bind Factories
         Container.Bind<SetGamePausedCommandFactory>()
@@ -47,10 +55,16 @@ public class MasterInstaller : MonoInstaller
         Container.Bind<InitializeSettingsCommandFactory>()
             .AsSingle()
             .Lazy();
-        Container.Bind<SaveSettingsCommandFactory>()
+        Container.Bind<LoadSceneCommandFactory>()
             .AsSingle()
             .Lazy();
-        Container.Bind<LoadSceneCommandFactory>()
+        Container.Bind<RegisterUserCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<LoginUserCommandFactory>()
+            .AsSingle()
+            .Lazy();
+        Container.Bind<LogoutUserCommandFactory>()
             .AsSingle()
             .Lazy();
 

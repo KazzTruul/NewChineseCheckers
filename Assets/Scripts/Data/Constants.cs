@@ -34,21 +34,31 @@ public static class Constants
         { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" },
         { TranslationIdentifier.Language,               "Options_Language" },
         { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
-        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" }
+        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" },
+        { TranslationIdentifier.LoginMenuTitle,         "Login_Menu_Title" },
+        { TranslationIdentifier.PlayerUsername,         "Player_Display_Name" },
+        { TranslationIdentifier.PlayerPassword,         "Player_Password" },
+        { TranslationIdentifier.LoginUser,              "Player_Login" },
+        { TranslationIdentifier.CreateAccount,          "Player_Create_Account" },
+        { TranslationIdentifier.LogoutUser,             "Player_Logout" },
+        { TranslationIdentifier.AutoLogin,              "Options_AutoLogin" },
+        { TranslationIdentifier.UserGreeting,           "Main_Menu_Greeting" }
     };
-    #endregion
+    #endregion Localization
 
     #region Input
-
     public const KeyCode PauseKey = KeyCode.Escape;
-
-    #endregion
+    public const int MinUsernameLength = 6;
+    public const int MaxUsernameLength = 16;
+    public const int MinPasswordLength = 6;
+    public const int MaxPasswordLength = 100;
+    #endregion Input
 
     #region Paths
     public const string TranslationJsonName = "{0}Translations.json";
     public static readonly string LocalizationPath = $"{Application.dataPath}/Data/Localization/";
     public static readonly string SettingsPath = $"{Application.persistentDataPath}/Settings.json";
-    #endregion
+    #endregion Paths
 
     #region Defaults
     public const float DefaultMasterVolume = 0f;
@@ -56,14 +66,16 @@ public static class Constants
     public const float DefaultSFXVolume = 0f;
     public const string DefaultLanguage = "en";
     public const bool AutoSaveDefault = true;
-    #endregion
+    public const bool AutoLoginDefault = true;
+    #endregion Defaults
 
     #region SceneIndices
     public const int MasterSceneIndex = 0;
-    public const int MainMenuSceneIndex = 1;
-    public const int SinglePlayerSceneIndex = 2;
-    public const int MultiPlayerSceneIndex = 3;
-    #endregion
+    public const int LoginSceneIndex = 1;
+    public const int MainMenuSceneIndex = 2;
+    public const int SinglePlayerSceneIndex = 3;
+    public const int MultiPlayerSceneIndex = 4;
+    #endregion SceneIndices
 
     #region Conversions
     public static readonly Dictionary<BoardColor, Color> ColorConversions = new Dictionary<BoardColor, Color>
@@ -82,5 +94,5 @@ public static class Constants
         { "en", "English" },
         { "sv", "Svenska" }
     };
-    #endregion
+    #endregion Conversions
 }

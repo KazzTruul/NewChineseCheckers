@@ -22,5 +22,13 @@
     PauseMenuTitle,
     Language,
     AutoSave,
-    SaveAndLeave
+    SaveAndLeave,
+    LoginMenuTitle,
+    PlayerUsername,
+    PlayerPassword,
+    LoginUser,
+    CreateAccount,
+    LogoutUser,
+    AutoLogin,
+    UserGreeting
 }

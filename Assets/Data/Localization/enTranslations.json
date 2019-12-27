@@ -22,6 +22,14 @@
 		"Pause_Menu_Title": "Game Paused",
 		"Options_Language": "Options",
 		"Options_AutoSave": "Auto Save",
-		"Options_SaveAndLeave": "Save and Leave"
+		"Options_SaveAndLeave": "Save and Leave",
+		"Login_Menu_Title": "Login to Account",
+		"Player_Display_Name": "Account Name",
+		"Player_Password": "Password",
+		"Player_Login": "Login",
+		"Player_Create_Account": "Create Account",
+		"Player_Logout": "Log Out",
+		"Options_AutoLogin": "Auto Login",
+		"Main_Menu_Greeting":  "Welcome, {0}"
 	}
 }

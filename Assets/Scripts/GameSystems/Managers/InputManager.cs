@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Zenject;
 
 public class InputManager : IInputManager
@@ -11,6 +12,8 @@ public class InputManager : IInputManager
     private SetGamePausedCommandFactory _setGamePausedCommandFactory;
     [Inject]
     private ICommandDispatcher _commandDispatcher;
+    [Inject]
+    private CoroutineRunner _coroutineRunner;
 
     private bool _gamePaused;
 

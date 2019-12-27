@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuContainer : MonoBehaviour, ILocalizable
 {
     [SerializeField]
+    private TMP_Text _userGreetingText;
+    [SerializeField]
     private TMP_Text _startSinglePlayerGameText;
     [SerializeField]
     private TMP_Text _startMultiPlayerGameText;
@@ -14,6 +16,8 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     private TMP_Text _loadGameText;
     [SerializeField]
     private TMP_Text _openSettingsText;
+    [SerializeField]
+    private TMP_Text _logoutUserText;
     [SerializeField]
     private TMP_Text _quitGameText;
     [SerializeField]
@@ -25,20 +29,31 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     [SerializeField]
     private Button _openSettingsButton;
     [SerializeField]
+    private Button _logoutUserButton;
+    [SerializeField]
     private Button _quitGameButton;
 
     private ILocalizationManager _localizationManager;
     private ICommandDispatcher _commandDispatcher;
     private LoadSceneCommandFactory _loadSceneCommandFactory;
     private SignalBus _signalBus;
+    private LogoutUserCommandFactory _logoutUserCommandFactory;
+    private SettingsContainer _settingsContainer;
 
     [Inject]
-    public void Initialize(ILocalizationManager localizationManager, ICommandDispatcher commandDispatcher, LoadSceneCommandFactory loadSceneCommandFactory, SignalBus signalBus)
+    public void Initialize(ILocalizationManager localizationManager,
+        ICommandDispatcher commandDispatcher,
+        LoadSceneCommandFactory loadSceneCommandFactory,
+        SignalBus signalBus,
+        LogoutUserCommandFactory logoutUserCommandFactory,
+        SettingsContainer settingsContainer)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
         _signalBus = signalBus;
+        _logoutUserCommandFactory = logoutUserCommandFactory;
+        _settingsContainer = settingsContainer;
 
         //TODO: Add difficulty selection
         _startSinglePlayerGameButton.onClick.AddListener(() =>
@@ -53,10 +68,15 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         });
         _openSettingsButton.onClick.AddListener(() =>
         {
-            //_commandDispatcher.ExecuteCommand(new settings)
+            //TODO: Change to command
             _signalBus.Fire(new SettingsShouldShowChangedSignal { ShowSettings = true });
         });
         //TODO: Make confirmation menu
+        _logoutUserButton.onClick.AddListener(() => 
+        {
+            _commandDispatcher.ExecuteCommand(_logoutUserCommandFactory.Create());
+            _commandDispatcher.ExecuteCommand(_loadSceneCommandFactory.Create(Constants.LoginSceneIndex, false, true, Constants.MainMenuSceneIndex));
+        });
         _quitGameButton.onClick.AddListener(() => Application.Quit());
 
         OnLanguageChanged();
@@ -64,10 +84,12 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLanguageChanged()
     {
+        _userGreetingText.text = string.Format(_localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.UserGreeting]), _settingsContainer.Settings.Username);
         _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayer]);
         _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayer]);
         _loadGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoadGame]);
         _openSettingsText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Options]);
+        _logoutUserText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LogoutUser]);
         _quitGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.QuitGame]);
     }
 }

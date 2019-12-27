@@ -22,6 +22,14 @@
 		"Pause_Menu_Title": "Spelet Pausat",
 		"Options_Language": "Språk",
 		"Options_AutoSave": "Spara Automatiskt",
-		"Options_SaveAndLeave": "Spara och Gå Tillbaka"
+		"Options_SaveAndLeave": "Spara och Gå Tillbaka",
+		"Login_Menu_Title": "Inloggning",
+		"Player_Display_Name": "Kontonamn",
+		"Player_Password": "Lösenord",
+		"Player_Login": "Logga In",
+		"Player_Create_Account": "Skapa Konto",
+		"Player_Logout": "Logga Ut",
+		"Options_AutoLogin": "Logga in Automatiskt",
+		"Main_Menu_Greeting": "Välkommen, {0}"
 	}
 }

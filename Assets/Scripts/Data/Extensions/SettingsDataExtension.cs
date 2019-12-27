@@ -7,6 +7,7 @@
         settingsData.SFXVolume = newSettings.SFXVolume;
         settingsData.Language = newSettings.Language;
         settingsData.AutoSave = newSettings.AutoSave;
+        settingsData.AutoLogin = newSettings.AutoLogin;
     }
 
     public static void ResetToDefaultSettings(this SettingsData settingsData, ILocalizationManager localizationManager)
@@ -16,5 +17,6 @@
         settingsData.SFXVolume = Constants.DefaultSFXVolume;
         settingsData.Language = localizationManager.GetPreferredLanguage();
         settingsData.AutoSave = Constants.AutoSaveDefault;
+        settingsData.AutoLogin = Constants.AutoLoginDefault;
     }
 }

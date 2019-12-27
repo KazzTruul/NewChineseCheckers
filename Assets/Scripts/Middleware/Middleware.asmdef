@@ -1,0 +1,23 @@
+{
+    "name": "Middleware",
+    "references": [
+        "GUID:ed470ed267a9a224790fec8410e5c27c",
+        "GUID:8f342294dfb958a4694b67859092b749",
+        "GUID:fb1574451c56b754fb50ac8ed022aacd",
+        "GUID:6faf849fd71899e48b3d80b074023cb5",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:d0acddb179989574c8355991596bd3e6",
+        "GUID:e988738e8012f5a4fa42a45fcab11e2c",
+        "GUID:14f8b558cd941e545961d1d8d31254f0",
+        "GUID:a2f2239355369ba4fb6909aeaa41def5"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": []
+}
