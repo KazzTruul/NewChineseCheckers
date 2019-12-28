@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System;
-using System.Reflection;
 
 internal sealed class TranslationFileValidationTool
 {
@@ -38,22 +37,7 @@ internal sealed class TranslationFileValidationTool
 
         await Task.WhenAll(fileUpdateTasks);
 
-        CompareIdentifiersToConstants();
-
         Debug.Log(SearchFinishedMessage);
-    }
-
-    private static void CompareIdentifiersToConstants()
-    {        
-        var translationIdentifiers = Enum.GetValues(typeof(TranslationIdentifier));
-        foreach (var identifier in translationIdentifiers)
-        {
-            if (Constants.Translations.Keys.Any(key => key.ToString() == identifier.ToString()))
-            {
-                continue;
-            }
-            Debug.Log(string.Format(IdentifierMissingFromConstantsMessage, identifier));
-        }
     }
 
     private static async Task ValidateTranslationFile(string language)
@@ -86,10 +70,15 @@ internal sealed class TranslationFileValidationTool
                 catalog = translationSerializer.ReadObject(memoryStream) as TranslationCatalog;
             }
 
+            var translationKeyFields = typeof(TranslationKeys).GetFields()
+                .Where(f => f.FieldType == typeof(string))
+                .Select(f => f.GetValue(f) as string)
+                .ToArray();
+
             var missingConstantTranslationsInCatalog =
             from translation
             in catalog.Translations.Keys
-            where !Constants.Translations.ContainsValue(translation)
+            where Array.IndexOf(translationKeyFields, translation) < 0
             select translation;
 
             foreach (var missingTranslation in missingConstantTranslationsInCatalog)
@@ -99,7 +88,7 @@ internal sealed class TranslationFileValidationTool
 
             var missingCatalogTranslations =
             from translation
-            in Constants.Translations.Values
+            in translationKeyFields
             where !catalog.Translations.ContainsKey(translation)
             select translation;
 

@@ -84,12 +84,12 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLanguageChanged()
     {
-        _userGreetingText.text = string.Format(_localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.UserGreeting]), _settingsContainer.Settings.Username);
-        _startSinglePlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SinglePlayer]);
-        _startMultiPlayerGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MultiPlayer]);
-        _loadGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LoadGame]);
-        _openSettingsText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Options]);
-        _logoutUserText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.LogoutUser]);
-        _quitGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.QuitGame]);
+        _userGreetingText.text = string.Format(TranslationKeys.MainMenuGreetingTranslation, _settingsContainer.Settings.Username);
+        _startSinglePlayerGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameStartSingleTranslation);
+        _startMultiPlayerGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameStartMultiTranslation);
+        _loadGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameLoadTranslation);
+        _openSettingsText.text = _localizationManager.GetTranslation(TranslationKeys.GameOptionsTranslation);
+        _logoutUserText.text = _localizationManager.GetTranslation(TranslationKeys.PlayerLogoutTranslation);
+        _quitGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameQuitTranslation);
     }
 }
