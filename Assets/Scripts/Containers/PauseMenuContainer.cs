@@ -65,12 +65,12 @@ public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
 
     public void OnLanguageChanged()
     {
-        _pauseMenuTitleText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.PauseMenuTitle]);
-        _resumeGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.ResumeGame]);
-        _restartGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.RestartGame]);
-        _settingsText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Options]);
-        _mainMenuText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MainMenu]);
-        _quitGameText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.QuitGame]);
+        _pauseMenuTitleText.text = _localizationManager.GetTranslation(TranslationKeys.PauseMenuTitleTranslation);
+        _resumeGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameResumeTranslation);
+        _restartGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameRestartTranslation);
+        _settingsText.text = _localizationManager.GetTranslation(TranslationKeys.GameOptionsTranslation);
+        _mainMenuText.text = _localizationManager.GetTranslation(TranslationKeys.MainMenuTranslation);
+        _quitGameText.text = _localizationManager.GetTranslation(TranslationKeys.GameQuitTranslation);
     }
 
     public void OnPausedAndUnpaused(GamePausedChangedSignal signal)

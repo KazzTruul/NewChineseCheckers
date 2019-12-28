@@ -125,14 +125,14 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
 
     public void OnLanguageChanged()
     {
-        _menuTitleText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.OptionsTitle]);
-        _masterVolumeText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MasterVolume]);
-        _musicVolumeText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.MusicVolume]);
-        _sfxVolumeText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SFXVolume]);
-        _languageText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.Language]);
-        _autoSaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.AutoSave]);
-        _autoLoginText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.AutoLogin]);
-        _saveAndLeaveText.text = _localizationManager.GetTranslation(Constants.Translations[TranslationIdentifier.SaveAndLeave]);
+        _menuTitleText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsTitleTranslation);
+        _masterVolumeText.text = _localizationManager.GetTranslation(TranslationKeys.VolumeMasterTranslation);
+        _musicVolumeText.text = _localizationManager.GetTranslation(TranslationKeys.VolumeMusicTranslation);
+        _sfxVolumeText.text = _localizationManager.GetTranslation(TranslationKeys.VolumeSfxTranslation);
+        _languageText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsLanguageTranslation);
+        _autoSaveText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsAutoSaveTranslation);
+        _autoLoginText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsAutoLoginTranslation);
+        _saveAndLeaveText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsSaveLeaveTranslation);
     }
 
     public void OnShowSettingsChanged(SettingsShouldShowChangedSignal signal)

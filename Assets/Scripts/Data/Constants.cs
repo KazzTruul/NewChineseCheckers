@@ -9,41 +9,6 @@ public static class Constants
         "en",
         "sv"
     };
-
-    public static readonly Dictionary<TranslationIdentifier, string> Translations = new Dictionary<TranslationIdentifier, string>()
-    {
-        { TranslationIdentifier.GameName,               "Game_Name" },
-        { TranslationIdentifier.Options,                "Game_Options" },
-        { TranslationIdentifier.SaveGame,               "Game_Save" },
-        { TranslationIdentifier.LoadGame,               "Game_Load" },
-        { TranslationIdentifier.QuitGame,               "Game_Quit" },
-        { TranslationIdentifier.SinglePlayer,           "Game_Start_Single" },
-        { TranslationIdentifier.MultiPlayer,            "Game_Start_Multi" },
-        { TranslationIdentifier.DifficultyEasy,         "Game_Difficulty_Easy" },
-        { TranslationIdentifier.DifficultyMedium,       "Game_Difficulty_Medium" },
-        { TranslationIdentifier.DifficultyHard,         "Game_Difficulty_Hard" },
-        { TranslationIdentifier.OptionsTitle,           "Options_Title" },
-        { TranslationIdentifier.MasterVolume,           "Volume_Master" },
-        { TranslationIdentifier.MusicVolume,            "Volume_Music" },
-        { TranslationIdentifier.SFXVolume,              "Volume_SFX" },
-        { TranslationIdentifier.ChangeLanguage,         "Language_Change" },
-        { TranslationIdentifier.GoBack,                 "Menu_Return" },
-        { TranslationIdentifier.ResumeGame,             "Game_Resume" },
-        { TranslationIdentifier.RestartGame,            "Game_Restart" },
-        { TranslationIdentifier.MainMenu,               "Main_Menu" },
-        { TranslationIdentifier.PauseMenuTitle,         "Pause_Menu_Title" },
-        { TranslationIdentifier.Language,               "Options_Language" },
-        { TranslationIdentifier.AutoSave,               "Options_AutoSave" },
-        { TranslationIdentifier.SaveAndLeave,           "Options_SaveAndLeave" },
-        { TranslationIdentifier.LoginMenuTitle,         "Login_Menu_Title" },
-        { TranslationIdentifier.PlayerUsername,         "Player_Display_Name" },
-        { TranslationIdentifier.PlayerPassword,         "Player_Password" },
-        { TranslationIdentifier.LoginUser,              "Player_Login" },
-        { TranslationIdentifier.CreateAccount,          "Player_Create_Account" },
-        { TranslationIdentifier.LogoutUser,             "Player_Logout" },
-        { TranslationIdentifier.AutoLogin,              "Options_AutoLogin" },
-        { TranslationIdentifier.UserGreeting,           "Main_Menu_Greeting" }
-    };
     #endregion Localization
 
     #region Input
