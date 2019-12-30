@@ -1,13 +1,13 @@
 ﻿using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using Generated;
+using System.Threading.Tasks;
 
 public class LocalizationEditorWindow : EditorWindow
 {
@@ -38,7 +38,7 @@ public class LocalizationEditorWindow : EditorWindow
 
     private enum WindowState
     {
-        Default, Add, Delete
+        Default, Add, Delete, Running
     }
 
     private enum OperationMode
@@ -81,6 +81,10 @@ public class LocalizationEditorWindow : EditorWindow
                 DisplayDeleteTranslationKeys();
                 DisplayGoBackButton();
                 break;
+
+            case WindowState.Running:
+                EditorGUILayout.TextArea("Operation in progress...");
+                break;
         }
     }
 
@@ -90,6 +94,7 @@ public class LocalizationEditorWindow : EditorWindow
         {
             _currentWindowState = WindowState.Add;
         }
+
         if (GUILayout.Button(DeleteTranslationButtonText))
         {
             _currentWindowState = WindowState.Delete;
@@ -105,7 +110,7 @@ public class LocalizationEditorWindow : EditorWindow
     {
         if (GUILayout.Button(AddTranslationButtonText))
         {
-            ConstructGeneratedType(OperationMode.Add, _newTranslation);
+            ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
         }
     }
 
@@ -117,13 +122,15 @@ public class LocalizationEditorWindow : EditorWindow
 
             if (GUILayout.Button(string.Format(DeleteTranslationKeyFormat, formattedString)))
             {
-                ConstructGeneratedType(OperationMode.Delete, stringField.GetValue(stringField) as string);
+                ConstructGeneratedType(OperationMode.Delete, stringField.GetValue(stringField) as string, GetOutputFilePath());
             }
         }
     }
 
-    private void ConstructGeneratedType(OperationMode mode, string targetTranslationKey)
+    private async void ConstructGeneratedType(OperationMode mode, string targetTranslationKey, string filePath)
     {
+        _currentWindowState = WindowState.Running;
+
         _targetUnit = new CodeCompileUnit();
 
         _targetClass = new CodeTypeDeclaration(GeneratedTypeName)
@@ -140,7 +147,6 @@ public class LocalizationEditorWindow : EditorWindow
         {
             if (mode == OperationMode.Delete && existingTranslationKey.Name == FormatStringForFieldName(targetTranslationKey))
             {
-                Debug.Log("Skipping obsolete key");
                 continue;
             }
 
@@ -165,30 +171,35 @@ public class LocalizationEditorWindow : EditorWindow
             });
         }
 
-        GenerateTypeFile(GetOutputFilePath());
+        await Task.Run(() => GenerateTypeFile(filePath));
+        _currentWindowState = WindowState.Default;
     }
 
-    private void GenerateTypeFile(string fileName)
+    private async void GenerateTypeFile(string fileName)
     {
-        if (!CodeDomProvider.IsDefinedLanguage(CodeDomProviderLanguage))
+        await Task.Run(() =>
         {
-            throw new Exception($"{CodeDomProviderLanguage} is not a valid language!");
-        }
 
-        var codeDomProvider = CodeDomProvider.CreateProvider(CodeDomProviderLanguage);
+            if (!CodeDomProvider.IsDefinedLanguage(CodeDomProviderLanguage))
+            {
+                throw new Exception($"{CodeDomProviderLanguage} is not a valid language!");
+            }
 
-        var codeGeneratorOptions = new CodeGeneratorOptions
-        {
-            BracingStyle = CodeGeneratorOptionsBracingStyle,
-            BlankLinesBetweenMembers = false
-        };
+            var codeDomProvider = CodeDomProvider.CreateProvider(CodeDomProviderLanguage);
 
-        using (var streamWriter = new StreamWriter(fileName))
-        {
-            codeDomProvider.GenerateCodeFromCompileUnit(_targetUnit, streamWriter, codeGeneratorOptions);
-        }
+            var codeGeneratorOptions = new CodeGeneratorOptions
+            {
+                BracingStyle = CodeGeneratorOptionsBracingStyle,
+                BlankLinesBetweenMembers = false
+            };
 
-        codeDomProvider.Dispose();
+            using (var streamWriter = new StreamWriter(fileName))
+            {
+                codeDomProvider.GenerateCodeFromCompileUnit(_targetUnit, streamWriter, codeGeneratorOptions);
+            }
+
+            codeDomProvider.Dispose();
+        });
     }
 
     private void DisplayGoBackButton()
