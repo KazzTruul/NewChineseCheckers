@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
@@ -9,9 +10,14 @@ using UnityEngine;
 
 public class LocalizationEditorWindow : EditorWindow
 {
+    #region Field
     private const string EditorWindowName = "Localization Editor";
 
     private const string GeneratedNamespaceName = "Generated";
+
+    private const string CodeDomProviderLanguage = "CSharp";
+
+    private const string CodeGeneratorOptionsBracingStyle = "C";
 
     private const string FieldNameSuffix = "Translation";
 
@@ -32,6 +38,8 @@ public class LocalizationEditorWindow : EditorWindow
     private const string GoBackButtonText = "Go Back";
 
     private static readonly string GeneratedTypeName = TranslationKeysType.Name;
+
+    private static readonly string OutputFilePath = Path.Combine(Application.dataPath, "Scripts", "Data", GeneratedNamespaceName, $"{GeneratedTypeName}.cs");
 
     private static readonly Type TranslationKeysType = typeof(TranslationKeys);
 
@@ -55,11 +63,12 @@ public class LocalizationEditorWindow : EditorWindow
         { WindowState.Delete, DeleteTranslationKeyFormat },
         { WindowState.Update, UpdateTranslationKeyFormat }
     };
+    #endregion Field
 
     [MenuItem("Window/Localization/" + EditorWindowName)]
     public static void ShowWindow()
     {
-        GetWindow<LocalizationEditorWindow>($"Localization Editor{EditorWindowName}");
+        GetWindow<LocalizationEditorWindow>(EditorWindowName);
     }
 
     private void OnGUI()
@@ -149,6 +158,30 @@ public class LocalizationEditorWindow : EditorWindow
             Name = FormatStringForFieldName(newTranslation),
             InitExpression = new CodePrimitiveExpression(FormatStringForTranslationKey(newTranslation))
         });
+
+        GenerateTypeFile(OutputFilePath);
+    }
+
+    private void GenerateTypeFile(string fileName)
+    {
+        if (!CodeDomProvider.IsDefinedLanguage(CodeDomProviderLanguage))
+        {
+            throw new Exception($"{CodeDomProviderLanguage} is not a valid language!");
+        }
+
+        var codeDomProvider = CodeDomProvider.CreateProvider(CodeDomProviderLanguage);
+
+        var codeGeneratorOptions = new CodeGeneratorOptions
+        {
+            BracingStyle = CodeGeneratorOptionsBracingStyle,
+            BlankLinesBetweenMembers = false
+        };
+
+        using (var streamWriter = new StreamWriter(fileName))
+        {
+            codeDomProvider.GenerateCodeFromCompileUnit(_targetUnit, streamWriter, codeGeneratorOptions);
+        }
+
     }
 
     private void DisplayDeleteTranslationKeys()
