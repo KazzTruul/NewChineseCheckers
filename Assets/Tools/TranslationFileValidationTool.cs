@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System;
+using Generated;
 
 internal sealed class TranslationFileValidationTool
 {

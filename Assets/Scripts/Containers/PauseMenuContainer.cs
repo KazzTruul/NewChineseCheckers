@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Generated;
 
 public class PauseMenuContainer : MonoBehaviour, ILocalizable, IPausable
 {

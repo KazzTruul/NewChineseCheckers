@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Generated;
 
 public class SettingsMenuContainer : MonoBehaviour, ILocalizable
 {

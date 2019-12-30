@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Generated;
 
 public class MainMenuContainer : MonoBehaviour, ILocalizable
 {
