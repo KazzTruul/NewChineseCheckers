@@ -48,13 +48,35 @@ public class LocalizationEditorWindow : EditorWindow
 
     private WindowState _currentWindowState = WindowState.Default;
 
-    private CodeNamespace _generatedNamespace = new CodeNamespace(GeneratedNamespaceName);
+    private readonly CodeNamespace _generatedNamespace = new CodeNamespace(GeneratedNamespaceName);
 
     private CodeCompileUnit _targetUnit;
 
     private CodeTypeDeclaration _targetClass;
 
     private string _newTranslation = "";
+
+    private int _deletionlGridIndex = -1;
+
+    private int DeletionGridIndex
+    {
+        set
+        {
+            if (value == _deletionlGridIndex)
+                return;
+
+            _deletionlGridIndex = value;
+
+            if (value > -1)
+            {
+                var translationKey = FormatStringForTranslationKey(_availableTranslationKeys[_deletionlGridIndex]);
+
+                ConstructGeneratedType(OperationMode.Delete, translationKey, GetOutputFilePath());
+            }
+        }
+    }
+
+    private string[] _availableTranslationKeys;
     #endregion Field
 
     [MenuItem("Window/Localization/" + EditorWindowName)]
@@ -65,6 +87,11 @@ public class LocalizationEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        if (EditorApplication.isCompiling)
+        {
+            return;
+        }
+
         switch (_currentWindowState)
         {
             case WindowState.Default:
@@ -83,13 +110,32 @@ public class LocalizationEditorWindow : EditorWindow
                 break;
 
             case WindowState.Running:
+                Event.current.Use();
                 EditorGUILayout.TextArea("Operation in progress...");
+                AssetDatabase.Refresh();
+                EditorApplication.update += WaitForRecompilation;
                 break;
+        }
+    }
+
+    private void WaitForRecompilation()
+    {
+        if (!EditorApplication.isCompiling)
+        {
+            EditorApplication.update -= WaitForRecompilation;
+            _currentWindowState = WindowState.Default;
         }
     }
 
     private void DisplayModeSelection()
     {
+        if (_deletionlGridIndex > -1)
+        {
+            _deletionlGridIndex = -1;
+        }
+
+        GUILayout.BeginVertical();
+
         if (GUILayout.Button(AddTranslationButtonText))
         {
             _currentWindowState = WindowState.Add;
@@ -99,6 +145,8 @@ public class LocalizationEditorWindow : EditorWindow
         {
             _currentWindowState = WindowState.Delete;
         }
+
+        GUILayout.EndVertical();
     }
 
     private void DisplayAddNewTranslationInput()
@@ -116,21 +164,18 @@ public class LocalizationEditorWindow : EditorWindow
 
     private void DisplayDeleteTranslationKeys()
     {
-        foreach (var stringField in TranslationKeysType.GetFields().Where(f => f.FieldType == typeof(string)))
-        {
-            var formattedString = FormatStringForButton(stringField.GetValue(stringField) as string);
+        _availableTranslationKeys = TranslationKeysType.GetFields()
+            .Where(f => f.FieldType == typeof(string))
+            .Select(s => s.GetValue(s) as string)
+            .ToArray();
 
-            if (GUILayout.Button(string.Format(DeleteTranslationKeyFormat, formattedString)))
-            {
-                ConstructGeneratedType(OperationMode.Delete, stringField.GetValue(stringField) as string, GetOutputFilePath());
-            }
-        }
+        var buttonTexts = _availableTranslationKeys.Select(s => string.Format(DeleteTranslationKeyFormat, FormatStringForButton(s))).ToArray();
+
+        DeletionGridIndex = GUILayout.SelectionGrid(_deletionlGridIndex, buttonTexts, 5);
     }
 
     private async void ConstructGeneratedType(OperationMode mode, string targetTranslationKey, string filePath)
     {
-        _currentWindowState = WindowState.Running;
-
         _targetUnit = new CodeCompileUnit();
 
         _targetClass = new CodeTypeDeclaration(GeneratedTypeName)
@@ -145,6 +190,7 @@ public class LocalizationEditorWindow : EditorWindow
         //Add existing translation keys to generated field
         foreach (var existingTranslationKey in TranslationKeysType.GetFields().Where(f => f.FieldType == typeof(string)))
         {
+            //Skip a key in order to delete it
             if (mode == OperationMode.Delete && existingTranslationKey.Name == FormatStringForFieldName(targetTranslationKey))
             {
                 continue;
@@ -172,14 +218,14 @@ public class LocalizationEditorWindow : EditorWindow
         }
 
         await Task.Run(() => GenerateTypeFile(filePath));
-        _currentWindowState = WindowState.Default;
+
+        _currentWindowState = WindowState.Running;
     }
 
     private async void GenerateTypeFile(string fileName)
     {
         await Task.Run(() =>
         {
-
             if (!CodeDomProvider.IsDefinedLanguage(CodeDomProviderLanguage))
             {
                 throw new Exception($"{CodeDomProviderLanguage} is not a valid language!");
