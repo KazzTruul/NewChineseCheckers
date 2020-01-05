@@ -162,7 +162,14 @@ public class LocalizationEditorWindow : EditorWindow
 
             if (_newTranslation.IsValidTranslationKey())
             {
-                ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
+                if (TranslationKeysType.GetField(FormatStringForFieldName(_newTranslation)) == null)
+                {
+                    ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
+                }
+                else
+                {
+                    Debug.LogError("Key Already Exists!");
+                }
             }
             else
             {
