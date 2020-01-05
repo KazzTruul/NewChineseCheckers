@@ -1,8 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 
+//TODO: Convert into string extension
 public class VerifyUsernameValidityStrategy
 {
-    private string _validUsernamePattern = @"[a-zA-Z0-9]";
+    private const string _validUsernamePattern = @"[a-zA-Z0-9]";
 
     public bool IsValidUsername(string potentialUsername)
     {

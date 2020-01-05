@@ -158,7 +158,14 @@ public class LocalizationEditorWindow : EditorWindow
     {
         if (GUILayout.Button(AddTranslationButtonText))
         {
-            ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
+            if (_newTranslation.IsValidTranslationKey())
+            {
+                ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
+            }
+            else
+            {
+                Debug.LogError("Invalid Translation Key");
+            }
         }
     }
 

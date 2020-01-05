@@ -1,8 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 
+//TODO: Convert into string extension
 public class VerifyPasswordValidityStrategy
 {
-    private string _validPasswordPattern = @"[a-zA-Z0-9]";
+    private const string _validPasswordPattern = @"[a-zA-Z0-9]";
 
     public bool IsValidPassword(string potentialPassword)
     {
