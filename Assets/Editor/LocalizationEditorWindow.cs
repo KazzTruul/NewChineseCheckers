@@ -158,6 +158,8 @@ public class LocalizationEditorWindow : EditorWindow
     {
         if (GUILayout.Button(AddTranslationButtonText))
         {
+            _newTranslation = _newTranslation.CapitalizeInitialLetters();
+
             if (_newTranslation.IsValidTranslationKey())
             {
                 ConstructGeneratedType(OperationMode.Add, _newTranslation, GetOutputFilePath());
