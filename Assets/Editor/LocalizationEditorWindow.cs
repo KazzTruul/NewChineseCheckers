@@ -31,17 +31,27 @@ public class LocalizationEditorWindow : EditorWindow
 
     private const string NewTranslationKeyLabel = "New Key Name: ";
 
-    private const string DeleteTranslationKeyFormat = "Delete {0}";
+    private const string NewSupportedLanguageLabel = "New Language: ";
+
+    private const string AddLanguageButtonText = "Add Supported Language";
+
+    private const string DeleteLanguageButtonText = "Delete Supported Language";
 
     private const string GoBackButtonText = "Go Back";
 
+    private const string SupportedLanguagesFieldArrayName = "Languages";
+
     private static readonly Type TranslationKeysType = typeof(TranslationKeys);
 
-    private static readonly string GeneratedTypeName = TranslationKeysType.Name;
+    private static readonly Type SupportedLanguagesType = typeof(SupportedLanguages);
+
+    private static readonly string TranslationKeysGeneratedTypeName = TranslationKeysType.Name;
+
+    private static readonly string SupportedLanguagesGeneratedTypeName = SupportedLanguagesType.Name;
 
     private enum WindowState
     {
-        Default, Add, Delete, Running
+        Default, AddTranslation, DeleteTranslation, AddSupportedLanguage, DeleteSupportedLanguage, Running
     }
 
     private enum OperationMode
@@ -55,31 +65,56 @@ public class LocalizationEditorWindow : EditorWindow
 
     private CodeCompileUnit _targetUnit;
 
-    private CodeTypeDeclaration _targetClass;
+    private CodeTypeDeclaration _translationKeysClass;
+
+    private CodeTypeDeclaration _supportedLanguagesClass;
 
     private string _newTranslation = "";
 
-    private int _deletionlGridIndex = -1;
+    private int _translationKeyDeletionlGridIndex = -1;
 
-    private int DeletionGridIndex
+    private string _newLanguage = "";
+
+    private int _supportedLanguageDeletionGridIndex = -1;
+
+    private int TranslationKeyDeletionGridIndex
     {
         set
         {
-            if (value == _deletionlGridIndex)
+            if (value == _translationKeyDeletionlGridIndex)
                 return;
 
-            _deletionlGridIndex = value;
+            _translationKeyDeletionlGridIndex = value;
 
             if (value > -1)
             {
-                var translationKey = FormatStringForTranslationKey(_availableTranslationKeys[_deletionlGridIndex]);
+                var translationKey = FormatStringForTranslationKey(_availableTranslationKeys[_translationKeyDeletionlGridIndex]);
 
-                ConstructTranslationKeysType(OperationMode.Delete, translationKey, GetOutputFilePath(), GetTranslationCatalogPaths());
+                ConstructTranslationKeysType(OperationMode.Delete, translationKey, GetTranslationKeyOutputFilePath(), GetTranslationCatalogPaths());
+            }
+        }
+    }
+
+    private int SupportedLanguageDeletionGridIndex
+    {
+        set
+        {
+            if (value == _supportedLanguageDeletionGridIndex)
+                return;
+
+            _supportedLanguageDeletionGridIndex = value;
+
+            if (value > -1)
+            {
+                var newLanguage = _availableSupportedLanguages[_supportedLanguageDeletionGridIndex];
+                ConstructSupportedLanguagesTypeFile(newLanguage, GetSupportedLanguagesOutputFilePath(), GetTranslationCatalogPath(newLanguage), OperationMode.Delete);
             }
         }
     }
 
     private string[] _availableTranslationKeys;
+
+    private string[] _availableSupportedLanguages;
     #endregion Field
 
     [MenuItem("Window/Localization/" + EditorWindowName)]
@@ -90,7 +125,7 @@ public class LocalizationEditorWindow : EditorWindow
 
     private void OnGUI()
     {
-        if (EditorApplication.isCompiling)
+        if (EditorApplication.isCompiling || Application.isPlaying)
         {
             return;
         }
@@ -101,14 +136,25 @@ public class LocalizationEditorWindow : EditorWindow
                 DisplayModeSelection();
                 break;
 
-            case WindowState.Add:
+            case WindowState.AddTranslation:
                 DisplayAddNewTranslationInput();
                 DisplayAddNewTranslationButton();
                 DisplayGoBackButton();
                 break;
 
-            case WindowState.Delete:
+            case WindowState.DeleteTranslation:
                 DisplayDeleteTranslationKeys();
+                DisplayGoBackButton();
+                break;
+
+            case WindowState.AddSupportedLanguage:
+                DisplayAddSupportedLanguageInput();
+                DisplayAddSupportedLanguageButton();
+                DisplayGoBackButton();
+                break;
+
+            case WindowState.DeleteSupportedLanguage:
+                DisplayDeleteSupportedLanguages();
                 DisplayGoBackButton();
                 break;
 
@@ -130,23 +176,39 @@ public class LocalizationEditorWindow : EditorWindow
         }
     }
 
+    #region LayoutElementsDisplay
     private void DisplayModeSelection()
     {
-        if (_deletionlGridIndex > -1)
+        if (_translationKeyDeletionlGridIndex > -1)
         {
-            _deletionlGridIndex = -1;
+            _translationKeyDeletionlGridIndex = -1;
+        }
+
+        if (_supportedLanguageDeletionGridIndex > -1)
+        {
+            _supportedLanguageDeletionGridIndex = -1;
         }
 
         GUILayout.BeginVertical();
 
         if (GUILayout.Button(AddTranslationButtonText))
         {
-            _currentWindowState = WindowState.Add;
+            _currentWindowState = WindowState.AddTranslation;
         }
 
         if (GUILayout.Button(DeleteTranslationButtonText))
         {
-            _currentWindowState = WindowState.Delete;
+            _currentWindowState = WindowState.DeleteTranslation;
+        }
+
+        if (GUILayout.Button(AddLanguageButtonText))
+        {
+            _currentWindowState = WindowState.AddSupportedLanguage;
+        }
+
+        if (GUILayout.Button(DeleteLanguageButtonText))
+        {
+            _currentWindowState = WindowState.DeleteSupportedLanguage;
         }
 
         GUILayout.EndVertical();
@@ -167,7 +229,7 @@ public class LocalizationEditorWindow : EditorWindow
             {
                 if (TranslationKeysType.GetField(FormatStringForFieldName(_newTranslation)) == null)
                 {
-                    ConstructTranslationKeysType(OperationMode.Add, _newTranslation, GetOutputFilePath(), GetTranslationCatalogPaths());
+                    ConstructTranslationKeysType(OperationMode.Add, _newTranslation, GetTranslationKeyOutputFilePath(), GetTranslationCatalogPaths());
                 }
                 else
                 {
@@ -188,24 +250,72 @@ public class LocalizationEditorWindow : EditorWindow
             .Select(s => s.GetValue(s) as string)
             .ToArray();
 
-        var buttonTexts = _availableTranslationKeys.Select(s => string.Format(DeleteTranslationKeyFormat, FormatStringForButton(s))).ToArray();
+        var buttonTexts = _availableTranslationKeys.Select(s => FormatStringForButton(s)).ToArray();
 
-        DeletionGridIndex = GUILayout.SelectionGrid(_deletionlGridIndex, buttonTexts, 5);
+        TranslationKeyDeletionGridIndex = GUILayout.SelectionGrid(_translationKeyDeletionlGridIndex, buttonTexts, 5);
     }
 
+    private void DisplayAddSupportedLanguageInput()
+    {
+        _newLanguage = EditorGUILayout.TextField(NewSupportedLanguageLabel, _newLanguage);
+    }
+
+    private void DisplayAddSupportedLanguageButton()
+    {
+        if (GUILayout.Button(AddLanguageButtonText))
+        {
+            _newLanguage = _newLanguage.ToLower();
+
+            if (_newLanguage.IsValidLanguage())
+            {
+                if (!_availableSupportedLanguages.Contains(_newLanguage))
+                {
+                    ConstructSupportedLanguagesTypeFile(_newLanguage, GetSupportedLanguagesOutputFilePath(), GetTranslationCatalogPath(_newLanguage), OperationMode.Add);
+                }
+                else
+                {
+                    Debug.LogError("Language already supported!");
+                }
+            }
+            else
+            {
+                Debug.LogError("Invalid Language format! Please use two or three letter ISO code!");
+            }
+        }
+    }
+
+    private void DisplayDeleteSupportedLanguages()
+    {
+        _availableSupportedLanguages = SupportedLanguages.Languages.Where(l => l != Constants.DefaultLanguage).ToArray();
+
+        SupportedLanguageDeletionGridIndex = GUILayout.SelectionGrid(_supportedLanguageDeletionGridIndex, _availableSupportedLanguages, 5);
+    }
+
+    private void DisplayGoBackButton()
+    {
+        if (GUILayout.Button(GoBackButtonText))
+        {
+            _newTranslation = "";
+            _currentWindowState = WindowState.Default;
+            GUI.FocusControl(AddTranslationButtonText);
+        }
+    }
+    #endregion LayoutElementDisplays
+
+    #region TranslationKeysGeneration
     private async void ConstructTranslationKeysType(OperationMode mode, string targetTranslationKey, string keysFilePath, string[] catalogFilePaths)
     {
         await Task.Run(() =>
         {
             _targetUnit = new CodeCompileUnit();
 
-            _targetClass = new CodeTypeDeclaration(GeneratedTypeName)
+            _translationKeysClass = new CodeTypeDeclaration(TranslationKeysGeneratedTypeName)
             {
                 IsClass = true,
                 TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed
             };
 
-            _generatedNamespace.Types.Add(_targetClass);
+            _generatedNamespace.Types.Add(_translationKeysClass);
             _targetUnit.Namespaces.Add(_generatedNamespace);
 
             //Add existing translation keys to generated field
@@ -217,7 +327,7 @@ public class LocalizationEditorWindow : EditorWindow
                     continue;
                 }
 
-                _targetClass.Members.Add(new CodeMemberField
+                _translationKeysClass.Members.Add(new CodeMemberField
                 {
                     Type = new CodeTypeReference(typeof(string)),
                     Attributes = MemberAttributes.Public | MemberAttributes.Const,
@@ -229,7 +339,7 @@ public class LocalizationEditorWindow : EditorWindow
             if (mode == OperationMode.Add)
             {
                 //Add new translation key to generated field
-                _targetClass.Members.Add(new CodeMemberField
+                _translationKeysClass.Members.Add(new CodeMemberField
                 {
                     Type = new CodeTypeReference(typeof(string)),
                     Attributes = MemberAttributes.Public | MemberAttributes.Const,
@@ -245,7 +355,7 @@ public class LocalizationEditorWindow : EditorWindow
 
             foreach (var catalogFilePath in catalogFilePaths)
             {
-                taskList.Add(Task.Run(() => GenerateTranslationCatalog(catalogFilePath, targetTranslationKey, mode)));
+                taskList.Add(Task.Run(() => UpdateTranslationCatalogKeys(catalogFilePath, targetTranslationKey, mode)));
             }
 
             Task.WaitAll(taskList.ToArray());
@@ -254,7 +364,7 @@ public class LocalizationEditorWindow : EditorWindow
         _currentWindowState = WindowState.Running;
     }
 
-    private async void GenerateTypeFile(string fileName)
+    private async void GenerateTypeFile(string filePath)
     {
         await Task.Run(() =>
         {
@@ -271,7 +381,7 @@ public class LocalizationEditorWindow : EditorWindow
                 BlankLinesBetweenMembers = false
             };
 
-            using (var streamWriter = new StreamWriter(fileName))
+            using (var streamWriter = new StreamWriter(filePath))
             {
                 codeDomProvider.GenerateCodeFromCompileUnit(_targetUnit, streamWriter, codeGeneratorOptions);
             }
@@ -280,7 +390,7 @@ public class LocalizationEditorWindow : EditorWindow
         });
     }
 
-    private async void GenerateTranslationCatalog(string translationCatalogFilePath, string translationKey, OperationMode mode)
+    private async void UpdateTranslationCatalogKeys(string translationCatalogFilePath, string translationKey, OperationMode mode)
     {
         await Task.Run(() =>
         {
@@ -294,13 +404,12 @@ public class LocalizationEditorWindow : EditorWindow
 
             TranslationCatalog translationCatalog;
 
-
             using (var memoryStream = new MemoryStream(Encoding.Unicode.GetBytes(jsonContent)))
             {
                 translationCatalog = translationSerializer.ReadObject(memoryStream) as TranslationCatalog;
             }
-            
-            if(mode == OperationMode.Add)
+
+            if (mode == OperationMode.Add)
             {
                 translationCatalog.AddTranslation(translationKey);
             }
@@ -312,24 +421,100 @@ public class LocalizationEditorWindow : EditorWindow
             {
                 throw new Exception("Invalid OperationMode!");
             }
-            
+
             using (var stream = File.Create(translationCatalogFilePath))
             {
                 translationSerializer.WriteObject(stream, translationCatalog);
             }
         });
     }
+    #endregion TranslationKeysGeneration
 
-    private void DisplayGoBackButton()
+    #region SupportedLanguagesGeneration
+    private async void ConstructSupportedLanguagesTypeFile(string targetLanguage, string outputTypeFilePath, string outputCatalogPath, OperationMode mode)
     {
-        if (GUILayout.Button(GoBackButtonText))
+        await Task.Run(() =>
         {
-            _newTranslation = "";
-            _currentWindowState = WindowState.Default;
-            GUI.FocusControl(AddTranslationButtonText);
-        }
+            _targetUnit = new CodeCompileUnit();
+
+            _supportedLanguagesClass = new CodeTypeDeclaration(SupportedLanguagesGeneratedTypeName)
+            {
+                IsClass = true,
+                TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed
+            };
+
+            _generatedNamespace.Types.Add(_supportedLanguagesClass);
+            _targetUnit.Namespaces.Add(_generatedNamespace);
+
+            var fieldArrayInfo = SupportedLanguagesType.GetField(SupportedLanguagesFieldArrayName);
+
+            var fieldArray = fieldArrayInfo.GetValue(fieldArrayInfo) as string[];
+
+            //Add new language to the type being constructed
+            if (mode == OperationMode.Add)
+            {
+                var fieldList = fieldArray.ToList();
+                fieldList.Add(targetLanguage);
+                fieldArray = fieldList.ToArray();
+            }
+
+            _supportedLanguagesClass.Members.Add(new CodeMemberField
+            {
+                Type = new CodeTypeReference(typeof(string[])),
+                Attributes = MemberAttributes.Public | MemberAttributes.Static,
+                Name = SupportedLanguagesFieldArrayName,
+                InitExpression = new CodeArrayCreateExpression(new CodeTypeReference(typeof(string)),
+                fieldArray
+                    .Where(l => l != targetLanguage || mode != OperationMode.Delete)
+                    .Select(l => new CodePrimitiveExpression(l))
+                    .ToArray())
+            });
+
+            GenerateTypeFile(outputTypeFilePath);
+
+            GenerateTranslationCatalog(outputCatalogPath, mode);
+        });
+
+        _currentWindowState = WindowState.Running;
     }
 
+    private async void GenerateTranslationCatalog(string catalogPath, OperationMode mode)
+    {
+        await Task.Run(() =>
+        {
+            if (mode == OperationMode.Delete)
+            {
+                if (File.Exists(catalogPath))
+                {
+                    File.Delete(catalogPath);
+                }
+                return;
+            }
+
+            var translationSerializer = new DataContractJsonSerializer(typeof(TranslationCatalog),
+            new DataContractJsonSerializerSettings
+            {
+                UseSimpleDictionaryFormat = true
+            });
+
+            var translationCatalog = new TranslationCatalog();
+
+            foreach (var translationKey in TranslationKeysType.GetFields()
+                .Where(f => f.FieldType == typeof(string))
+                .Select(f => f.GetValue(f) as string))
+            {
+                translationCatalog.AddTranslation(translationKey);
+            }
+
+            using (var stream = File.Create(catalogPath))
+            {
+                translationSerializer.WriteObject(stream, translationCatalog);
+            }
+        });
+    }
+    #endregion SupportedLanguagesGeneration
+
+    #region Formatting
     private string FormatStringForButton(string unformattedString)
     {
         return unformattedString.Replace('_', ' ');
@@ -356,23 +541,38 @@ public class LocalizationEditorWindow : EditorWindow
 
         return formattedString;
     }
+    #endregion Formatting
+
+    #region Paths
+    //Required to get file path as these can't be retrieved outside of main thread
+    private string GetTranslationKeyOutputFilePath()
+    {
+        return Path.Combine(Application.dataPath, "Scripts", "Data", GeneratedNamespaceName, $"{TranslationKeysGeneratedTypeName}.cs");
+    }
 
     //Required to get file path as these can't be retrieved outside of main thread
-    private string GetOutputFilePath()
+    private string GetSupportedLanguagesOutputFilePath()
     {
-        return Path.Combine(Application.dataPath, "Scripts", "Data", GeneratedNamespaceName, $"{GeneratedTypeName}.cs");
+        return Path.Combine(Application.dataPath, "Scripts", "Data", GeneratedNamespaceName, $"{SupportedLanguagesGeneratedTypeName}.cs");
+    }
+
+    //Required to get file path as these can't be retrieved outside of main thread
+    private string GetTranslationCatalogPath(string language)
+    {
+        return Path.Combine(Constants.LocalizationPath, string.Format(Constants.TranslationJsonName, language));
     }
 
     //Required to get file paths as these can't be retrieved outside of main thread
     private string[] GetTranslationCatalogPaths()
     {
-        var catalogFilePaths = new string[Constants.SupportedLanuages.Length];
+        var catalogFilePaths = new string[SupportedLanguages.Languages.Length];
 
         for (var i = 0; i < catalogFilePaths.Length; i++)
         {
-            catalogFilePaths[i] = Path.Combine(Constants.LocalizationPath, string.Format(Constants.TranslationJsonName, Constants.SupportedLanuages[i]));
+            catalogFilePaths[i] = Path.Combine(Constants.LocalizationPath, string.Format(Constants.TranslationJsonName, SupportedLanguages.Languages[i]));
         }
 
         return catalogFilePaths;
     }
+    #endregion Paths
 }
