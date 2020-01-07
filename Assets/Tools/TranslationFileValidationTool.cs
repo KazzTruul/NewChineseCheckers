@@ -33,7 +33,7 @@ internal sealed class TranslationFileValidationTool
 
         var fileUpdateTasks =
             from language
-            in Constants.SupportedLanuages
+            in SupportedLanguages.Languages
             select Task.Run(() => ValidateTranslationFile(language));
 
         await Task.WhenAll(fileUpdateTasks);
