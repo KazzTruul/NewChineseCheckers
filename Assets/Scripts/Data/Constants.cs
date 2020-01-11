@@ -3,14 +3,6 @@ using UnityEngine;
 
 public static class Constants
 {
-    #region Localization
-    public static readonly string[] SupportedLanuages =
-    {
-        "en",
-        "sv"
-    };
-    #endregion Localization
-
     #region Input
     public const KeyCode PauseKey = KeyCode.Escape;
     public const int MinUsernameLength = 6;

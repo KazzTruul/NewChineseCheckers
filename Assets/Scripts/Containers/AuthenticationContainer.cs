@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Middleware;
+using Generated;
 
 public class AuthenticationContainer : MonoBehaviour, ILocalizable
 {

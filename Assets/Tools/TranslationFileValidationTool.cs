@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System;
+using Generated;
 
 internal sealed class TranslationFileValidationTool
 {
@@ -32,7 +33,7 @@ internal sealed class TranslationFileValidationTool
 
         var fileUpdateTasks =
             from language
-            in Constants.SupportedLanuages
+            in SupportedLanguages.Languages
             select Task.Run(() => ValidateTranslationFile(language));
 
         await Task.WhenAll(fileUpdateTasks);

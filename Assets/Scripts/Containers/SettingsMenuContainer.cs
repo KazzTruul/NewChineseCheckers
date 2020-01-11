@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Generated;
 
 public class SettingsMenuContainer : MonoBehaviour, ILocalizable
 {
@@ -74,9 +75,9 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _sfxVolumeSlider.value = _settingsContainer.Settings.SFXVolume;
         _sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
 
-        _languageSelectionDropdown.onValueChanged.AddListener(language => _commandDispatcher.ExecuteCommand(_changeLanguageCommandFactory.Create(Constants.SupportedLanuages[language])));
-        _languageSelectionDropdown.AddOptions(Constants.SupportedLanuages.Select(language => new TMP_Dropdown.OptionData(Constants.IsoToLocalizedLanguages[language])).ToList());
-        _languageSelectionDropdown.value = Constants.SupportedLanuages.Contains(_localizationManager.CurrentLanguage) ? Array.IndexOf(Constants.SupportedLanuages, _localizationManager.CurrentLanguage) : 0;
+        _languageSelectionDropdown.onValueChanged.AddListener(language => _commandDispatcher.ExecuteCommand(_changeLanguageCommandFactory.Create(SupportedLanguages.Languages[language])));
+        _languageSelectionDropdown.AddOptions(SupportedLanguages.Languages.Select(language => new TMP_Dropdown.OptionData(Constants.IsoToLocalizedLanguages[language])).ToList());
+        _languageSelectionDropdown.value = SupportedLanguages.Languages.Contains(_localizationManager.CurrentLanguage) ? Array.IndexOf(SupportedLanguages.Languages, _localizationManager.CurrentLanguage) : 0;
 
         _autoSaveToggle.isOn = _settingsContainer.Settings.AutoSave;
         _autoSaveToggle.onValueChanged.AddListener(SetAutoSaveEnabled);
