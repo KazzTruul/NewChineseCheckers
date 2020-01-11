@@ -30,7 +30,7 @@ namespace LocalizationEditor
 
                 if (value > -1)
                 {
-                    var translationKey = EditorWindowOperationsBase.FormatStringForTranslationKey(_availableTranslationKeys[_translationKeyDeletionlGridIndex]);
+                    var translationKey = FormatStringForTranslationKey(_availableTranslationKeys[_translationKeyDeletionlGridIndex]);
 
                     new TranslationKeysOperations(this).ConstructTranslationKeysType(OperationMode.Delete, translationKey, GetTranslationKeyOutputFilePath(), GetTranslationCatalogPaths());
                 }
@@ -64,6 +64,32 @@ namespace LocalizationEditor
         {
             GetWindow<LocalizationEditorWindow>(LocalizationEditorData.EditorWindowName);
         }
+        public static string FormatStringForButton(string unformattedString)
+        {
+            return unformattedString.Replace('_', ' ');
+        }
+
+        public static string FormatStringForTranslationKey(string unformattedString)
+        {
+            return unformattedString.Replace(' ', '_');
+        }
+
+        public static string FormatStringForFieldName(string unformattedString)
+        {
+            var formattedString = "";
+
+            foreach (var c in unformattedString)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    formattedString += c;
+                }
+            }
+
+            formattedString += LocalizationEditorData.FieldNameSuffix;
+
+            return formattedString;
+        }
 
         private void OnGUI()
         {
@@ -89,24 +115,36 @@ namespace LocalizationEditor
                     break;
 
                 case WindowState.AddTranslation:
+                    GUILayout.Label(LocalizationEditorData.AddTranslationLabelText);
+                    GUILayout.Space(15);
+                    EditorGUILayout.BeginHorizontal();
                     DisplayAddNewTranslationInput();
                     DisplayAddNewTranslationButton();
+                    EditorGUILayout.EndHorizontal();
+                    GUILayout.Space(15);
                     DisplayGoBackButton();
                     break;
 
                 case WindowState.DeleteTranslation:
                     DisplayDeleteTranslationKeys();
+                    GUILayout.Space(15);
                     DisplayGoBackButton();
                     break;
 
                 case WindowState.AddSupportedLanguage:
+                    GUILayout.Label(LocalizationEditorData.AddLanguageLabelText);
+                    GUILayout.Space(15);
+                    EditorGUILayout.BeginHorizontal();
                     DisplayAddSupportedLanguageInput();
                     DisplayAddSupportedLanguageButton();
+                    EditorGUILayout.EndHorizontal();
+                    GUILayout.Space(15);
                     DisplayGoBackButton();
                     break;
 
                 case WindowState.DeleteSupportedLanguage:
                     DisplayDeleteSupportedLanguages();
+                    GUILayout.Space(15);
                     DisplayGoBackButton();
                     break;
 
@@ -179,7 +217,7 @@ namespace LocalizationEditor
 
                 if (_newTranslation.IsValidTranslationKey())
                 {
-                    if (LocalizationEditorData.TranslationKeysType.GetField(EditorWindowOperationsBase.FormatStringForFieldName(_newTranslation)) == null)
+                    if (LocalizationEditorData.TranslationKeysType.GetField(FormatStringForFieldName(_newTranslation)) == null)
                     {
                         new TranslationKeysOperations(this).ConstructTranslationKeysType(OperationMode.Add, _newTranslation, GetTranslationKeyOutputFilePath(), GetTranslationCatalogPaths());
                     }
@@ -197,12 +235,16 @@ namespace LocalizationEditor
 
         private void DisplayDeleteTranslationKeys()
         {
+            GUILayout.Label(LocalizationEditorData.DeleteTranslationLabelText);
+
+            GUILayout.Space(15);
+
             _availableTranslationKeys = LocalizationEditorData.TranslationKeysType.GetFields()
                 .Where(f => f.FieldType == typeof(string))
                 .Select(s => s.GetValue(s) as string)
                 .ToArray();
 
-            var buttonTexts = _availableTranslationKeys.Select(s => EditorWindowOperationsBase.FormatStringForButton(s)).ToArray();
+            var buttonTexts = _availableTranslationKeys.Select(s => FormatStringForButton(s)).ToArray();
 
             TranslationKeyDeletionGridIndex = GUILayout.SelectionGrid(_translationKeyDeletionlGridIndex, buttonTexts, 5);
         }
@@ -238,6 +280,10 @@ namespace LocalizationEditor
 
         private void DisplayDeleteSupportedLanguages()
         {
+            GUILayout.Label(LocalizationEditorData.DeleteLanguageLabelText);
+
+            GUILayout.Space(15);
+
             _availableSupportedLanguages = SupportedLanguages.Languages.Where(l => l != Constants.DefaultLanguage).ToArray();
 
             SupportedLanguageDeletionGridIndex = GUILayout.SelectionGrid(_supportedLanguageDeletionGridIndex, _availableSupportedLanguages, 5);

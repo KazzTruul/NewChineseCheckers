@@ -18,15 +18,23 @@ namespace LocalizationEditor
 
         public const string AddTranslationButtonText = "Add New Translation Key";
 
+        public const string AddTranslationLabelText = "Input New Translation Key";
+
         public const string DeleteTranslationButtonText = "Delete Existing Translation Key";
+
+        public const string DeleteTranslationLabelText = "Choose a Translation Key to Delete";
 
         public const string NewTranslationKeyLabel = "New Key Name: ";
 
         public const string NewSupportedLanguageLabel = "New Language: ";
 
+        public const string AddLanguageLabelText = "Input New Supported Language";
+
         public const string AddLanguageButtonText = "Add Supported Language";
 
         public const string DeleteLanguageButtonText = "Delete Supported Language";
+
+        public const string DeleteLanguageLabelText = "Choose a Language to Delete";
 
         public const string GoBackButtonText = "Go Back";
 

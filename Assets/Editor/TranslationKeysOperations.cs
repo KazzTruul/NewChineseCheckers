@@ -44,7 +44,7 @@ namespace LocalizationEditor
                 foreach (var existingTranslationKey in TranslationKeysType.GetFields().Where(f => f.FieldType == typeof(string)))
                 {
                     //Skip a key in order to delete it
-                    if (mode == OperationMode.Delete && existingTranslationKey.Name == FormatStringForFieldName(targetTranslationKey))
+                    if (mode == OperationMode.Delete && existingTranslationKey.Name == LocalizationEditorWindow.FormatStringForFieldName(targetTranslationKey))
                     {
                         continue;
                     }
@@ -65,8 +65,8 @@ namespace LocalizationEditor
                     {
                         Type = new CodeTypeReference(typeof(string)),
                         Attributes = MemberAttributes.Public | MemberAttributes.Const,
-                        Name = FormatStringForFieldName(targetTranslationKey),
-                        InitExpression = new CodePrimitiveExpression(FormatStringForTranslationKey(targetTranslationKey))
+                        Name = LocalizationEditorWindow.FormatStringForFieldName(targetTranslationKey),
+                        InitExpression = new CodePrimitiveExpression(LocalizationEditorWindow.FormatStringForTranslationKey(targetTranslationKey))
                     });
                 }
 
