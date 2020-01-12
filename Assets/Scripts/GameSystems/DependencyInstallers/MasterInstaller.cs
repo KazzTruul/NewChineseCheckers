@@ -13,7 +13,6 @@ public class MasterInstaller : MonoInstaller
         Container.DeclareSignal<LanguageChangedSignal>();
         Container.DeclareSignal<GamePausedChangedSignal>().OptionalSubscriber();
         Container.DeclareSignal<ActiveSceneChangedSignal>();
-        Container.DeclareSignal<SettingsShouldShowChangedSignal>().OptionalSubscriber();
         Container.DeclareSignal<UserRegistrationSucceededSignal>().OptionalSubscriber();
         Container.DeclareSignal<UserRegistrationFailedSignal>().OptionalSubscriber();
         Container.DeclareSignal<UserLoginSucceededSignal>().OptionalSubscriber();

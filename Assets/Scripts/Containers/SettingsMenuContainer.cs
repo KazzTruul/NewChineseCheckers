@@ -44,26 +44,26 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     private Button _saveAndExitButton;
 
     private ILocalizationManager _localizationManager;
-    private SignalBus _signalbus;
     private SettingsContainer _settingsContainer;
     private ChangeVolumeCommandFactory _changeVolumeCommandFactory;
     private ChangeLanguageCommandFactory _changeLanguageCommandFactory;
+    private ShowSettingsCommandFactory _showSettingsCommandFactory;
     private ICommandDispatcher _commandDispatcher;
 
     [Inject]
     private void Initialize(
         ILocalizationManager localizationManager,
-        SignalBus signalBus,
         SettingsContainer settingsContainer,
         ChangeVolumeCommandFactory changeVolumeCommandFactory,
         ChangeLanguageCommandFactory changeLanguageCommandFactory,
+        ShowSettingsCommandFactory showSettingsCommandFactory,
         ICommandDispatcher commandDispatcher)
     {
         _localizationManager = localizationManager;
-        _signalbus = signalBus;
         _settingsContainer = settingsContainer;
         _changeVolumeCommandFactory = changeVolumeCommandFactory;
         _changeLanguageCommandFactory = changeLanguageCommandFactory;
+        _showSettingsCommandFactory = showSettingsCommandFactory;
         _commandDispatcher = commandDispatcher;
         
         _backButton.onClick.AddListener(OnCloseSettings);
@@ -136,9 +136,9 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _saveAndLeaveText.text = _localizationManager.GetTranslation(TranslationKeys.OptionsSaveLeaveTranslation);
     }
 
-    public void OnShowSettingsChanged(SettingsShouldShowChangedSignal signal)
+    public void ShowSettings(bool showSettings)
     {
-        _menuObject.SetActive(signal.ShowSettings);
+        _menuObject.SetActive(showSettings);
     }
 
     private void ResetToDefault()
@@ -159,6 +159,6 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     private void OnCloseSettings()
     {
         DiscardChanges();
-        _signalbus.Fire(new SettingsShouldShowChangedSignal { ShowSettings = false });
+        _commandDispatcher.ExecuteCommand(_showSettingsCommandFactory.Create(false));
     }
 }
