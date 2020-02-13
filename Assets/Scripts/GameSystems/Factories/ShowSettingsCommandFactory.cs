@@ -3,7 +3,7 @@
 public class ShowSettingsCommandFactory
 {
     [Inject]
-    private SettingsMenuContainer _settingsMenuContainer;
+    private readonly SettingsMenuPopupContainer _settingsMenuContainer;
 
     public ShowSettingsCommand Create(bool showSettings)
     {

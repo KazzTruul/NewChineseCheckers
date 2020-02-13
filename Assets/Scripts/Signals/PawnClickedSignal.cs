@@ -1,4 +1,4 @@
 ﻿public class PawnClickedSignal
 {
-    public Pawn Pawn;
+    public Pawn Pawn { get; set; }
 }

@@ -3,9 +3,9 @@
 public class SpawnBoardCommandFactory
 {
     [Inject]
-    private BoardData _boardData;
+    private readonly BoardData _boardData;
     [Inject]
-    private TileFactory _tileFactory;
+    private readonly TileFactory _tileFactory;
 
     public SpawnBoardCommand Create()
     {

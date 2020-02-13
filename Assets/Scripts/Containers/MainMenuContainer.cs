@@ -39,21 +39,21 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
     private LoadSceneCommandFactory _loadSceneCommandFactory;
     private LogoutUserCommandFactory _logoutUserCommandFactory;
     private SettingsContainer _settingsContainer;
-    private ShowSettingsCommandFactory _showSettingsCommandFactory;
+    private ShowPopupCommandFactory<SettingsMenuPopupContainer> _showSettingsPopupCommandFactory;
 
     [Inject]
     public void Initialize(ILocalizationManager localizationManager,
         ICommandDispatcher commandDispatcher,
         LoadSceneCommandFactory loadSceneCommandFactory,
         LogoutUserCommandFactory logoutUserCommandFactory,
-        ShowSettingsCommandFactory showSettingsCommandFactory,
+        ShowPopupCommandFactory<SettingsMenuPopupContainer> showSettingsPopupCommandFactory,
         SettingsContainer settingsContainer)
     {
         _localizationManager = localizationManager;
         _commandDispatcher = commandDispatcher;
         _loadSceneCommandFactory = loadSceneCommandFactory;
         _logoutUserCommandFactory = logoutUserCommandFactory;
-        _showSettingsCommandFactory = showSettingsCommandFactory;
+        _showSettingsPopupCommandFactory = showSettingsPopupCommandFactory;
         _settingsContainer = settingsContainer;
 
         //TODO: Add difficulty selection
@@ -69,7 +69,7 @@ public class MainMenuContainer : MonoBehaviour, ILocalizable
         });
         _openSettingsButton.onClick.AddListener(() =>
         {
-            _commandDispatcher.ExecuteCommand(_showSettingsCommandFactory.Create(true));
+            _commandDispatcher.ExecuteCommand(_showSettingsPopupCommandFactory.Create());
         });
         //TODO: Make confirmation menu
         _logoutUserButton.onClick.AddListener(() => 

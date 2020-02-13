@@ -4,7 +4,7 @@ using Zenject;
 public sealed class CommandDispatcher : ICommandDispatcher
 {
     [Inject]
-    private CoroutineRunner _coroutineRunner;
+    private readonly CoroutineRunner _coroutineRunner;
 
     private List<CommandBase> _commandList = new List<CommandBase>();
 

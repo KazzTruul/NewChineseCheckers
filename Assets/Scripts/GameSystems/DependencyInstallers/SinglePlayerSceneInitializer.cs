@@ -9,7 +9,7 @@ public class SinglePlayerSceneInitializer
 
     public void OnActiveSceneChanged(ActiveSceneChangedSignal signal)
     {
-        //TODO: Update check
+        //TODO: Update condition for spawning board
         if(signal.NewSceneIndex != Constants.SinglePlayerSceneIndex)
         {
             return;

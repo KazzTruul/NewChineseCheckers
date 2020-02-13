@@ -3,7 +3,7 @@
 public class SetGamePausedCommandFactory
 {
     [Inject]
-    private IInputManager _inputManager;
+    private readonly IInputManager _inputManager;
 
     public SetGamePausedCommand Create(bool? pauseGame = null)
     {

@@ -1,4 +1,4 @@
 ﻿public class TileClickedSignal
 {
-    public Tile Tile;
+    public Tile Tile { get; set; }
 }

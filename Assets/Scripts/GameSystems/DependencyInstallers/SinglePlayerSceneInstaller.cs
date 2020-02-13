@@ -1,5 +1,4 @@
 ﻿using Zenject;
-
 public class SinglePlayerSceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
@@ -8,10 +7,6 @@ public class SinglePlayerSceneInstaller : MonoInstaller
         Container.DeclareSignal<TileClickedSignal>();
 
         //Set up Bindings
-        Container.Bind<SettingsMenuContainer>()
-            .FromComponentInHierarchy()
-            .AsSingle()
-            .Lazy();
         Container.Bind<TileFactory>()
             .AsSingle()
             .Lazy();
@@ -26,9 +21,6 @@ public class SinglePlayerSceneInstaller : MonoInstaller
             .AsSingle()
             .Lazy();
         Container.Bind<ChangeVolumeCommandFactory>()
-            .AsSingle()
-            .Lazy();
-        Container.Bind<ShowSettingsCommandFactory>()
             .AsSingle()
             .Lazy();
 

@@ -2,7 +2,7 @@
 
 public class DefaultSpawnBoardStrategy : SpawnBoardStrategy
 {
-    protected override float _tileOffset { get; } = 2.0f;
+    protected override float TileOffset { get; } = 2.0f;
 
     private const float YPos = 0.0f;
     
@@ -14,13 +14,13 @@ public class DefaultSpawnBoardStrategy : SpawnBoardStrategy
         {
             board[row] = new Tile[rowLengths[row]];
 
-            var zPos = ((rowLengths.Length * _tileOffset) / 2) - (_tileOffset * row) - (_tileOffset / 2.0f);
+            var zPos = ((rowLengths.Length * TileOffset) / 2) - (TileOffset * row) - (TileOffset / 2.0f);
 
             for (var column = 0; column < rowLengths[row]; column++)
             {
                 var tile = tileFactory.Create(column, row);
 
-                var xPos = (-(rowLengths[row] * _tileOffset) / 2) + (_tileOffset * column) + (_tileOffset / 2.0f);
+                var xPos = (-(rowLengths[row] * TileOffset) / 2) + (TileOffset * column) + (TileOffset / 2.0f);
 
                 tile.transform.position = new Vector3(xPos, YPos, zPos);
                 tile.transform.rotation = new Quaternion(-90.0f, 0.0f, 0.0f, tile.transform.rotation.w);

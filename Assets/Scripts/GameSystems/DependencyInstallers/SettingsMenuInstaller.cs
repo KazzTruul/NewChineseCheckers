@@ -4,7 +4,7 @@ public class SettingsMenuInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesTo<SettingsMenuContainer>()
+        Container.BindInterfacesTo<SettingsMenuPopupContainer>()
             .FromComponentOnRoot();
 
         //Bind signals

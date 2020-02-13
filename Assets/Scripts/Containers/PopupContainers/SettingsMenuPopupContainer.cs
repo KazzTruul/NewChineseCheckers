@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System;
 using Generated;
 
-public class SettingsMenuContainer : MonoBehaviour, ILocalizable
+public class SettingsMenuPopupContainer : PopupContainerBase, ILocalizable
 {
     [SerializeField]
     private GameObject _menuObject;
@@ -48,6 +48,8 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     private ChangeVolumeCommandFactory _changeVolumeCommandFactory;
     private ChangeLanguageCommandFactory _changeLanguageCommandFactory;
     private ShowSettingsCommandFactory _showSettingsCommandFactory;
+    private SetGameStateCommandFactory _setGameStateCommandFactory;
+    private RemoveGameStateCommandFactory _removeGameStateCommandFactory;
     private ICommandDispatcher _commandDispatcher;
 
     [Inject]
@@ -57,6 +59,8 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         ChangeVolumeCommandFactory changeVolumeCommandFactory,
         ChangeLanguageCommandFactory changeLanguageCommandFactory,
         ShowSettingsCommandFactory showSettingsCommandFactory,
+        SetGameStateCommandFactory setGameStateCommandFactory,
+        RemoveGameStateCommandFactory removeGameStateCommandFactory,
         ICommandDispatcher commandDispatcher)
     {
         _localizationManager = localizationManager;
@@ -64,6 +68,8 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
         _changeVolumeCommandFactory = changeVolumeCommandFactory;
         _changeLanguageCommandFactory = changeLanguageCommandFactory;
         _showSettingsCommandFactory = showSettingsCommandFactory;
+        _setGameStateCommandFactory = setGameStateCommandFactory;
+        _removeGameStateCommandFactory = removeGameStateCommandFactory;
         _commandDispatcher = commandDispatcher;
         
         _backButton.onClick.AddListener(OnCloseSettings);
@@ -139,6 +145,14 @@ public class SettingsMenuContainer : MonoBehaviour, ILocalizable
     public void ShowSettings(bool showSettings)
     {
         _menuObject.SetActive(showSettings);
+        if (showSettings)
+        {
+            _commandDispatcher.ExecuteCommand(_setGameStateCommandFactory.Create(GameState.Settings));
+        }
+        else
+        {
+            _commandDispatcher.ExecuteCommand(_removeGameStateCommandFactory.Create(GameState.Settings));
+        }
     }
 
     private void ResetToDefault()

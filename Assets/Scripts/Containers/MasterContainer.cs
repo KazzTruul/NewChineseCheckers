@@ -1,20 +1,11 @@
 ﻿using UnityEngine;
 using Zenject;
-using Middleware;
 
 public sealed class MasterContainer : MonoBehaviour
 {
     //CommandDispatcher
     [Inject]
     private readonly ICommandDispatcher _commandDispatcher;
-
-    //Managers
-    [Inject]
-    private readonly ILocalizationManager _localizationManager;
-    [Inject]
-    private readonly IInputManager _inputManager;
-    [Inject]
-    private readonly PlayFabManager _playFabManager;
     
     //Factories
     [Inject]

@@ -34,10 +34,7 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
     private LoginUserCommandFactory _loginUserCommandFactory;
     private SettingsContainer _settingsContainer;
     private LoadSceneCommandFactory _loadSceneCommandFactory;
-
-    private readonly VerifyUsernameValidityStrategy _verifyUsernameValidityStrategy = new VerifyUsernameValidityStrategy();
-    private readonly VerifyPasswordValidityStrategy _verifyPasswordValidityStrategy = new VerifyPasswordValidityStrategy();
-
+    
     private string _username = "";
     private string _userPassword = "";
 
@@ -90,11 +87,11 @@ public class AuthenticationContainer : MonoBehaviour, ILocalizable
 
     private void DetermineRegisterLoginButtonsInteractable()
     {
-        var validUsername = _verifyUsernameValidityStrategy.IsValidUsername(_username);
-        var validPassword = _verifyPasswordValidityStrategy.IsValidPassword(_userPassword);
+        var isValidUsername = _username.IsValidUsername();
+        var isValidPassword = _userPassword.IsValidPassword();
 
-        _registerUserButton.interactable = validUsername && validPassword;
-        _loginUserButton.interactable = validUsername && validPassword;
+        _registerUserButton.interactable = isValidUsername && isValidPassword;
+        _loginUserButton.interactable = isValidUsername && isValidPassword;
     }
 
     private void OnUsernameInputChanged(string username)

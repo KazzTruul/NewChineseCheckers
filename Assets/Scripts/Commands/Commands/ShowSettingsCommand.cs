@@ -1,9 +1,9 @@
 ﻿public class ShowSettingsCommand : SynchronousCommand
 {
-    private readonly SettingsMenuContainer _settingsMenuContainer;
+    private readonly SettingsMenuPopupContainer _settingsMenuContainer;
     private readonly bool _showSettings;
 
-    public ShowSettingsCommand(SettingsMenuContainer settingsMenuContainer, bool showSettings)
+    public ShowSettingsCommand(SettingsMenuPopupContainer settingsMenuContainer, bool showSettings)
     {
         _settingsMenuContainer = settingsMenuContainer;
         _showSettings = showSettings;

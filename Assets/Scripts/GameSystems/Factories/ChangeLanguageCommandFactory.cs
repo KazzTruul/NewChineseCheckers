@@ -3,7 +3,7 @@
 public class ChangeLanguageCommandFactory
 {
     [Inject]
-    private ILocalizationManager _localizationManager;
+    private readonly ILocalizationManager _localizationManager;
 
     public ChangeLanguageCommand Create(string language)
     {

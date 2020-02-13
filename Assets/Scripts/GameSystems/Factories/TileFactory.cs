@@ -17,7 +17,7 @@ public class TileFactory
 
     public Tile Create(int x, int y)
     {
-        GameObject tileGO = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        var tileGO = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 
         tileGO.name = string.Format(TileName, y, x);
         tileGO.transform.localScale = new Vector3(1.0f, 0.1f, 1.0f);

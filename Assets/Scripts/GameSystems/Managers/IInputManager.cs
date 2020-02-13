@@ -7,4 +7,6 @@ public interface IInputManager : ITickable
     void OnPawnClicked(PawnClickedSignal signal);
     void OnActiveSceneChanged(ActiveSceneChangedSignal signal);
     void SetGamePaused(bool? pauseGame);
+    void SetGameState(GameState newState);
+    void RemoveGameState(GameState obsoleteState);
 }

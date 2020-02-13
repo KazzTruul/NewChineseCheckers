@@ -5,11 +5,11 @@ using System.Collections;
 public class LoadSceneCommand : CoroutineCommand
 {
     private readonly ZenjectSceneLoader _sceneLoader;
+    private readonly SignalBus _signalBus;
     private readonly int _loadSceneIndex;
     private readonly int _unloadSceneIndex;
     private readonly bool _restartScene;
     private readonly bool _loadAdditive;
-    private readonly SignalBus _signalBus;
 
     public LoadSceneCommand(ZenjectSceneLoader sceneLoader, SignalBus signalBus, int sceneIndex, bool restartScene, bool loadAdditive, int unloadSceneIndex)
     {

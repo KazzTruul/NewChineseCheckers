@@ -8,6 +8,10 @@ public static class StringExtensions
 
     private const string ValidLanguageRegexPattern = @"^[a-z]{2,3}$";
 
+    private const string ValidUsernamePattern = @"[a-zA-Z0-9]";
+
+    private const string ValidPasswordPattern = @"[a-zA-Z0-9]";
+
     public static bool IsValidTranslationKey(this string potentialTranslationKey)
     {
         return !string.IsNullOrEmpty(potentialTranslationKey)
@@ -23,5 +27,21 @@ public static class StringExtensions
     {
         return !string.IsNullOrEmpty(potentialLanguage)
             && Regex.IsMatch(potentialLanguage, ValidLanguageRegexPattern);
+    }
+
+    public static bool IsValidUsername(this string potentialUsername)
+    {
+        return !string.IsNullOrEmpty(potentialUsername)
+            && Regex.IsMatch(potentialUsername, ValidUsernamePattern)
+            && potentialUsername.Length >= Constants.MinUsernameLength
+            && potentialUsername.Length <= Constants.MaxUsernameLength;
+    }
+
+    public static bool IsValidPassword(this string potentialPassword)
+    {
+        return !string.IsNullOrEmpty(potentialPassword)
+            && Regex.IsMatch(potentialPassword, ValidPasswordPattern)
+            && potentialPassword.Length >= Constants.MinPasswordLength
+            && potentialPassword.Length <= Constants.MaxPasswordLength;
     }
 }

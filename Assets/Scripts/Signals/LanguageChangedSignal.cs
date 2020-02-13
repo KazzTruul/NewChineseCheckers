@@ -1,4 +1,4 @@
 ﻿public class LanguageChangedSignal
 {
-    public string Language;
+    public string Language { get; set; }
 }
